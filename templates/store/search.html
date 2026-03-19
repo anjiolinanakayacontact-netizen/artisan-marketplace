@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Discover - The Woven Narrative</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "surface-variant": "#ede3b8", "secondary-container": "#fd9e70",
+                    "tertiary": "#006096", "surface-container": "#f9eec2",
+                    "on-secondary": "#ffffff", "surface-container-highest": "#ede3b8",
+                    "on-error": "#ffffff", "surface-container-high": "#f3e8bd",
+                    "surface-bright": "#fff9ec", "error-container": "#ffdad6",
+                    "primary-container": "#b15f00", "outline": "#887364",
+                    "outline-variant": "#dbc2b0", "surface-container-lowest": "#ffffff",
+                    "on-primary-container": "#fffbff", "tertiary-container": "#007abd",
+                    "on-background": "#201c02", "surface": "#fff9ec",
+                    "inverse-surface": "#363113", "surface-container-low": "#fff4c8",
+                    "error": "#ba1a1a", "primary": "#8d4b00",
+                    "secondary": "#944a23", "inverse-primary": "#ffb77d",
+                    "on-surface": "#201c02", "on-secondary-container": "#76340e",
+                    "on-surface-variant": "#554336", "on-primary": "#ffffff",
+                    "background": "#fff9ec"
+                },
+                fontFamily: { "headline": ["Plus Jakarta Sans"], "body": ["Inter"] },
+                borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    body { min-height: max(884px, 100dvh); }
+</style>
+</head>
+<body class="bg-surface font-body text-on-surface selection:bg-secondary-container selection:text-on-secondary-container">
+
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#fff9ec]/80 backdrop-blur-md flex justify-between items-center px-6 h-16 shadow-[0_10px_30px_-15px_rgba(32,28,2,0.06)]">
+    <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-[#8d4b00]">temp_preferences_eco</span>
+        <h1 class="font-['Plus_Jakarta_Sans'] font-bold text-lg tracking-tight text-[#8d4b00] italic">The Woven Narrative</h1>
+    </div>
+    <a href="{% url 'cart' %}" class="hover:opacity-80 transition-opacity active:scale-95 duration-200">
+        <span class="material-symbols-outlined text-[#8d4b00]">shopping_bag</span>
+    </a>
+</header>
+
+<main class="pt-20 pb-24 px-4 max-w-md mx-auto">
+
+    <!-- Search Form -->
+    <section class="mb-8">
+        <form method="get" action="{% url 'search' %}">
+            <div class="relative group">
+                <div class="absolute inset-y-0 left-5 flex items-center pointer-events-none">
+                    <span class="material-symbols-outlined text-outline">search</span>
+                </div>
+                <input name="q" value="{{ query }}"
+                       class="w-full h-16 pl-14 pr-20 bg-surface-container-highest border-none rounded-full focus:ring-2 focus:ring-primary font-headline text-lg placeholder:text-outline/50 transition-all"
+                       placeholder="Search products..." type="text"/>
+                <div class="absolute inset-y-0 right-3 flex items-center">
+                    <button type="submit" class="p-3 bg-primary text-on-primary rounded-full shadow-lg active:scale-95 duration-200">
+                        <span class="material-symbols-outlined">tune</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <!-- Category Filter Pills -->
+    <section class="mb-8 -mx-4 overflow-hidden">
+        <div class="flex gap-3 px-4 overflow-x-auto hide-scrollbar">
+            <a href="{% url 'search' %}?q={{ query }}&sort=price_asc"
+               class="whitespace-nowrap px-6 py-2.5 rounded-full font-label text-sm font-medium
+               {% if sort == 'price_asc' %}bg-primary text-on-primary{% else %}bg-surface-container text-on-surface-variant border border-outline-variant/10{% endif %}">
+                Price: Low to High
+            </a>
+            <a href="{% url 'search' %}?q={{ query }}&sort=newest"
+               class="whitespace-nowrap px-6 py-2.5 rounded-full font-label text-sm font-medium
+               {% if sort == 'newest' %}bg-primary text-on-primary{% else %}bg-surface-container text-on-surface-variant border border-outline-variant/10{% endif %}">
+                Newest
+            </a>
+            <a href="{% url 'search' %}?q={{ query }}&sort=price_desc"
+               class="whitespace-nowrap px-6 py-2.5 rounded-full font-label text-sm font-medium
+               {% if sort == 'price_desc' %}bg-primary text-on-primary{% else %}bg-surface-container text-on-surface-variant border border-outline-variant/10{% endif %}">
+                Price: High to Low
+            </a>
+        </div>
+    </section>
+
+    <div class="flex flex-col gap-10">
+
+        <!-- Category Filter -->
+        <section class="bg-surface-container-low p-6 rounded-xl space-y-8">
+            <div>
+                <h3 class="font-headline font-bold text-lg mb-4 text-on-surface">Categories</h3>
+                <div class="flex flex-wrap gap-2">
+                    <a href="{% url 'search' %}?q={{ query }}"
+                       class="px-4 py-2 rounded-lg text-sm font-medium
+                       {% if not selected_category %}bg-primary/10 text-primary{% else %}bg-surface-container-highest text-on-surface-variant{% endif %}">
+                        All
+                    </a>
+                    {% for category in categories %}
+                    <a href="{% url 'search' %}?q={{ query }}&category={{ category.id }}"
+                       class="px-4 py-2 rounded-lg text-sm font-medium
+                       {% if selected_category == category.id|stringformat:'s' %}bg-primary/10 text-primary{% else %}bg-surface-container-highest text-on-surface-variant{% endif %}">
+                        {{ category.name }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Grid -->
+        <section class="space-y-6">
+            <div class="flex justify-between items-baseline">
+                <h2 class="font-headline font-extrabold text-2xl tracking-tight">Handcrafted Results</h2>
+                <span class="font-label text-xs text-outline font-medium uppercase tracking-widest">
+                    {{ products|length }} Items
+                </span>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                {% for product in products %}
+                <div class="flex flex-col gap-3 group">
+                    <a href="{% url 'product_detail' product.pk %}">
+                        <div class="relative aspect-[4/5] rounded-xl overflow-hidden bg-surface-container-high transition-transform duration-300 group-hover:scale-[0.98]">
+                            {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                                 class="w-full h-full object-cover"/>
+                            {% else %}
+                            <div class="w-full h-full flex items-center justify-center">
+                                <span class="material-symbols-outlined text-4xl text-outline-variant">image</span>
+                            </div>
+                            {% endif %}
+                            <form method="post" action="{% url 'add_to_cart' product.pk %}">
+                                {% csrf_token %}
+                                <button type="submit"
+                                        class="absolute top-3 right-3 w-10 h-10 bg-surface/90 backdrop-blur-md rounded-full flex items-center justify-center text-primary shadow-sm active:scale-90 transition-all">
+                                    <span class="material-symbols-outlined text-xl">add_shopping_cart</span>
+                                </button>
+                            </form>
+                        </div>
+                        <div class="px-1">
+                            <h4 class="font-headline font-bold text-on-surface leading-tight">{{ product.name }}</h4>
+                            <p class="font-body text-sm text-outline mb-1">{{ product.category }}</p>
+                            <span class="font-headline font-bold text-primary">₱{{ product.price }}</span>
+                        </div>
+                    </a>
+                </div>
+                {% empty %}
+                <div class="col-span-2 text-center py-12">
+                    <span class="material-symbols-outlined text-5xl text-outline-variant">search_off</span>
+                    <p class="font-headline font-semibold text-on-surface mt-4">No products found</p>
+                    <p class="text-on-surface-variant text-sm mt-1">Try a different search term or category</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+    </div>
+</main>
+
+<!-- Bottom Nav -->
+<nav class="fixed bottom-0 w-full rounded-t-[3rem] z-50 bg-[#fff4c8] backdrop-blur-xl shadow-[0_-10px_40px_rgba(32,28,2,0.08)] flex justify-around items-center h-20 pb-4 px-4">
+    <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#944a23]/50 hover:text-[#8d4b00] transition-colors">
+        <span class="material-symbols-outlined">home</span>
+        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Home</span>
+    </a>
+    <a href="{% url 'search' %}" class="flex flex-col items-center justify-center text-[#8d4b00] scale-110 transition-transform">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">search</span>
+        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Discover</span>
+    </a>
+    <a href="{% url 'cart' %}" class="flex flex-col items-center justify-center text-[#944a23]/50 hover:text-[#8d4b00] transition-colors">
+        <span class="material-symbols-outlined">shopping_cart</span>
+        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Cart</span>
+    </a>
+    <a href="#" class="flex flex-col items-center justify-center text-[#944a23]/50 hover:text-[#8d4b00] transition-colors">
+        <span class="material-symbols-outlined">person</span>
+        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Profile</span>
+    </a>
+</nav>
+
+</body>
+</html>

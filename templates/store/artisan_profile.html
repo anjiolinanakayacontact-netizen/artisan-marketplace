@@ -1,0 +1,236 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>{{ artisan.name }} - The Woven Narrative</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "surface-variant": "#ede3b8",
+                    "secondary-container": "#fd9e70",
+                    "tertiary": "#006096",
+                    "surface-container": "#f9eec2",
+                    "on-secondary": "#ffffff",
+                    "surface-dim": "#e5dab0",
+                    "surface-container-highest": "#ede3b8",
+                    "on-primary-fixed": "#2f1500",
+                    "on-error": "#ffffff",
+                    "surface-container-high": "#f3e8bd",
+                    "surface-bright": "#fff9ec",
+                    "primary-fixed-dim": "#ffb77d",
+                    "on-tertiary-fixed": "#001d32",
+                    "primary-fixed": "#ffdcc3",
+                    "on-tertiary-fixed-variant": "#004a75",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#b15f00",
+                    "outline": "#887364",
+                    "outline-variant": "#dbc2b0",
+                    "on-primary-fixed-variant": "#6e3900",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed-dim": "#96ccff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-container": "#fffbff",
+                    "tertiary-container": "#007abd",
+                    "on-background": "#201c02",
+                    "surface": "#fff9ec",
+                    "surface-tint": "#904d00",
+                    "inverse-surface": "#363113",
+                    "surface-container-low": "#fff4c8",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#cee5ff",
+                    "primary": "#8d4b00",
+                    "secondary-fixed-dim": "#ffb693",
+                    "secondary": "#944a23",
+                    "inverse-primary": "#ffb77d",
+                    "on-surface": "#201c02",
+                    "on-secondary-container": "#76340e",
+                    "on-surface-variant": "#554336",
+                    "secondary-fixed": "#ffdbcc",
+                    "on-secondary-fixed-variant": "#76330d",
+                    "inverse-on-surface": "#fcf1c5",
+                    "on-tertiary-container": "#fdfcff",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed": "#351000",
+                    "on-primary": "#ffffff",
+                    "background": "#fff9ec"
+                },
+                fontFamily: {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+                },
+                borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    body {
+        min-height: max(884px, 100dvh);
+        -webkit-tap-highlight-color: transparent;
+    }
+</style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-secondary-container">
+
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#fff9ec]/80 backdrop-blur-md shadow-[0_10px_30px_-15px_rgba(32,28,2,0.06)] flex justify-between items-center px-6 h-16">
+    <a href="{% url 'home' %}" class="text-[#8d4b00] active:scale-95 duration-200">
+        <span class="material-symbols-outlined">arrow_back</span>
+    </a>
+    <h1 class="text-[#8d4b00] font-['Plus_Jakarta_Sans'] font-bold text-lg tracking-tight">The Woven Narrative</h1>
+    <a href="{% url 'cart' %}" class="text-[#8d4b00] active:scale-95 duration-200">
+        <span class="material-symbols-outlined">shopping_bag</span>
+    </a>
+</header>
+
+<main class="pt-16 pb-24">
+
+    <!-- Hero Section -->
+    <section class="px-6 pt-8 pb-4">
+        <div class="relative w-full aspect-[4/5] rounded-xl overflow-hidden shadow-2xl mb-8">
+            {% if artisan.photo %}
+            <img src="{{ artisan.photo.url }}" alt="{{ artisan.name }}" class="w-full h-full object-cover"/>
+            {% else %}
+            <div class="w-full h-full bg-surface-container-high flex items-center justify-center">
+                <span class="material-symbols-outlined text-8xl text-outline">person</span>
+            </div>
+            {% endif %}
+            <div class="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent"></div>
+            <div class="absolute bottom-6 left-6 right-6">
+                <span class="inline-block bg-primary text-on-primary px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-3">
+                    {{ artisan.specialty }}
+                </span>
+                <h2 class="text-4xl font-headline font-extrabold text-on-surface tracking-tight leading-none mb-1">
+                    {{ artisan.name }}
+                </h2>
+                <div class="flex items-center gap-2 text-secondary font-medium">
+                    <span class="material-symbols-outlined text-sm">location_on</span>
+                    <span class="text-sm">{{ artisan.location }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bio -->
+        <div class="bg-surface-container-low p-8 rounded-lg mb-12 relative overflow-hidden">
+            <div class="absolute -top-4 -right-4 opacity-10">
+                <span class="material-symbols-outlined text-8xl">format_quote</span>
+            </div>
+            <p class="text-lg leading-relaxed text-on-surface-variant font-medium">
+                "{{ artisan.bio }}"
+            </p>
+            <div class="mt-6 flex gap-4">
+                <a href="mailto:{{ artisan.email }}"
+                   class="bg-primary text-on-primary px-6 py-3 rounded-full font-bold text-sm active:scale-95 transition-transform flex items-center gap-2">
+                    <span class="material-symbols-outlined text-base">mail</span>
+                    Inquire
+                </a>
+                <button class="bg-secondary-container text-on-secondary-container px-6 py-3 rounded-full font-bold text-sm active:scale-95 transition-transform">
+                    Share Story
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Grid -->
+    <div class="px-6 mb-6 flex justify-between items-end">
+        <div>
+            <h3 class="text-2xl font-headline font-bold text-on-surface">Artisan Collection</h3>
+            <p class="text-sm text-on-surface-variant opacity-70">Handcrafted works by {{ artisan.name }}</p>
+        </div>
+    </div>
+
+    <section class="px-6 grid grid-cols-2 gap-4">
+        {% for product in products %}
+        {% if forloop.first %}
+        <!-- First product: large -->
+        <div class="col-span-2 group">
+            <a href="{% url 'product_detail' product.pk %}">
+                <div class="bg-surface-container-low rounded-xl overflow-hidden aspect-video mb-3">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                    {% endif %}
+                </div>
+                <div class="flex justify-between items-start px-1">
+                    <div>
+                        <h4 class="font-headline font-bold text-lg">{{ product.name }}</h4>
+                        <p class="text-sm text-on-surface-variant">{{ product.description|truncatewords:5 }}</p>
+                    </div>
+                    <p class="font-bold text-secondary">₱{{ product.price }}</p>
+                </div>
+            </a>
+        </div>
+        {% else %}
+        <!-- Remaining products: small grid -->
+        <div class="group">
+            <a href="{% url 'product_detail' product.pk %}">
+                <div class="bg-surface-container-low rounded-xl overflow-hidden aspect-square mb-3">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                    {% endif %}
+                </div>
+                <h4 class="font-headline font-bold text-base">{{ product.name }}</h4>
+                <p class="font-bold text-secondary text-sm">₱{{ product.price }}</p>
+            </a>
+        </div>
+        {% endif %}
+        {% empty %}
+        <p class="col-span-2 text-outline text-center py-8">No products yet from this artisan.</p>
+        {% endfor %}
+    </section>
+
+    <!-- Ethical Craftsmanship -->
+    <section class="mt-12 px-6">
+        <div class="bg-surface-container-highest p-8 rounded-xl">
+            <h3 class="text-xl font-headline font-bold mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">eco</span>
+                Ethical Craftsmanship
+            </h3>
+            <div class="space-y-4 text-sm leading-relaxed text-on-surface-variant">
+                <p>{{ artisan.craftsmanship_note }}</p>
+                <div class="h-[1px] bg-outline-variant/20 w-full"></div>
+                <div class="flex justify-between items-center">
+                    <span class="font-bold">Production Time</span>
+                    <span>{{ artisan.production_time }}</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- Bottom Nav -->
+<nav class="fixed bottom-0 w-full rounded-t-[3rem] z-50 bg-[#fff4c8] backdrop-blur-xl shadow-[0_-10px_40px_rgba(32,28,2,0.08)] flex justify-around items-center h-20 pb-4 px-4">
+    <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#944a23]/50 hover:text-[#8d4b00] transition-colors">
+        <span class="material-symbols-outlined">home</span>
+        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Home</span>
+    </a>
+    <a href="{% url 'search' %}" class="flex flex-col items-center justify-center text-[#944a23]/50 hover:text-[#8d4b00] transition-colors">
+        <span class="material-symbols-outlined">search</span>
+        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Discover</span>
+    </a>
+    <a href="{% url 'cart' %}" class="flex flex-col items-center justify-center text-[#944a23]/50 hover:text-[#8d4b00] transition-colors">
+        <span class="material-symbols-outlined">shopping_cart</span>
+        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Cart</span>
+    </a>
+    <a href="#" class="flex flex-col items-center justify-center text-[#8d4b00] scale-110 transition-transform">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Profile</span>
+    </a>
+</nav>
+
+</body>
+</html>
