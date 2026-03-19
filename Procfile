@@ -1,1 +1,1 @@
-web: python -m gunicorn marketplace.wsgi --bind 0.0.0.0:$PORT
+web: /app/.venv/bin/gunicorn marketplace.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --timeout 120
