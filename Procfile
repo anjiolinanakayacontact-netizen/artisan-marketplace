@@ -1,1 +1,1 @@
-web: gunicorn marketplace.wsgi --bind 0.0.0.0:$PORT
+web: python -m gunicorn marketplace.wsgi --bind 0.0.0.0:$PORT
