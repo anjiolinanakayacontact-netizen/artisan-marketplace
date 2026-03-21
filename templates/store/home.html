@@ -1,260 +1,212 @@
+{% load static %}
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
+<html class="light" lang="en">
+<head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>THE ARTISAN EDITORIAL - The Woven Narrative</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#E65100",
-                        "on-primary": "#ffffff",
-                        "surface": "#ffffff",
-                        "on-surface": "#1b1b1b",
-                        "background": "#ffffff",
-                        "on-background": "#1b1b1b",
-                        "surface-container": "#f3f3f3",
-                        "surface-container-high": "#ebebeb",
-                        "outline": "#1b1b1b",
-                        "secondary": "#1b1b1b"
-                    },
-                    fontFamily: {
-                        "headline": ["Plus Jakarta Sans"],
-                        "body": ["Inter"],
-                        "label": ["Plus Jakarta Sans"]
-                    },
-                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#E65100", "on-primary": "#ffffff",
+                    "surface": "#ffffff", "on-surface": "#1b1b1b",
+                    "background": "#ffffff", "on-background": "#1b1b1b",
+                    "surface-container": "#f3f3f3",
+                    "surface-container-high": "#ebebeb",
+                    "outline": "#1b1b1b", "secondary": "#1b1b1b"
                 },
+                fontFamily: {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Inter"],
+                    "label": ["Plus Jakarta Sans"]
+                },
+                borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
             },
-        }
-    </script>
+        },
+    }
+</script>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        body {
-            background-color: #ffffff;
-            color: #1b1b1b;
-            font-family: 'Inter', sans-serif;
-        }
-    </style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    body { background-color: #ffffff; color: #1b1b1b; font-family: 'Inter', sans-serif; min-height: max(884px, 100dvh); }
+</style>
 </head>
 <body class="bg-background selection:bg-primary selection:text-on-primary">
-<!-- TopAppBar from COMPONENTS_13 -->
-<header class="bg-[#f9f9f9]/80 dark:bg-[#1b1b1b]/80 backdrop-blur-lg fixed top-0 w-full z-50">
-<div class="flex justify-between items-center px-6 h-20 w-full">
-<div class="flex items-center gap-4">
-<button class="active:scale-95 duration-200 hover:opacity-70 transition-opacity">
-<span class="material-symbols-outlined text-[#1b1b1b] dark:text-[#f9f9f9]" data-icon="menu">menu</span>
-</button>
-<span class="text-xl font-black tracking-widest text-[#1b1b1b] dark:text-[#f9f9f9] font-plus-jakarta uppercase">THE ARTISAN EDITORIAL</span>
-</div>
-<div class="relative active:scale-95 duration-200 cursor-pointer hover:opacity-70 transition-opacity">
-<span class="material-symbols-outlined text-[#1b1b1b] dark:text-[#f9f9f9]" data-icon="shopping_bag">shopping_bag</span>
-<span class="absolute -top-1 -right-1 bg-[#E65100] text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">3</span>
-</div>
-</div>
+
+<!-- TopAppBar -->
+<header class="bg-[#f9f9f9]/80 backdrop-blur-lg fixed top-0 w-full z-50">
+    <div class="flex justify-between items-center px-6 h-20 w-full">
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-[#1b1b1b] cursor-pointer hover:opacity-70">menu</span>
+            <span class="text-xl font-black tracking-widest text-[#1b1b1b] uppercase">THE ARTISAN EDITORIAL</span>
+        </div>
+        <div class="flex items-center gap-4">
+            {% if user.is_authenticated %}
+            <span class="text-xs font-bold text-[#1b1b1b] hidden sm:block uppercase tracking-widest">{{ user.username }}</span>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="text-xs font-bold text-[#1b1b1b] hover:text-primary uppercase tracking-widest transition-colors">Logout</button>
+            </form>
+            {% else %}
+            <a href="{% url 'login' %}" class="text-xs font-bold text-[#1b1b1b] hover:text-primary uppercase tracking-widest transition-colors">Login</a>
+            <a href="{% url 'register' %}" class="text-xs font-bold bg-black text-white px-4 py-2 hover:bg-primary transition-colors uppercase tracking-widest">Register</a>
+            {% endif %}
+            <a href="{% url 'cart' %}" class="relative active:scale-95 duration-200 cursor-pointer hover:opacity-70">
+                <span class="material-symbols-outlined text-[#1b1b1b]">shopping_bag</span>
+                {% if cart_count %}
+                <span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{{ cart_count }}</span>
+                {% endif %}
+            </a>
+        </div>
+    </div>
 </header>
+
 <main class="pt-20 pb-24">
-<!-- Hero Section -->
-<section class="relative px-6 pt-6 pb-12">
-<div class="relative w-full aspect-[4/5] overflow-hidden shadow-2xl">
-<img alt="Traditional Filipino weaving" class="w-full h-full object-cover grayscale contrast-125" data-alt="Close up of vibrant handwoven textile loom" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAT2JSSu9xvlutiZI4kPfjAZXbXJ8Q3h7WmI48Iw3fxac-_JDhGKNpB_Vyuof38a957NK4EUcg22az-WvW3_-itJW38Tz6uJr0KdZ-iYmGrUzZp2JhhxM4IAYcZkwn06Q-EidNDGP0bJOxwWA7Z4jGTw_6ginG0RIIWUiFu85-KD8A1PSK0d54B38gEekFDIOEnooPYOyOcrG-_Bk_cAFzvhZ7ib9qeVYjtx90M1UD7Uk3sLHl8eKOBZTeP6UbYDPlD8eEC2ZH36i8X"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-<div class="absolute bottom-10 left-8 right-8 text-white">
-<h1 class="font-headline font-black text-5xl leading-none uppercase tracking-tighter">Handcrafted<br/>With Soul</h1>
-<p class="mt-4 font-body text-sm opacity-90 max-w-[240px] uppercase tracking-widest leading-relaxed">Modern Filipino craftsmanship defined.</p>
-<button class="mt-8 bg-primary text-white px-10 py-4 rounded-none font-black text-xs uppercase tracking-[0.2em] hover:opacity-90 active:scale-95 transition-all">
+
+    <!-- Hero Section -->
+    <section class="relative px-6 pt-6 pb-12">
+        <div class="relative w-full aspect-[4/5] overflow-hidden shadow-2xl">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800"
+                 alt="Traditional Filipino weaving"
+                 class="w-full h-full object-cover grayscale contrast-125"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+            <div class="absolute bottom-10 left-8 right-8 text-white">
+                <h1 class="font-headline font-black text-5xl leading-none uppercase tracking-tighter">Handcrafted<br/>With Soul</h1>
+                <p class="mt-4 font-body text-sm opacity-90 max-w-[240px] uppercase tracking-widest leading-relaxed">Modern Filipino craftsmanship defined.</p>
+                <a href="{% url 'search' %}"
+                   class="inline-block mt-8 bg-primary text-white px-10 py-4 font-black text-xs uppercase tracking-[0.2em] hover:opacity-90 active:scale-95 transition-all">
                     Explore Collection
-                </button>
-</div>
-</div>
-</section>
-<!-- Categories Row -->
-<section class="px-6 mb-16">
-<h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] mb-8 text-on-surface">Curated Categories</h2>
-<div class="flex gap-10 overflow-x-auto pb-4 no-scrollbar">
-<div class="flex flex-col items-center gap-3 min-w-fit group">
-<div class="w-14 h-14 bg-surface-container-high flex items-center justify-center text-on-surface group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-<span class="material-symbols-outlined text-2xl" data-icon="potted_plant">potted_plant</span>
-</div>
-<span class="font-label text-[10px] font-black uppercase tracking-widest text-on-surface">Pottery</span>
-</div>
-<div class="flex flex-col items-center gap-3 min-w-fit group">
-<div class="w-14 h-14 bg-surface-container-high flex items-center justify-center text-on-surface group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-<span class="material-symbols-outlined text-2xl" data-icon="texture">texture</span>
-</div>
-<span class="font-label text-[10px] font-black uppercase tracking-widest text-on-surface">Weaving</span>
-</div>
-<div class="flex flex-col items-center gap-3 min-w-fit group">
-<div class="w-14 h-14 bg-surface-container-high flex items-center justify-center text-on-surface group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-<span class="material-symbols-outlined text-2xl" data-icon="diamond">diamond</span>
-</div>
-<span class="font-label text-[10px] font-black uppercase tracking-widest text-on-surface">Jewelry</span>
-</div>
-<div class="flex flex-col items-center gap-3 min-w-fit group">
-<div class="w-14 h-14 bg-surface-container-high flex items-center justify-center text-on-surface group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-<span class="material-symbols-outlined text-2xl" data-icon="chair">chair</span>
-</div>
-<span class="font-label text-[10px] font-black uppercase tracking-widest text-on-surface">Decor</span>
-</div>
-</div>
-</section>
-<!-- Featured Artisans -->
-<section class="bg-black text-white py-16 px-6 mb-16">
-<div class="flex justify-between items-end mb-10">
-<div>
-<h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] text-white">The Master Artisans</h2>
-<p class="text-[10px] text-white/50 font-medium uppercase mt-2 tracking-widest">Preserving Heritage</p>
-</div>
-<button class="text-primary text-[10px] font-black uppercase tracking-widest border-b border-primary">View All</button>
-</div>
-<div class="flex gap-8 overflow-x-auto no-scrollbar">
-<div class="flex flex-col items-center min-w-[80px]">
-<div class="w-20 h-20 grayscale hover:grayscale-0 transition-all duration-500 mb-3 border border-white/20 p-1">
-<img alt="Lola Rosa" class="w-full h-full object-cover" data-alt="Portrait of an elderly artisan smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_2MMQVBEMVO6iIgtFhV2nXZ8_EM1hujenHFdqVYTRmGbU6YvI7gycCpbQgvwC3YDMO4oWDsE9kdkXi5VJBETPkPMwGH7nSlxgMObuL82_X5FwY1zs01eDxq9WAYYSCI_x2uLx2DwXEOoy07E6w1qVbyb0420cSGta2CmOsC_TtJUk5HbSwK7D-wPhp7u_ATpUn4WzeHmPnUf_MPQ-P-y16oRuszTeoS7aJMYQI6NNsKvG4xtPtGo8DWxAnndBPXAmFOjQPfaEXJ17"/>
-</div>
-<span class="font-label text-[9px] font-black tracking-widest uppercase">Lola Rosa</span>
-</div>
-<div class="flex flex-col items-center min-w-[80px]">
-<div class="w-20 h-20 grayscale hover:grayscale-0 transition-all duration-500 mb-3 border border-white/20 p-1">
-<img alt="Tatay Juan" class="w-full h-full object-cover" data-alt="Portrait of a male woodworker" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhdo6b52JAuecxwObuQByG4lTOe-3B2G-BOeBZGBTeBnST1kSQHSHU2gv8QxFAM5VUKZAauYYoxRzHum5gP5lU81a6VgtJkHUiYdhgU0F5H8iK0-akTDbJ4Hped5JDZttVaLReokAmP45CzBQm_bpZ9OeK5gQMPPzsP04FR0o8DhEL_BEJMVW-mKqzVawFd6yOXY050M4jSuIhpuJZzUUo2QpMBlPjh4Km_xZxqVP6O9JomZYfyt2Qsyd325IXQY8q2k_CqzRZsnwW"/>
-</div>
-<span class="font-label text-[9px] font-black tracking-widest uppercase">Tatay Juan</span>
-</div>
-<div class="flex flex-col items-center min-w-[80px]">
-<div class="w-20 h-20 grayscale hover:grayscale-0 transition-all duration-500 mb-3 border border-white/20 p-1">
-<img alt="Elena S." class="w-full h-full object-cover" data-alt="Portrait of a young weaver" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUHCGkMsFkhBD5uteGmnsd96qOZBSEFQs4mGMUXXOjW0tCU6Bbi_BtqKPjfXCHCyCTaCXDb0Koyjd94aB7qlGNXMAkce2iz1qRZbl_FmKqDyyBoBi7rLYJw9GDvBf3oynBgF4EhKX8u0Hng99IZyTqHSC6XF4YdGtmdX5VpM2PfM19EGVxTAoVvhBGlHnDBPO8Ki-MByx95bEtAO6KyQ_zLFiuePdMqgnd2cZrBaE4-2lhT9dUP4kFdnHUKaPVxSc7wl0qN9p-Ubia"/>
-</div>
-<span class="font-label text-[9px] font-black tracking-widest uppercase">Elena S.</span>
-</div>
-<div class="flex flex-col items-center min-w-[80px]">
-<div class="w-20 h-20 grayscale hover:grayscale-0 transition-all duration-500 mb-3 border border-white/20 p-1">
-<img alt="Berto P." class="w-full h-full object-cover" data-alt="Portrait of a male potter" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBirAVRAJQKwOozhuIImTHC6QhgNerMtqdnjtTh4URw6IbYlTOHuDTzeVtm12ux1NhPCMdx_Qsd4DrP-Xs9pwES-5VgpC9YXGfAB4kGb43KC1UsVLXXoTbSiGCEm5mvmYIls1jR2XBvbLjLihFcICnqwkq6FJGz0iTL1aIVnwNZhcq143B5ox3diOjw4ksOQfvoPs-NULY4qJ-YoOaJ3M9L1hxibgehhDE1ZflwNHw4N7Txr_odLgn_B3kQdZBIe_A1omlXpB84DeS"/>
-</div>
-<span class="font-label text-[9px] font-black tracking-widest uppercase">Berto P.</span>
-</div>
-</div>
-</section>
-<!-- Product Grid -->
-<section class="px-6 mb-16">
-<h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] mb-10 text-on-surface">The Seasonal Drop</h2>
-<div class="grid grid-cols-2 gap-x-6 gap-y-12">
-<!-- Product 1 -->
-<div class="group">
-<div class="aspect-square bg-surface-container overflow-hidden mb-5 relative group-hover:shadow-xl transition-all duration-500">
-<img alt="Handmade Clay Pot" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="Terracotta clay vase with organic shape" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6ErkBPMLjd68_jCUKSMydPw9TGrCTiglxXz3lSNoU6jEWHgnNLogSit2ZXZiufTa0nmJ_CNjnGQSxm1SVV6FC5fiteJsUDZ-05LrRNqwA5207BYK54DsCMBOnSXM8tLjlHiSo6waL606k-oNbBykK_raQ_1-2ymfUA3wc6v-NUSgIYO53kahB6t_KtZlKCSaMAON3DnmYiONIO5piHcPo8YVprhGI4f_04ikmnlhv5ul6BUaDU_80wsM_0eLmmNPmK7uaN9av4cTR"/>
-<button class="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm flex items-center justify-center text-black hover:bg-primary hover:text-white transition-colors">
-<span class="material-symbols-outlined text-lg" data-icon="favorite">favorite</span>
-</button>
-</div>
-<h3 class="font-headline font-black text-[10px] uppercase tracking-widest text-on-surface truncate">Burnay Clay Vase</h3>
-<p class="text-[9px] text-on-surface/50 mb-3 uppercase tracking-tighter">Berto P.</p>
-<div class="flex items-center justify-between border-t border-black/5 pt-3">
-<span class="font-headline font-black text-primary text-sm">₱1,250</span>
-<button class="bg-black text-white w-10 h-10 flex items-center justify-center active:scale-90 transition-transform">
-<span class="material-symbols-outlined text-sm" data-icon="add_shopping_cart">add_shopping_cart</span>
-</button>
-</div>
-</div>
-<!-- Product 2 -->
-<div class="group">
-<div class="aspect-square bg-surface-container overflow-hidden mb-5 relative group-hover:shadow-xl transition-all duration-500">
-<img alt="Woven Bag" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="Handwoven abaca tote bag" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC23Hj2W7JOsvZWod72iXEAs8HyN8IXV_dL-bbZdZuQTKuSZLR0-ooC51yTqmqwJxMNvD9ysCbvhVtMiZe81jQzJ_igUJufaQ-z9qMCEkTnzWLVmzgG466j1vy8PQjqGHrPCi0PeSa8rdojmpuFamh-GqjMDD4mKeTv730PHYGFuUzuH_58wAhubYdodBCtys_ZHs53Umx_oO4oo13bGYiP30gViB6ZTylYV5_Ig9TfRwVUp5f7ESLJUn9B7sb7dHJe9ZxaIqqSll-3"/>
-<button class="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm flex items-center justify-center text-black hover:bg-primary hover:text-white transition-colors">
-<span class="material-symbols-outlined text-lg" data-icon="favorite">favorite</span>
-</button>
-</div>
-<h3 class="font-headline font-black text-[10px] uppercase tracking-widest text-on-surface truncate">Abaca Market Tote</h3>
-<p class="text-[9px] text-on-surface/50 mb-3 uppercase tracking-tighter">Lola Rosa</p>
-<div class="flex items-center justify-between border-t border-black/5 pt-3">
-<span class="font-headline font-black text-primary text-sm">₱2,400</span>
-<button class="bg-black text-white w-10 h-10 flex items-center justify-center active:scale-90 transition-transform">
-<span class="material-symbols-outlined text-sm" data-icon="add_shopping_cart">add_shopping_cart</span>
-</button>
-</div>
-</div>
-<!-- Product 3 -->
-<div class="group">
-<div class="aspect-square bg-surface-container overflow-hidden mb-5 relative group-hover:shadow-xl transition-all duration-500">
-<img alt="Brass Jewelry" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="Traditional brass filigree necklace" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAexAuUTeA5nSqdi_ZpiWz-VWF7AJPKCDMtVVNH1zbQpSfuEC63X1Pf0_fJyEcp1k4IYOFSBppIvoH54zqbt1G15nzHWKzj-3KXkTJa-d5B-BID2OoNMK_3pKhrewdl2cwk8XKZpUi3NdbemwoVgEdvBjzBkDv-uRKn2KNfZFWtmfL-WuuBss0MRRrATafSc7DUPQTc79TVidBy4OSvnyjPhEX8T8LkQqmbuCNupLyNTHjhQJPUxP2mC0LJLv5VFTRMMNj-7OUdMPpB"/>
-<button class="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm flex items-center justify-center text-black hover:bg-primary hover:text-white transition-colors">
-<span class="material-symbols-outlined text-lg" data-icon="favorite">favorite</span>
-</button>
-</div>
-<h3 class="font-headline font-black text-[10px] uppercase tracking-widest text-on-surface truncate">T'boli Brass Necklace</h3>
-<p class="text-[9px] text-on-surface/50 mb-3 uppercase tracking-tighter">Elena S.</p>
-<div class="flex items-center justify-between border-t border-black/5 pt-3">
-<span class="font-headline font-black text-primary text-sm">₱3,100</span>
-<button class="bg-black text-white w-10 h-10 flex items-center justify-center active:scale-90 transition-transform">
-<span class="material-symbols-outlined text-sm" data-icon="add_shopping_cart">add_shopping_cart</span>
-</button>
-</div>
-</div>
-<!-- Product 4 -->
-<div class="group">
-<div class="aspect-square bg-surface-container overflow-hidden mb-5 relative group-hover:shadow-xl transition-all duration-500">
-<img alt="Woven Table Runner" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="Traditional Inabel textile table runner" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChvyEOOmNzuOzlXL7fUcEBncthNpBsJFN2s5ogIgo3JVA1rLAbf2XjPepPKA84a0W-cnn5Z0nJI2rckRvP2tHrlJOCTwd055g2_bujceD7FPH-J8TrWhsuFiyG9ShC9gl8oEuojLykG7pxCBEBEdbfy-1PHxMCpwbucSa17AFCu18jIptoLJcyuJB2JclKmphi8YJU13vKRz5-AbelnZXdZURBSiHlOC1plRGru9npQef19hijxTbquhvSkBsQoHKLIkX6Acq9Lvkc"/>
-<button class="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm flex items-center justify-center text-black hover:bg-primary hover:text-white transition-colors">
-<span class="material-symbols-outlined text-lg" data-icon="favorite">favorite</span>
-</button>
-</div>
-<h3 class="font-headline font-black text-[10px] uppercase tracking-widest text-on-surface truncate">Inabel Table Runner</h3>
-<p class="text-[9px] text-on-surface/50 mb-3 uppercase tracking-tighter">Lola Rosa</p>
-<div class="flex items-center justify-between border-t border-black/5 pt-3">
-<span class="font-headline font-black text-primary text-sm">₱1,850</span>
-<button class="bg-black text-white w-10 h-10 flex items-center justify-center active:scale-90 transition-transform">
-<span class="material-symbols-outlined text-sm" data-icon="add_shopping_cart">add_shopping_cart</span>
-</button>
-</div>
-</div>
-</div>
-</section>
-<!-- Footer -->
-<footer class="bg-black text-white w-full py-16 px-8 mt-auto flex flex-col items-center space-y-10">
-<span class="text-white font-black font-headline text-lg uppercase tracking-[0.4em]">The Woven Narrative</span>
-<div class="flex flex-col items-center gap-6 text-center">
-<a class="font-['Plus_Jakarta_Sans'] text-[10px] uppercase tracking-widest font-bold opacity-60 hover:opacity-100 transition-all" href="#">Our Philosophy</a>
-<a class="font-['Plus_Jakarta_Sans'] text-[10px] uppercase tracking-widest font-bold opacity-60 hover:opacity-100 transition-all" href="#">Curator Support</a>
-<a class="font-['Plus_Jakarta_Sans'] text-[10px] uppercase tracking-widest font-bold opacity-60 hover:opacity-100 transition-all" href="#">Artisan Application</a>
-<a class="font-['Plus_Jakarta_Sans'] text-[10px] uppercase tracking-widest font-bold opacity-60 hover:opacity-100 transition-all" href="#">Shipping &amp; Logistics</a>
-</div>
-<div class="h-px w-12 bg-primary"></div>
-<p class="font-['Plus_Jakarta_Sans'] text-[9px] uppercase tracking-[0.2em] text-white opacity-40">Handcrafted in the Philippines</p>
-</footer>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Row -->
+    <section class="px-6 mb-16">
+        <h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] mb-8 text-on-surface">Curated Categories</h2>
+        <div class="flex gap-10 overflow-x-auto pb-4 no-scrollbar">
+            {% for category in categories %}
+            <a href="{% url 'search' %}?category={{ category.id }}" class="flex flex-col items-center gap-3 min-w-fit group">
+                <div class="w-14 h-14 bg-surface-container-high flex items-center justify-center text-on-surface group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                    <span class="material-symbols-outlined text-2xl">category</span>
+                </div>
+                <span class="font-label text-[10px] font-black uppercase tracking-widest text-on-surface">{{ category.name }}</span>
+            </a>
+            {% empty %}
+            <p class="text-on-surface/50 text-sm">No categories yet.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Featured Artisans -->
+    <section class="bg-black text-white py-16 px-6 mb-16">
+        <div class="flex justify-between items-end mb-10">
+            <div>
+                <h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] text-white">The Master Artisans</h2>
+                <p class="text-[10px] text-white/50 font-medium uppercase mt-2 tracking-widest">Preserving Heritage</p>
+            </div>
+        </div>
+        <div class="flex gap-8 overflow-x-auto no-scrollbar">
+            {% for artisan in artisans %}
+            <a href="{% url 'artisan_profile' artisan.pk %}" class="flex flex-col items-center min-w-[80px]">
+                <div class="w-20 h-20 grayscale hover:grayscale-0 transition-all duration-500 mb-3 border border-white/20 p-1 overflow-hidden">
+                    {% if artisan.photo %}
+                    <img src="{{ artisan.photo.url }}" alt="{{ artisan.name }}" class="w-full h-full object-cover"/>
+                    {% else %}
+                    <div class="w-full h-full bg-white/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white">person</span>
+                    </div>
+                    {% endif %}
+                </div>
+                <span class="font-label text-[9px] font-black tracking-widest uppercase text-white text-center">{{ artisan.name }}</span>
+            </a>
+            {% empty %}
+            <p class="text-white/50 text-sm">No artisans yet.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Product Grid -->
+    <section class="px-6 mb-16">
+        <h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] mb-10 text-on-surface">The Seasonal Drop</h2>
+        <div class="grid grid-cols-2 gap-x-6 gap-y-12">
+            {% for product in products %}
+            <div class="group">
+                <div class="aspect-square bg-surface-container overflow-hidden mb-5 relative group-hover:shadow-xl transition-all duration-500">
+                    {% if product.image %}
+                    <a href="{% url 'product_detail' product.pk %}">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"/>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'product_detail' product.pk %}" class="w-full h-full flex items-center justify-center">
+                        <span class="material-symbols-outlined text-4xl text-on-surface/20">image</span>
+                    </a>
+                    {% endif %}
+                </div>
+                <h3 class="font-headline font-black text-[10px] uppercase tracking-widest text-on-surface truncate">{{ product.name }}</h3>
+                <p class="text-[9px] text-on-surface/50 mb-3 uppercase tracking-tighter">{{ product.artisan }}</p>
+                <div class="flex items-center justify-between border-t border-black/5 pt-3">
+                    <span class="font-headline font-black text-primary text-sm">₱{{ product.price }}</span>
+                    <form method="post" action="{% url 'add_to_cart' product.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="bg-black text-white w-10 h-10 flex items-center justify-center active:scale-90 transition-transform hover:bg-primary">
+                            <span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-2 text-center py-12 text-on-surface/50">
+                No products yet. Add some in the admin panel!
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white w-full py-16 px-8 mt-auto flex flex-col items-center space-y-10">
+        <span class="text-white font-black font-headline text-lg uppercase tracking-[0.4em]">The Woven Narrative</span>
+        <div class="flex flex-col items-center gap-6 text-center">
+            <a class="font-['Plus_Jakarta_Sans'] text-[10px] uppercase tracking-widest font-bold opacity-60 hover:opacity-100 transition-all" href="#">Our Philosophy</a>
+            <a class="font-['Plus_Jakarta_Sans'] text-[10px] uppercase tracking-widest font-bold opacity-60 hover:opacity-100 transition-all" href="#">Curator Support</a>
+            <a class="font-['Plus_Jakarta_Sans'] text-[10px] uppercase tracking-widest font-bold opacity-60 hover:opacity-100 transition-all" href="#">Artisan Application</a>
+            <a class="font-['Plus_Jakarta_Sans'] text-[10px] uppercase tracking-widest font-bold opacity-60 hover:opacity-100 transition-all" href="#">Shipping &amp; Logistics</a>
+        </div>
+        <div class="h-px w-12 bg-primary"></div>
+        <p class="font-['Plus_Jakarta_Sans'] text-[9px] uppercase tracking-[0.2em] text-white opacity-40">Handcrafted in the Philippines</p>
+    </footer>
+
 </main>
-<!-- BottomNavBar from COMPONENTS_13 -->
-<nav class="bg-[#ffffff] dark:bg-[#121212] fixed bottom-0 w-full z-50 rounded-t-2xl shadow-2xl">
-<div class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 shadow-[0_-1px_0_0_rgba(27,27,27,0.05)]">
-<div class="flex flex-col items-center justify-center text-[#a43700] dark:text-[#ff8a50] relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-[#a43700] after:rounded-full transition-transform active:scale-90 duration-300 ease-out cursor-pointer">
-<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
-<span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta mt-1">Curated</span>
-</div>
-<div class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] dark:hover:text-[#ff8a50] transition-colors active:scale-90 duration-300 ease-out cursor-pointer">
-<span class="material-symbols-outlined" data-icon="search">search</span>
-<span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta mt-1">Discover</span>
-</div>
-<div class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] dark:hover:text-[#ff8a50] transition-colors active:scale-90 duration-300 ease-out cursor-pointer">
-<span class="material-symbols-outlined" data-icon="Conditions">Conditions</span>
-<span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta mt-1">Artisans</span>
-</div>
-<div class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] dark:hover:text-[#ff8a50] transition-colors active:scale-90 duration-300 ease-out cursor-pointer">
-<span class="material-symbols-outlined" data-icon="person">person</span>
-<span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta mt-1">Vault</span>
-</div>
-</div>
+
+<!-- Bottom Nav -->
+<nav class="bg-white fixed bottom-0 w-full z-50 rounded-t-2xl shadow-2xl">
+    <div class="flex justify-around items-center h-20 px-4">
+        <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#a43700]">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest mt-1">Curated</span>
+        </a>
+        <a href="{% url 'search' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors">
+            <span class="material-symbols-outlined">search</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest mt-1">Discover</span>
+        </a>
+        <a href="{% url 'search' %}?sort=newest" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors">
+            <span class="material-symbols-outlined">groups</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest mt-1">Artisans</span>
+        </a>
+        <a href="{% url 'cart' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors">
+            <span class="material-symbols-outlined">shopping_bag</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest mt-1">Vault</span>
+        </a>
+    </div>
 </nav>
-</body></html>
+
+</body>
+</html>
