@@ -1,177 +1,216 @@
-{% load static %}
 <!DOCTYPE html>
-<html class="light" lang="en">
-<head>
+
+<html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Your Cart - The Woven Narrative</title>
+<title>THE ARTISAN EDITORIAL - Your Cart</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
-    tailwind.config = {
-        darkMode: "class",
-        theme: {
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
             extend: {
-                colors: {
-                    "surface-variant": "#ede3b8", "secondary-container": "#fd9e70",
-                    "tertiary": "#006096", "surface-container": "#f9eec2",
-                    "on-secondary": "#ffffff", "surface-dim": "#e5dab0",
-                    "surface-container-highest": "#ede3b8", "on-primary-fixed": "#2f1500",
-                    "on-error": "#ffffff", "surface-container-high": "#f3e8bd",
-                    "surface-bright": "#fff9ec", "primary-fixed-dim": "#ffb77d",
-                    "error-container": "#ffdad6", "primary-container": "#b15f00",
-                    "outline": "#887364", "outline-variant": "#dbc2b0",
-                    "surface-container-lowest": "#ffffff", "on-primary-container": "#fffbff",
-                    "tertiary-container": "#007abd", "on-background": "#201c02",
-                    "surface": "#fff9ec", "surface-tint": "#904d00",
-                    "inverse-surface": "#363113", "surface-container-low": "#fff4c8",
-                    "error": "#ba1a1a", "primary": "#8d4b00",
-                    "secondary": "#944a23", "inverse-primary": "#ffb77d",
-                    "on-surface": "#201c02", "on-secondary-container": "#76340e",
-                    "on-surface-variant": "#554336", "secondary-fixed": "#ffdbcc",
-                    "on-primary": "#ffffff", "background": "#fff9ec"
-                },
-                fontFamily: { "headline": ["Plus Jakarta Sans"], "body": ["Inter"] },
-                borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+              colors: {
+                "surface-variant": "#f3f3f3",
+                "secondary-container": "#E65100",
+                "tertiary": "#1b1b1b",
+                "surface-container": "#ffffff",
+                "on-secondary": "#ffffff",
+                "surface-dim": "#f9f9f9",
+                "surface-container-highest": "#f3f3f3",
+                "on-primary-fixed": "#000000",
+                "on-error": "#ffffff",
+                "surface-container-high": "#ffffff",
+                "surface-bright": "#ffffff",
+                "primary-fixed-dim": "#ff8a50",
+                "on-tertiary-fixed": "#ffffff",
+                "primary-fixed": "#ffccbc",
+                "on-tertiary-fixed-variant": "#E65100",
+                "error-container": "#ffdad6",
+                "primary-container": "#E65100",
+                "outline": "#1b1b1b",
+                "outline-variant": "#e0e0e0",
+                "on-primary-fixed-variant": "#E65100",
+                "on-tertiary": "#ffffff",
+                "tertiary-fixed-dim": "#e0e0e0",
+                "surface-container-lowest": "#ffffff",
+                "on-primary-container": "#ffffff",
+                "tertiary-container": "#1b1b1b",
+                "on-background": "#1b1b1b",
+                "surface": "#ffffff",
+                "surface-tint": "#E65100",
+                "inverse-surface": "#1b1b1b",
+                "surface-container-low": "#f9f9f9",
+                "error": "#ba1a1a",
+                "tertiary-fixed": "#f3f3f3",
+                "primary": "#E65100",
+                "secondary-fixed-dim": "#ff8a50",
+                "secondary": "#1b1b1b",
+                "inverse-primary": "#ff8a50",
+                "on-surface": "#1b1b1b",
+                "on-secondary-container": "#ffffff",
+                "on-surface-variant": "#757575",
+                "secondary-fixed": "#f3f3f3",
+                "on-secondary-fixed-variant": "#1b1b1b",
+                "inverse-on-surface": "#ffffff",
+                "on-tertiary-container": "#ffffff",
+                "on-error-container": "#93000a",
+                "on-secondary-fixed": "#1b1b1b",
+                "on-primary": "#ffffff",
+                "background": "#ffffff"
+              },
+              fontFamily: {
+                "headline": ["Plus Jakarta Sans"],
+                "body": ["Inter"],
+                "label": ["Inter"],
+                "plus-jakarta": ["Plus Jakarta Sans"]
+              },
+              borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
             },
-        },
-    }
-</script>
+          },
+        }
+    </script>
 <style>
-    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-    body { background-color: #fff9ec; color: #201c02; min-height: max(884px, 100dvh); }
-</style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #ffffff;
+            color: #1b1b1b;
+            -webkit-font-smoothing: antialiased;
+        }
+        .pb-safe {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+    </style>
 </head>
-<body class="font-body selection:bg-secondary-container/30">
-
-<!-- TopAppBar -->
-<header class="fixed top-0 w-full z-50 bg-[#fff9ec]/80 backdrop-blur-md shadow-[0_10px_30px_-15px_rgba(32,28,2,0.06)] flex justify-between items-center px-6 h-16">
-    <div class="flex items-center gap-2">
-        <span class="material-symbols-outlined text-[#8d4b00]">temp_preferences_eco</span>
-        <h1 class="font-['Plus_Jakarta_Sans'] font-bold text-lg tracking-tight text-[#8d4b00]">The Woven Narrative</h1>
-    </div>
-    <a href="{% url 'home' %}" class="hover:opacity-80 transition-opacity">
-        <span class="material-symbols-outlined text-[#201c02]/60">shopping_bag</span>
-    </a>
+<body class="font-body selection:bg-primary/30">
+<!-- TopAppBar from COMPONENTS_13 -->
+<header class="fixed top-0 w-full z-50 bg-[#ffffff]/80 dark:bg-[#1b1b1b]/80 backdrop-blur-lg flex justify-between items-center px-6 h-20 w-full">
+<div class="flex items-center gap-3">
+<button class="active:scale-95 duration-200 hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined text-[#1b1b1b] dark:text-[#f9f9f9]" data-icon="menu">menu</span>
+</button>
+<h1 class="font-plus-jakarta text-xl font-black tracking-widest text-[#1b1b1b] dark:text-[#f9f9f9] uppercase">THE ARTISAN EDITORIAL</h1>
+</div>
+<div class="flex items-center">
+<button class="active:scale-95 duration-200 hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined text-[#1b1b1b] dark:text-[#f9f9f9]" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</div>
 </header>
-
-<main class="pt-24 pb-32 px-6 max-w-lg mx-auto min-h-screen">
-
-    <div class="mb-10">
-        <h2 class="font-headline font-bold text-3xl text-on-surface tracking-tight">Shopping Bag</h2>
-        <p class="text-on-surface-variant text-sm mt-1">Review your curated selection of artisan goods.</p>
-    </div>
-
-    {% if cart_items %}
-    <!-- Cart Items -->
-    <section class="space-y-6 mb-12">
-        {% for item in cart_items %}
-        <div class="bg-surface-container-low rounded-lg p-4 flex gap-4 shadow-sm">
-            <div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
-                {% if item.product.image %}
-                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="w-full h-full object-cover"/>
-                {% else %}
-                <div class="w-full h-full bg-surface-container-high flex items-center justify-center">
-                    <span class="material-symbols-outlined text-outline">image</span>
-                </div>
-                {% endif %}
-            </div>
-            <div class="flex flex-col justify-between flex-grow py-1">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h3 class="font-headline font-semibold text-on-surface">{{ item.product.name }}</h3>
-                        <p class="text-xs text-on-surface-variant uppercase tracking-wider font-medium">
-                            {{ item.product.category }}
-                        </p>
-                    </div>
-                    <a href="{% url 'remove_from_cart' item.product.id %}"
-                       class="text-error/70 hover:text-error transition-colors">
-                        <span class="material-symbols-outlined text-[20px]">delete</span>
-                    </a>
-                </div>
-                <div class="flex justify-between items-end">
-                    <div class="flex items-center bg-surface-container rounded-full px-2 py-1 gap-3">
-                        <a href="{% url 'decrease_cart' item.product.id %}"
-                           class="w-6 h-6 flex items-center justify-center text-primary active:scale-90 transition-transform">
-                            <span class="material-symbols-outlined text-[18px]">remove</span>
-                        </a>
-                        <span class="font-medium text-sm w-4 text-center">{{ item.quantity }}</span>
-                        <a href="{% url 'increase_cart' item.product.id %}"
-                           class="w-6 h-6 flex items-center justify-center text-primary active:scale-90 transition-transform">
-                            <span class="material-symbols-outlined text-[18px]">add</span>
-                        </a>
-                    </div>
-                    <span class="font-headline font-bold text-primary">₱{{ item.subtotal }}</span>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </section>
-
-    <!-- Order Summary -->
-    <section class="bg-surface-container-high rounded-xl p-6 mb-8">
-        <h3 class="font-headline font-bold text-lg mb-4 text-on-surface">Order Summary</h3>
-        <div class="space-y-3 text-sm">
-            <div class="flex justify-between text-on-surface-variant">
-                <span>Subtotal</span>
-                <span class="font-medium text-on-surface">₱{{ total }}</span>
-            </div>
-            <div class="flex justify-between text-on-surface-variant">
-                <span>Shipping</span>
-                <span class="font-medium text-on-surface">₱150.00</span>
-            </div>
-            <div class="pt-3 mt-3 border-t border-outline-variant/20 flex justify-between items-center">
-                <span class="font-bold text-lg text-on-surface">Total</span>
-                <span class="font-headline font-extrabold text-2xl text-primary">₱{{ grand_total }}</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Checkout Button -->
-    <div class="mb-12">
-        <a href="{% url 'checkout' %}"
-           class="w-full bg-primary text-on-primary py-5 rounded-full font-headline font-bold text-lg shadow-lg hover:opacity-95 active:scale-[0.98] transition-all flex items-center justify-center gap-3">
-            Proceed to Checkout
-            <span class="material-symbols-outlined">arrow_forward</span>
-        </a>
-    </div>
-
-    {% else %}
-    <!-- Empty State -->
-    <div class="flex flex-col items-center justify-center py-20 text-center">
-        <div class="w-24 h-24 bg-surface-container-low rounded-full flex items-center justify-center mb-6">
-            <span class="material-symbols-outlined text-4xl text-outline-variant">shopping_basket</span>
-        </div>
-        <p class="font-headline font-semibold text-xl text-on-surface">Your cart is currently empty</p>
-        <p class="text-on-surface-variant mt-2 mb-8 max-w-[200px]">Find something unique handcrafted by our local artisans.</p>
-        <a href="{% url 'home' %}" class="bg-secondary-container text-on-secondary-container px-8 py-3 rounded-full font-bold">
-            Start Shopping
-        </a>
-    </div>
-    {% endif %}
-
+<main class="pt-28 pb-32 px-6 max-w-lg mx-auto min-h-screen">
+<!-- Page Title -->
+<div class="mb-10">
+<h2 class="font-headline font-black text-4xl text-on-surface tracking-tighter uppercase">Shopping Bag</h2>
+<p class="text-on-surface-variant text-sm mt-2 font-medium">Review your curated selection of artisan goods.</p>
+</div>
+<!-- Cart Items List -->
+<section class="space-y-4 mb-12">
+<!-- Item 1 -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-4 flex gap-4">
+<div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-surface-variant">
+<img alt="Handwoven Banig Mat" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAejMPxsZzira4fA5yFeWm55Lr2jUFblv01GPBWqb16AAJz3jjBdM-zczIBma1hB9YWkPcg5odDnPBzqBQNNtPq5x1zGe1nW-mS92a9xSI5iXHt77EOPUFfdKRzUDsP72D_OyXKG6OUJXjrxKgrdxYctvbabBBsc13UI2ayIQroYN0JvweO-X5Lm5GV2XdsHkl8DzqMzKivxOFQhve5Yd1LZNWEx7BwSXexbEuoGAfgsUzy-c8rn-ziQDWrf117rfZPl-ZuPbpBsFle"/>
+</div>
+<div class="flex flex-col justify-between flex-grow py-1">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline font-bold text-on-surface leading-tight">Artisan Banig Mat</h3>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold mt-1">Bicol Collection</p>
+</div>
+<button class="text-on-surface/40 hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+<div class="flex justify-between items-end">
+<div class="flex items-center bg-white border border-outline-variant rounded-full px-2 py-1 gap-3">
+<button class="w-6 h-6 flex items-center justify-center text-on-surface active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]" data-icon="remove">remove</span>
+</button>
+<span class="font-bold text-sm w-4 text-center">1</span>
+<button class="w-6 h-6 flex items-center justify-center text-on-surface active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+</button>
+</div>
+<span class="font-headline font-black text-[#E65100]">₱1,250</span>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-4 flex gap-4">
+<div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-surface-variant">
+<img alt="Terracotta Clay Vase" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUQoLCY7ESQ2WMWMCXSL0qPHkoRtFIeTTlQOlUfFRWQSbI1eHAfqhbv64TrvO2L9lYmnuNcIwHdmpfnePpkIKqRhf1SGpzjSXX-h2AFiI-C6dbuicO0lZpVV9mdIalnmL0q8vawkJBIU6z3QbSeNU5bardKMwHEoYbEm1iqBBwCDVN4XQnMCO26CXXuHYUGm8g5CLoE0TNea6zh_46s9Na9vKCtfT3Ie2gNC57US6tcZ-Ub_sWtGyvrs5mSzawV0s5aIhHW-ONIJU_"/>
+</div>
+<div class="flex flex-col justify-between flex-grow py-1">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline font-bold text-on-surface leading-tight">Earthbound Vase</h3>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold mt-1">Loom Series</p>
+</div>
+<button class="text-on-surface/40 hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+<div class="flex justify-between items-end">
+<div class="flex items-center bg-white border border-outline-variant rounded-full px-2 py-1 gap-3">
+<button class="w-6 h-6 flex items-center justify-center text-on-surface active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]" data-icon="remove">remove</span>
+</button>
+<span class="font-bold text-sm w-4 text-center">1</span>
+<button class="w-6 h-6 flex items-center justify-center text-on-surface active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+</button>
+</div>
+<span class="font-headline font-black text-[#E65100]">₱1,250</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Order Summary -->
+<section class="bg-[#1b1b1b] text-white rounded-2xl p-6 mb-8">
+<h3 class="font-headline font-black text-lg mb-6 uppercase tracking-widest">Order Summary</h3>
+<div class="space-y-4 text-sm">
+<div class="flex justify-between text-white/60">
+<span>Subtotal</span>
+<span class="font-bold text-white">₱2,500.00</span>
+</div>
+<div class="flex justify-between text-white/60">
+<span>Shipping</span>
+<span class="font-bold text-white">₱150.00</span>
+</div>
+<div class="pt-4 mt-4 border-t border-white/10 flex justify-between items-center">
+<span class="font-black text-xl uppercase tracking-tighter">Total</span>
+<span class="font-headline font-black text-2xl text-[#ff8a50]">₱2,650.00</span>
+</div>
+</div>
+</section>
+<!-- CTA -->
+<div class="mb-12">
+<button class="w-full bg-[#E65100] text-white py-5 rounded-full font-headline font-black text-lg uppercase tracking-widest shadow-[0_10px_30px_-5px_rgba(230,81,0,0.4)] hover:brightness-110 active:scale-[0.97] transition-all flex items-center justify-center gap-3">
+                Proceed to Checkout
+                <span class="material-symbols-outlined font-bold" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
 </main>
-
-<!-- Bottom Nav -->
-<nav class="fixed bottom-0 w-full rounded-t-[3rem] z-50 bg-[#fff4c8] backdrop-blur-xl shadow-[0_-10px_40px_rgba(32,28,2,0.08)] flex justify-around items-center h-20 pb-4 px-4">
-    <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#944a23]/50 hover:text-[#8d4b00] transition-colors">
-        <span class="material-symbols-outlined">home</span>
-        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Home</span>
-    </a>
-    <a href="{% url 'search' %}" class="flex flex-col items-center justify-center text-[#944a23]/50 hover:text-[#8d4b00] transition-colors">
-        <span class="material-symbols-outlined">search</span>
-        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Discover</span>
-    </a>
-    <a href="{% url 'cart' %}" class="flex flex-col items-center justify-center text-[#8d4b00] scale-110 transition-transform">
-        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
-        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Cart</span>
-    </a>
-    <a href="#" class="flex flex-col items-center justify-center text-[#944a23]/50 hover:text-[#8d4b00] transition-colors">
-        <span class="material-symbols-outlined">person</span>
-        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Profile</span>
-    </a>
+<!-- BottomNavBar from COMPONENTS_13 -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#ffffff] dark:bg-[#121212] z-50 rounded-t-2xl shadow-2xl">
+<a class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] dark:hover:text-[#ff8a50] transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta mt-1">Curated</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] dark:hover:text-[#ff8a50] transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta mt-1">Discover</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#a43700] dark:text-[#ff8a50] relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-[#a43700] after:rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta mt-1">Vault</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] dark:hover:text-[#ff8a50] transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta mt-1">Artisans</span>
+</a>
 </nav>
-
-</body>
-</html>
+</body></html>

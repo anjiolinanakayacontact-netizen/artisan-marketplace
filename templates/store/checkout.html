@@ -1,246 +1,254 @@
-{% load static %}
 <!DOCTYPE html>
-<html class="light" lang="en">
-<head>
+
+<html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Checkout | The Woven Narrative</title>
+<title>Checkout | The Artisan Editorial</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
-    tailwind.config = {
-        darkMode: "class",
-        theme: {
-            extend: {
-                colors: {
-                    "surface-variant": "#ede3b8", "secondary-container": "#fd9e70",
-                    "tertiary": "#006096", "surface-container": "#f9eec2",
-                    "on-secondary": "#ffffff", "surface-container-highest": "#ede3b8",
-                    "on-error": "#ffffff", "surface-container-high": "#f3e8bd",
-                    "surface-bright": "#fff9ec", "error-container": "#ffdad6",
-                    "primary-container": "#b15f00", "outline": "#887364",
-                    "outline-variant": "#dbc2b0", "surface-container-lowest": "#ffffff",
-                    "on-primary-container": "#fffbff", "tertiary-container": "#007abd",
-                    "on-background": "#201c02", "surface": "#fff9ec",
-                    "inverse-surface": "#363113", "surface-container-low": "#fff4c8",
-                    "error": "#ba1a1a", "primary": "#8d4b00",
-                    "secondary": "#944a23", "inverse-primary": "#ffb77d",
-                    "on-surface": "#201c02", "on-secondary-container": "#76340e",
-                    "on-surface-variant": "#554336", "on-primary": "#ffffff",
-                    "background": "#fff9ec"
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#E65100",
+                        "on-primary": "#ffffff",
+                        "surface": "#ffffff",
+                        "on-surface": "#1b1b1b",
+                        "background": "#ffffff",
+                        "on-background": "#1b1b1b",
+                        "outline": "#e0e0e0",
+                        "surface-container": "#f9f9f9",
+                        "surface-container-high": "#f3f3f3"
+                    },
+                    fontFamily: {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "plus-jakarta": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
                 },
-                fontFamily: { "headline": ["Plus Jakarta Sans"], "body": ["Inter"] },
-                borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
             },
-        },
-    }
-</script>
+        }
+    </script>
 <style>
-    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-    body { background-color: #fff9ec; color: #201c02; font-family: 'Inter', sans-serif; min-height: max(884px, 100dvh); }
-</style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #ffffff;
+            color: #1b1b1b;
+            font-family: 'Inter', sans-serif;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
 </head>
-<body class="min-h-screen flex flex-col">
-
-<!-- TopAppBar -->
-<header class="fixed top-0 w-full z-50 bg-[#fff9ec]/80 backdrop-blur-md shadow-[0_10px_30px_-15px_rgba(32,28,2,0.06)] flex justify-between items-center px-6 h-16">
-    <div class="flex items-center gap-3">
-        <a href="{% url 'cart' %}" class="active:scale-95 duration-200 text-[#8d4b00]">
-            <span class="material-symbols-outlined">arrow_back</span>
-        </a>
-        <h1 class="font-['Plus_Jakarta_Sans'] font-bold text-lg tracking-tight text-[#8d4b00]">Checkout</h1>
-    </div>
-    <a href="{% url 'cart' %}" class="active:scale-95 duration-200 text-[#8d4b00]">
-        <span class="material-symbols-outlined">shopping_bag</span>
-    </a>
+<body class="min-h-screen flex flex-col bg-white text-[#1b1b1b]">
+<!-- TopAppBar (from COMPONENTS_13) -->
+<header class="fixed top-0 w-full z-50 bg-[#f9f9f9]/80 dark:bg-[#1b1b1b]/80 backdrop-blur-lg flex justify-between items-center px-6 h-20 w-full">
+<button class="active:scale-95 duration-200 text-[#a43700] dark:text-[#ff8a50]">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-plus-jakarta tracking-tighter font-bold uppercase text-xl font-black tracking-widest text-[#1b1b1b] dark:text-[#f9f9f9]">THE ARTISAN EDITORIAL</h1>
+<button class="active:scale-95 duration-200 text-[#a43700] dark:text-[#ff8a50]">
+<span class="material-symbols-outlined">shopping_bag</span>
+</button>
 </header>
-
-<main class="mt-16 mb-32 px-6 flex-grow">
-
-    <!-- Progress Stepper -->
-    <nav class="py-8">
-        <div class="flex items-center justify-between relative">
-            <div class="absolute top-1/2 left-0 w-full h-0.5 bg-surface-container-high -translate-y-1/2 z-0"></div>
-            <div class="absolute top-1/2 left-0 w-1/2 h-0.5 bg-primary -translate-y-1/2 z-0"></div>
-            <div class="relative z-10 flex flex-col items-center gap-2">
-                <div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold shadow-lg">1</div>
-                <span class="text-[10px] font-bold uppercase tracking-widest text-primary">Address</span>
-            </div>
-            <div class="relative z-10 flex flex-col items-center gap-2">
-                <div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold">2</div>
-                <span class="text-[10px] font-medium uppercase tracking-widest text-on-surface-variant">Payment</span>
-            </div>
-            <div class="relative z-10 flex flex-col items-center gap-2">
-                <div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold">3</div>
-                <span class="text-[10px] font-medium uppercase tracking-widest text-on-surface-variant">Review</span>
-            </div>
-        </div>
-    </nav>
-
-    <form method="post" action="{% url 'checkout' %}">
-        {% csrf_token %}
-
-        <!-- Address Form -->
-        <section class="mb-10">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="font-headline text-2xl font-bold text-primary">Shipping Details</h2>
-                <span class="text-[10px] bg-secondary-container px-3 py-1 rounded-full text-on-secondary-container font-bold uppercase tracking-widest">Required</span>
-            </div>
-            <div class="space-y-4">
-                <div class="flex flex-col gap-1.5">
-                    <label class="text-xs font-bold uppercase tracking-widest text-outline ml-2">Full Name</label>
-                    <input name="full_name" required type="text" placeholder="Juan Dela Cruz"
-                           class="w-full bg-surface-container-highest border-none rounded-lg p-4 focus:ring-2 focus:ring-primary text-on-surface font-body"/>
+<main class="mt-20 mb-32 px-6 flex-grow">
+<!-- Progress Stepper -->
+<nav class="py-8">
+<div class="flex items-center justify-between relative">
+<!-- Track Line -->
+<div class="absolute top-1/2 left-0 w-full h-0.5 bg-gray-100 -translate-y-1/2 z-0"></div>
+<div class="absolute top-1/2 left-0 w-1/2 h-0.5 bg-primary -translate-y-1/2 z-0"></div>
+<!-- Step 1: Active -->
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs">
+                    1
                 </div>
-                <div class="flex flex-col gap-1.5">
-                    <label class="text-xs font-bold uppercase tracking-widest text-outline ml-2">Phone Number</label>
-                    <input name="phone" required type="tel" placeholder="+63 9XX XXX XXXX"
-                           class="w-full bg-surface-container-highest border-none rounded-lg p-4 focus:ring-2 focus:ring-primary text-on-surface font-body"/>
+<span class="text-[9px] font-bold uppercase tracking-widest text-primary">Address</span>
+</div>
+<!-- Step 2: Payment (Pending) -->
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center font-bold text-xs border border-gray-200">
+                    2
                 </div>
-                <div class="flex flex-col gap-1.5">
-                    <label class="text-xs font-bold uppercase tracking-widest text-outline ml-2">Street Address</label>
-                    <input name="address" required type="text" placeholder="House No., Street Name"
-                           class="w-full bg-surface-container-highest border-none rounded-lg p-4 focus:ring-2 focus:ring-primary text-on-surface font-body"/>
+<span class="text-[9px] font-medium uppercase tracking-widest text-gray-400">Payment</span>
+</div>
+<!-- Step 3: Review (Pending) -->
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center font-bold text-xs border border-gray-200">
+                    3
                 </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="flex flex-col gap-1.5">
-                        <label class="text-xs font-bold uppercase tracking-widest text-outline ml-2">Barangay</label>
-                        <input name="barangay" required type="text" placeholder="Brgy. 123"
-                               class="w-full bg-surface-container-highest border-none rounded-lg p-4 focus:ring-2 focus:ring-primary text-on-surface font-body"/>
-                    </div>
-                    <div class="flex flex-col gap-1.5">
-                        <label class="text-xs font-bold uppercase tracking-widest text-outline ml-2">City</label>
-                        <input name="city" required type="text" placeholder="Manila"
-                               class="w-full bg-surface-container-highest border-none rounded-lg p-4 focus:ring-2 focus:ring-primary text-on-surface font-body"/>
-                    </div>
-                </div>
-                <div class="flex flex-col gap-1.5">
-                    <label class="text-xs font-bold uppercase tracking-widest text-outline ml-2">Province</label>
-                    <input name="province" required type="text" placeholder="Metro Manila"
-                           class="w-full bg-surface-container-highest border-none rounded-lg p-4 focus:ring-2 focus:ring-primary text-on-surface font-body"/>
-                </div>
-            </div>
-        </section>
-
-        <!-- Payment Options -->
-        <section class="mb-10">
-            <h2 class="font-headline text-2xl font-bold text-primary mb-6">Payment Method</h2>
-            <div class="space-y-3">
-                <!-- GCash -->
-                <label class="relative flex items-center p-5 rounded-lg bg-surface-container-low border-2 border-transparent transition-all cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-surface-container shadow-sm">
-                    <input checked name="payment_method" value="gcash" class="hidden peer" type="radio"/>
-                    <div class="flex items-center gap-4 w-full">
-                        <div class="w-12 h-12 rounded-full bg-tertiary-container flex items-center justify-center text-white">
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
-                        </div>
-                        <div class="flex-grow">
-                            <p class="font-bold text-on-surface">GCash</p>
-                            <p class="text-xs text-outline">E-Wallet Instant Payment</p>
-                        </div>
-                        <div class="w-6 h-6 rounded-full border-2 border-outline peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center">
-                            <div class="w-2 h-2 rounded-full bg-white"></div>
-                        </div>
-                    </div>
-                </label>
-                <!-- Maya -->
-                <label class="relative flex items-center p-5 rounded-lg bg-surface-container-low border-2 border-transparent transition-all cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-surface-container shadow-sm">
-                    <input name="payment_method" value="maya" class="hidden peer" type="radio"/>
-                    <div class="flex items-center gap-4 w-full">
-                        <div class="w-12 h-12 rounded-full bg-[#00ffab]/20 flex items-center justify-center text-[#006e4a]">
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
-                        </div>
-                        <div class="flex-grow">
-                            <p class="font-bold text-on-surface">Maya</p>
-                            <p class="text-xs text-outline">Digital Bank &amp; Wallet</p>
-                        </div>
-                        <div class="w-6 h-6 rounded-full border-2 border-outline peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center"></div>
-                    </div>
-                </label>
-                <!-- COD -->
-                <label class="relative flex items-center p-5 rounded-lg bg-surface-container-low border-2 border-transparent transition-all cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-surface-container shadow-sm">
-                    <input name="payment_method" value="cod" class="hidden peer" type="radio"/>
-                    <div class="flex items-center gap-4 w-full">
-                        <div class="w-12 h-12 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary">
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
-                        </div>
-                        <div class="flex-grow">
-                            <p class="font-bold text-on-surface">Cash on Delivery</p>
-                            <p class="text-xs text-outline">Pay upon receiving package</p>
-                        </div>
-                        <div class="w-6 h-6 rounded-full border-2 border-outline peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center"></div>
-                    </div>
-                </label>
-            </div>
-        </section>
-
-        <!-- Order Summary -->
-        <section class="bg-surface-container-high rounded-xl p-6 mb-12">
-            <h2 class="font-headline text-lg font-bold text-primary mb-4 flex items-center gap-2">
-                <span class="material-symbols-outlined text-sm">receipt_long</span>
-                Order Summary
-            </h2>
-            <div class="space-y-4">
-                {% for item in cart_items %}
-                <div class="flex justify-between items-center text-sm">
-                    <div class="flex gap-3 items-center">
-                        <div class="w-10 h-10 rounded-md bg-white overflow-hidden flex-shrink-0">
-                            {% if item.product.image %}
-                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="w-full h-full object-cover"/>
-                            {% endif %}
-                        </div>
-                        <span class="font-medium">{{ item.product.name }} (x{{ item.quantity }})</span>
-                    </div>
-                    <span class="font-bold">₱{{ item.subtotal }}</span>
-                </div>
-                {% endfor %}
-                <div class="pt-4 border-t border-outline-variant/30 space-y-2">
-                    <div class="flex justify-between text-xs text-outline">
-                        <span>Subtotal</span>
-                        <span>₱{{ total }}</span>
-                    </div>
-                    <div class="flex justify-between text-xs text-outline">
-                        <span>Shipping Fee</span>
-                        <span>₱150</span>
-                    </div>
-                    <div class="flex justify-between items-center pt-2 text-primary">
-                        <span class="font-bold uppercase tracking-widest text-xs">Total Amount</span>
-                        <span class="text-xl font-extrabold">₱{{ grand_total }}</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Place Order Button -->
-        <div class="fixed bottom-20 left-0 w-full p-6 bg-surface/80 backdrop-blur-md z-40">
-            <button type="submit"
-                    class="w-full bg-primary text-on-primary font-headline font-bold py-5 rounded-full shadow-xl shadow-primary/20 active:translate-y-[-2px] duration-300 transition-transform">
-                Place Order
-            </button>
-        </div>
-
-    </form>
-</main>
-
-<!-- Bottom Nav -->
-<nav class="fixed bottom-0 w-full rounded-t-[3rem] z-50 bg-[#fff4c8] backdrop-blur-xl shadow-[0_-10px_40px_rgba(32,28,2,0.08)] flex justify-around items-center h-20 pb-4 px-4">
-    <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#944a23]/50 hover:text-[#8d4b00] transition-colors">
-        <span class="material-symbols-outlined">home</span>
-        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Home</span>
-    </a>
-    <a href="{% url 'search' %}" class="flex flex-col items-center justify-center text-[#944a23]/50 hover:text-[#8d4b00] transition-colors">
-        <span class="material-symbols-outlined">search</span>
-        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Discover</span>
-    </a>
-    <a href="{% url 'cart' %}" class="flex flex-col items-center justify-center text-[#8d4b00] scale-110 transition-transform translate-y-[-2px]">
-        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
-        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Cart</span>
-    </a>
-    <a href="{% url 'login' %}" class="flex flex-col items-center justify-center text-[#944a23]/50 hover:text-[#8d4b00] transition-colors">
-        <span class="material-symbols-outlined">person</span>
-        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Profile</span>
-    </a>
+<span class="text-[9px] font-medium uppercase tracking-widest text-gray-400">Review</span>
+</div>
+</div>
 </nav>
-
-</body>
-</html>
+<!-- Address Form Section -->
+<section class="mb-10">
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-headline text-xl font-black text-black uppercase tracking-tight">Shipping Details</h2>
+<span class="text-[9px] border border-black px-2 py-0.5 rounded-sm text-black font-bold uppercase tracking-widest">Required</span>
+</div>
+<div class="space-y-4">
+<div class="flex flex-col gap-1.5">
+<label class="text-[10px] font-bold uppercase tracking-widest text-black">Full Name</label>
+<input class="w-full bg-white border-2 border-gray-100 rounded-none p-4 focus:border-primary focus:ring-0 text-black font-body text-sm" placeholder="Juan Dela Cruz" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-[10px] font-bold uppercase tracking-widest text-black">Phone Number</label>
+<input class="w-full bg-white border-2 border-gray-100 rounded-none p-4 focus:border-primary focus:ring-0 text-black font-body text-sm" placeholder="+63 9XX XXX XXXX" type="tel"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-[10px] font-bold uppercase tracking-widest text-black">Street Address</label>
+<input class="w-full bg-white border-2 border-gray-100 rounded-none p-4 focus:border-primary focus:ring-0 text-black font-body text-sm" placeholder="House No., Street Name" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-1.5">
+<label class="text-[10px] font-bold uppercase tracking-widest text-black">Barangay</label>
+<input class="w-full bg-white border-2 border-gray-100 rounded-none p-4 focus:border-primary focus:ring-0 text-black font-body text-sm" placeholder="Brgy. 123" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-[10px] font-bold uppercase tracking-widest text-black">City</label>
+<input class="w-full bg-white border-2 border-gray-100 rounded-none p-4 focus:border-primary focus:ring-0 text-black font-body text-sm" placeholder="Manila" type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-[10px] font-bold uppercase tracking-widest text-black">Province</label>
+<input class="w-full bg-white border-2 border-gray-100 rounded-none p-4 focus:border-primary focus:ring-0 text-black font-body text-sm" placeholder="Metro Manila" type="text"/>
+</div>
+</div>
+</section>
+<!-- Payment Options -->
+<section class="mb-10">
+<h2 class="font-headline text-xl font-black text-black mb-6 uppercase tracking-tight">Payment Method</h2>
+<div class="space-y-3">
+<!-- GCash Card -->
+<label class="relative flex items-center p-4 rounded-none bg-white border-2 border-gray-100 transition-all cursor-pointer has-[:checked]:border-primary shadow-sm">
+<input checked="" class="hidden peer" name="payment" type="radio"/>
+<div class="flex items-center gap-4 w-full">
+<div class="w-10 h-10 rounded-full bg-[#E65100]/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+</div>
+<div class="flex-grow">
+<p class="font-bold text-black text-sm">GCash</p>
+<p class="text-[10px] text-gray-500 uppercase tracking-tighter">Instant E-Wallet Transfer</p>
+</div>
+<div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-primary flex items-center justify-center">
+<div class="w-2.5 h-2.5 rounded-full bg-primary opacity-0 peer-checked:opacity-100"></div>
+</div>
+</div>
+</label>
+<!-- Maya Card -->
+<label class="relative flex items-center p-4 rounded-none bg-white border-2 border-gray-100 transition-all cursor-pointer has-[:checked]:border-primary shadow-sm">
+<input class="hidden peer" name="payment" type="radio"/>
+<div class="flex items-center gap-4 w-full">
+<div class="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center text-black">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<div class="flex-grow">
+<p class="font-bold text-black text-sm">Maya</p>
+<p class="text-[10px] text-gray-500 uppercase tracking-tighter">Digital Bank &amp; Wallet</p>
+</div>
+<div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-primary flex items-center justify-center">
+<div class="w-2.5 h-2.5 rounded-full bg-primary opacity-0 peer-checked:opacity-100"></div>
+</div>
+</div>
+</label>
+<!-- COD Card -->
+<label class="relative flex items-center p-4 rounded-none bg-white border-2 border-gray-100 transition-all cursor-pointer has-[:checked]:border-primary shadow-sm">
+<input class="hidden peer" name="payment" type="radio"/>
+<div class="flex items-center gap-4 w-full">
+<div class="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center text-black">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+</div>
+<div class="flex-grow">
+<p class="font-bold text-black text-sm">Cash on Delivery</p>
+<p class="text-[10px] text-gray-500 uppercase tracking-tighter">Pay upon receiving package</p>
+</div>
+<div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-primary flex items-center justify-center">
+<div class="w-2.5 h-2.5 rounded-full bg-primary opacity-0 peer-checked:opacity-100"></div>
+</div>
+</div>
+</label>
+</div>
+</section>
+<!-- Order Summary -->
+<section class="bg-gray-50 rounded-lg p-6 mb-12 border border-gray-100">
+<h2 class="font-headline text-md font-black text-black mb-4 flex items-center gap-2 uppercase tracking-widest">
+<span class="material-symbols-outlined text-sm">receipt_long</span>
+            Order Summary
+        </h2>
+<div class="space-y-4">
+<div class="flex justify-between items-center text-sm">
+<div class="flex gap-3 items-center">
+<div class="w-10 h-10 rounded-none bg-white border border-gray-200 overflow-hidden">
+<img alt="Native Basket" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkDLELGA89u7irMLPB7VOOtsNd7t-8XWU6dGwgnS9Gt_ZmZmmy3nCXt_60bir8OE5PkoSjrrn5BluNarq52cG9dduMxYT73z2GhlVAQKJo1wPyf3rp4brGmUMqGbeTtm_94C6rBBNwy1XfT8Je8wpNj0Hcz1GIjLutWsvUhzG9X6IboKakUmYeeakpejchT77K6JKIqOqSPksM6PXs9wE8oprOpGabtsN5lCwGlMe1_O1tF_x5_ANYafDJltdQKj9ZIUI757-nL-X8"/>
+</div>
+<span class="font-medium text-xs">Abacá Basket (x1)</span>
+</div>
+<span class="font-bold">₱1,250</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<div class="flex gap-3 items-center">
+<div class="w-10 h-10 rounded-none bg-white border border-gray-200 overflow-hidden">
+<img alt="Clay Pot" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhO3mHC7eSjENGTVbuJi6-H9875l8VtINmVUcYdvk8tdqYHMrlNu0t6h4qiS_34iHO-kGxcVzfIxXZBh9XmcEH_IzHlgs229I7RXV7oLzuMJvevOGE2UUbxFzyy-E6vDC9BydDFh3cpwL5sXgMZn17o-Zlkz8U83jtqA8t9mNGlzJOOu4JU3xNyrlbpoblj86Bn2RS1MaOk_6iau5QawiokMH-L6XzsP5a1c6D3NeX2XI_j6tezsaPNEr4QskAi41_p0hcYN0qXkrg"/>
+</div>
+<span class="font-medium text-xs">Burnay Clay Pot (x2)</span>
+</div>
+<span class="font-bold">₱840</span>
+</div>
+<div class="pt-4 border-t border-gray-200 space-y-2">
+<div class="flex justify-between text-[10px] text-gray-500 font-bold uppercase">
+<span>Subtotal</span>
+<span>₱2,090</span>
+</div>
+<div class="flex justify-between text-[10px] text-gray-500 font-bold uppercase">
+<span>Shipping Fee</span>
+<span>₱150</span>
+</div>
+<div class="flex justify-between items-center pt-2 text-black">
+<span class="font-black uppercase tracking-widest text-[10px]">Total Amount</span>
+<span class="text-xl font-black">₱2,240</span>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Action -->
+<div class="fixed bottom-20 left-0 w-full p-6 bg-white/95 backdrop-blur-sm z-40 border-t border-gray-100">
+<button class="w-full bg-[#E65100] text-white font-headline font-black py-4 rounded-none shadow-lg active:scale-95 duration-200 uppercase tracking-widest text-sm">
+            Place Order
+        </button>
+</div>
+</main>
+<!-- BottomNavBar (from COMPONENTS_13) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#ffffff] dark:bg-[#121212] z-50 rounded-t-2xl shadow-2xl">
+<div class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] dark:hover:text-[#ff8a50] transition-colors">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta">Curated</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] dark:hover:text-[#ff8a50] transition-colors">
+<span class="material-symbols-outlined">search</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta">Discover</span>
+</div>
+<!-- Active Tab: Artisans (as proxy for current flow) -->
+<div class="flex flex-col items-center justify-center text-[#a43700] dark:text-[#ff8a50] relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-[#a43700] after:rounded-full active:scale-90 duration-300 ease-out">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta">Cart</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] dark:hover:text-[#ff8a50] transition-colors">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta">Vault</span>
+</div>
+</nav>
+</body></html>

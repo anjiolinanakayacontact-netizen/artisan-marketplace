@@ -1,174 +1,165 @@
-{% load static %}
 <!DOCTYPE html>
-<html class="light" lang="en">
-<head>
+
+<html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>{{ product.name }} - The Woven Narrative</title>
+<title>Artisan Market - Product Details</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
-    tailwind.config = {
+      tailwind.config = {
         darkMode: "class",
         theme: {
-            extend: {
-                colors: {
-                    "surface-variant": "#ede3b8", "secondary-container": "#fd9e70",
-                    "tertiary": "#006096", "surface-container": "#f9eec2",
-                    "on-secondary": "#ffffff", "surface-container-highest": "#ede3b8",
-                    "on-error": "#ffffff", "surface-container-high": "#f3e8bd",
-                    "surface-bright": "#fff9ec", "error-container": "#ffdad6",
-                    "primary-container": "#b15f00", "outline": "#887364",
-                    "outline-variant": "#dbc2b0", "surface-container-lowest": "#ffffff",
-                    "on-primary-container": "#fffbff", "tertiary-container": "#007abd",
-                    "on-background": "#201c02", "surface": "#fff9ec",
-                    "inverse-surface": "#363113", "surface-container-low": "#fff4c8",
-                    "error": "#ba1a1a", "primary": "#8d4b00",
-                    "secondary": "#944a23", "inverse-primary": "#ffb77d",
-                    "on-surface": "#201c02", "on-secondary-container": "#76340e",
-                    "on-surface-variant": "#554336", "on-primary": "#ffffff",
-                    "background": "#fff9ec"
-                },
-                fontFamily: { "headline": ["Plus Jakarta Sans"], "body": ["Inter"] },
-                borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          extend: {
+            colors: {
+              "primary": "#E65100",
+              "on-primary": "#ffffff",
+              "background": "#ffffff",
+              "surface": "#ffffff",
+              "on-surface": "#1b1b1b",
+              "on-surface-variant": "#4a4a4a",
+              "surface-container-low": "#f9f9f9",
+              "surface-container-high": "#f3f3f3",
+              "outline": "#1b1b1b",
             },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+          },
         },
-    }
-</script>
+      }
+    </script>
 <style>
-    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-    body { min-height: max(884px, 100dvh); background-color: #fff9ec; }
-</style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
 </head>
-<body class="bg-surface text-on-surface font-body min-h-screen flex flex-col">
-
-<!-- TopAppBar -->
-<header class="fixed top-0 w-full z-50 bg-[#fff9ec]/80 backdrop-blur-md shadow-[0_10px_30px_-15px_rgba(32,28,2,0.06)]">
-    <div class="flex justify-between items-center px-6 h-16 w-full">
-        <a href="{% url 'home' %}" class="text-[#8d4b00] active:scale-95 duration-200">
-            <span class="material-symbols-outlined">arrow_back</span>
-        </a>
-        <h1 class="font-['Plus_Jakarta_Sans'] font-bold text-lg tracking-tight text-[#8d4b00]">The Woven Narrative</h1>
-        <a href="{% url 'cart' %}" class="text-[#8d4b00] active:scale-95 duration-200 relative">
-            <span class="material-symbols-outlined">shopping_bag</span>
-            {% if cart_count %}
-            <span class="absolute -top-1 -right-1 bg-[#944a23] text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{{ cart_count }}</span>
-            {% endif %}
-        </a>
-    </div>
+<body class="bg-background text-on-surface font-body min-h-screen flex flex-col">
+<!-- TopAppBar (from COMPONENTS_13) -->
+<header class="fixed top-0 w-full z-50 bg-[#f9f9f9]/80 dark:bg-[#1b1b1b]/80 backdrop-blur-lg">
+<div class="flex justify-between items-center px-6 h-20 w-full">
+<button class="text-[#1b1b1b] dark:text-[#f9f9f9] active:scale-95 duration-200 hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="text-xl font-black tracking-widest text-[#1b1b1b] dark:text-[#f9f9f9] font-['Plus_Jakarta_Sans'] uppercase">THE ARTISAN EDITORIAL</h1>
+<button class="text-[#1b1b1b] dark:text-[#f9f9f9] active:scale-95 duration-200 hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</div>
 </header>
-
-<main class="flex-grow pt-16 pb-32">
-
-    <!-- Hero Image -->
-    <section class="px-6 pt-4">
-        <div class="relative w-full aspect-[4/5] rounded-xl overflow-hidden bg-surface-container-low">
-            {% if product.image %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover"/>
-            {% else %}
-            <div class="w-full h-full flex items-center justify-center">
-                <span class="material-symbols-outlined text-6xl text-outline-variant">image</span>
-            </div>
-            {% endif %}
-            {% if product.category %}
-            <div class="absolute top-4 left-4">
-                <span class="bg-surface-container/90 backdrop-blur-sm text-secondary font-label px-4 py-1.5 rounded-md text-xs font-semibold uppercase tracking-wider">
-                    {{ product.category }}
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-24 pb-32">
+<!-- Hero Image Section -->
+<section class="px-6">
+<div class="relative w-full aspect-[4/5] rounded-lg overflow-hidden bg-surface-container-low">
+<img alt="Hand-woven bamboo basket" class="w-full h-full object-cover" data-alt="Intricately hand-woven bamboo and rattan basket" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChGd6bEibXSarHX-vJfawQgiEtKjOy4UmctSR0gnaCRN1q_iIZPQgu3mkQk0o5_2hVvI88qFIuOJI-C0mp4dNPm6229YUZSvcqsI-4WjJnWICTHkRhtnyF6rfvaQy2L5IqpyiPs5OgoKZKygXBLrYB-w1q-BEaL1RNGn5YJOtKLmuu5RiSIt-j4j4U4zXJGACOQvk-aYKYDbXPpveOLb-eryaXCDV8k7vGzEcsaqbBVA7OWh2nQNUZhKhESn3EwrAY-Cx2-gKZaVUs"/>
+<div class="absolute top-6 left-6">
+<span class="bg-[#E65100] text-white font-label px-4 py-1.5 rounded-none text-xs font-bold uppercase tracking-[0.2em]">
+                    Weaving
                 </span>
-            </div>
-            {% endif %}
-        </div>
-    </section>
-
-    <!-- Product Details -->
-    <section class="px-8 mt-8">
-        <div class="flex flex-col space-y-2">
-            <h2 class="font-headline text-3xl font-extrabold text-on-surface tracking-tight leading-tight">
-                {{ product.name }}
+</div>
+</div>
+</section>
+<!-- Product Details -->
+<section class="px-6 mt-10">
+<div class="flex flex-col space-y-3">
+<h2 class="font-headline text-4xl font-black text-on-surface tracking-tighter leading-none uppercase">
+                Binakol Pattern Storage
             </h2>
-
-            <!-- Artisan Link -->
-            {% if product.artisan_profile %}
-            <a href="{% url 'artisan_profile' product.artisan_profile.pk %}"
-               class="flex items-center space-x-2 w-fit group">
-                <div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden">
-                    {% if product.artisan_profile.photo %}
-                    <img src="{{ product.artisan_profile.photo.url }}" alt="{{ product.artisan }}" class="w-full h-full object-cover"/>
-                    {% else %}
-                    <span class="material-symbols-outlined text-sm text-primary">person</span>
-                    {% endif %}
-                </div>
-                <span class="font-label text-sm text-secondary font-medium group-hover:underline">by {{ product.artisan }}</span>
-                <span class="material-symbols-outlined text-sm text-secondary" style="font-variation-settings: 'FILL' 1;">verified</span>
-            </a>
-            {% else %}
-            <p class="text-sm text-secondary font-medium">by {{ product.artisan }}</p>
-            {% endif %}
-        </div>
-
-        <!-- Price -->
-        <div class="mt-6 flex items-baseline space-x-2">
-            <span class="font-headline text-2xl font-bold text-primary">₱{{ product.price }}</span>
-        </div>
-
-        <!-- Description -->
-        <div class="mt-6">
-            <p class="text-on-surface-variant leading-relaxed text-[0.95rem]">{{ product.description }}</p>
-        </div>
-
-        <!-- Add to Cart -->
-        <div class="mt-10 p-6 bg-surface-container-low rounded-lg space-y-6">
-            <form method="post" action="{% url 'add_to_cart' product.pk %}">
-                {% csrf_token %}
-                <button type="submit"
-                        class="w-full bg-primary text-on-primary font-headline font-bold py-5 rounded-full shadow-lg shadow-primary/20 active:translate-y-1 transition-all">
-                    Add to Cart
-                </button>
-            </form>
-        </div>
-
-        <!-- Back to Market -->
-        <div class="mt-8 flex justify-center">
-            <a href="{% url 'home' %}" class="flex items-center space-x-2 text-on-surface-variant hover:text-primary transition-colors font-label font-medium">
-                <span class="material-symbols-outlined text-lg">chevron_left</span>
-                <span>Back to Market</span>
-            </a>
-        </div>
-    </section>
+<!-- Artisan Link -->
+<a class="flex items-center space-x-3 w-fit group" href="#">
+<div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden">
+<img alt="Artisan Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBy3uQprsTUor9NlvFsumcfAHzPGN7qf51InaUUmaB3CKb6qz_fBnt0lqcQJxknVyz90onzg8ZZGY9PwCcTb7NJ7dUmGd6AkBtHYjkO33_nwsFJANcUZKSBxrH0ON9o6qlLgURxDPMdw6xympY4a3-hBFfcIaPZ5aChLHMP0aCLHpHP5_1-JwYx4XuBgpRTNfc4viYRCP-MKS6K0UD6aNb_rJycWFByHiuZxrwl7u4_HPVVilHNWH8BmAVx6iU37ofN7CAAr9yqiHxW"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-xs text-on-surface-variant font-bold uppercase tracking-wider">Master Artisan</span>
+<div class="flex items-center space-x-1">
+<span class="font-headline text-sm text-on-surface font-black group-hover:text-primary transition-colors">Mateo Silang</span>
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+</a>
+</div>
+<!-- Price -->
+<div class="mt-8 flex items-baseline space-x-3">
+<span class="font-headline text-3xl font-black text-[#E65100]">₱1,200</span>
+<span class="text-lg text-on-surface-variant line-through font-label opacity-40 italic">₱1,500</span>
+</div>
+<!-- Description -->
+<div class="mt-8 border-l-4 border-[#1b1b1b] pl-6">
+<p class="text-on-surface-variant leading-relaxed text-[1rem] font-medium">
+                This hand-woven basket is made from locally sourced bamboo and rattan, crafted with traditional techniques passed down through generations. Each strand is sun-dried for durability and dyed using organic vegetable extracts.
+            </p>
+</div>
+<!-- Controls Section -->
+<div class="mt-12 space-y-6">
+<div class="flex items-center justify-between py-6 border-y border-on-surface/10">
+<span class="font-label font-black text-xs uppercase tracking-[0.2em] text-on-surface">Quantity</span>
+<div class="flex items-center border-2 border-on-surface rounded-none overflow-hidden">
+<button class="w-12 h-12 flex items-center justify-center text-on-surface active:bg-on-surface active:text-white transition-all">
+<span class="material-symbols-outlined" data-icon="remove">remove</span>
+</button>
+<span class="w-12 text-center font-headline font-black text-lg border-x-2 border-on-surface">1</span>
+<button class="w-12 h-12 flex items-center justify-center text-on-surface active:bg-on-surface active:text-white transition-all">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+</div>
+<button class="w-full bg-[#1b1b1b] text-white font-headline font-black py-6 text-sm uppercase tracking-[0.3em] active:bg-[#E65100] active:scale-[0.98] transition-all">
+                Add to Cart
+            </button>
+</div>
+<!-- Back to Market Link -->
+<div class="mt-12 flex justify-center">
+<a class="flex items-center space-x-2 text-on-surface font-label font-black text-xs uppercase tracking-widest hover:text-[#E65100] transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span>
+<span>The Archive</span>
+</a>
+</div>
+</section>
 </main>
-
 <!-- Footer -->
-<footer class="w-full py-12 px-8 mt-auto bg-[#fff4c8] flex flex-col items-center space-y-6">
-    <div class="text-[#8d4b00] font-bold">The Woven Narrative</div>
-    <p class="font-['Inter'] text-sm text-center text-[#944a23]">Handcrafted with Love in the Philippines</p>
-    <div class="flex flex-wrap justify-center gap-4 text-sm opacity-70 text-[#944a23]">
-        <a class="hover:text-[#8d4b00] transition-all" href="#">About Our Weavers</a>
-        <a class="hover:text-[#8d4b00] transition-all" href="#">Become an Artisan</a>
-    </div>
+<footer class="w-full py-16 px-8 mt-auto bg-[#1b1b1b] text-white flex flex-col items-center space-y-8">
+<div class="text-2xl font-black tracking-tighter uppercase font-headline">The Artisan Editorial</div>
+<div class="w-12 h-[2px] bg-[#E65100]"></div>
+<p class="font-['Inter'] text-xs leading-relaxed text-center opacity-60 uppercase tracking-widest">
+        Handcrafted with Love in the Philippines
+    </p>
+<div class="flex flex-wrap justify-center gap-8 text-[10px] font-black uppercase tracking-[0.2em]">
+<a class="hover:text-[#E65100] transition-all" href="#">About</a>
+<a class="hover:text-[#E65100] transition-all" href="#">Artisans</a>
+<a class="hover:text-[#E65100] transition-all" href="#">Journal</a>
+</div>
 </footer>
-
-<!-- Bottom Nav -->
-<nav class="fixed bottom-0 w-full rounded-t-[3rem] z-50 bg-[#fff4c8] backdrop-blur-xl shadow-[0_-10px_40px_rgba(32,28,2,0.08)]">
-    <div class="flex justify-around items-center h-20 pb-4 px-4">
-        <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#944a23]/50 hover:text-[#8d4b00] transition-colors">
-            <span class="material-symbols-outlined">home</span>
-            <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Home</span>
-        </a>
-        <a href="{% url 'search' %}" class="flex flex-col items-center justify-center text-[#8d4b00] scale-110 transition-transform">
-            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">search</span>
-            <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Discover</span>
-        </a>
-        <a href="{% url 'cart' %}" class="flex flex-col items-center justify-center text-[#944a23]/50 hover:text-[#8d4b00] transition-colors">
-            <span class="material-symbols-outlined">shopping_cart</span>
-            <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Cart</span>
-        </a>
-        <a href="{% url 'login' %}" class="flex flex-col items-center justify-center text-[#944a23]/50 hover:text-[#8d4b00] transition-colors">
-            <span class="material-symbols-outlined">person</span>
-            <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Profile</span>
-        </a>
-    </div>
+<!-- BottomNavBar (from COMPONENTS_13) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#ffffff] dark:bg-[#121212] z-50 rounded-t-2xl shadow-2xl">
+<!-- Curated -->
+<a class="flex flex-col items-center justify-center text-[#a43700] dark:text-[#ff8a50] relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-[#a43700] after:rounded-full active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta mt-1">Curated</span>
+</a>
+<!-- Discover -->
+<a class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] dark:hover:text-[#ff8a50] transition-colors active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta mt-1">Discover</span>
+</a>
+<!-- Artisans -->
+<a class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] dark:hover:text-[#ff8a50] transition-colors active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="Conditions">Conditions</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta mt-1">Artisans</span>
+</a>
+<!-- Vault -->
+<a class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] dark:hover:text-[#ff8a50] transition-colors active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta mt-1">Vault</span>
+</a>
 </nav>
-
-</body>
-</html>
+</body></html>
