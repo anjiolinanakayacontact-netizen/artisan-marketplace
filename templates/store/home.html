@@ -64,6 +64,10 @@
             <span class="material-symbols-outlined">shopping_bag</span>
             Cart
         </a>
+        <a href="{% url 'checkout' %}" class="flex items-center gap-4 font-black uppercase tracking-widest text-sm hover:text-primary transition-colors">
+            <span class="material-symbols-outlined">receipt_long</span>
+            Checkout
+        </a>
         <div class="h-px bg-black/10"></div>
         {% if user.is_authenticated %}
         <p class="text-xs font-black uppercase tracking-widest text-black/40">Logged in as {{ user.username }}</p>
@@ -263,7 +267,6 @@
         document.getElementById('sidebar-overlay').classList.remove('hidden');
         document.body.style.overflow = 'hidden';
     }
-
     function closeSidebar() {
         document.getElementById('sidebar').classList.add('-translate-x-full');
         document.getElementById('sidebar-overlay').classList.add('hidden');
