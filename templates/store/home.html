@@ -40,11 +40,60 @@
 </head>
 <body class="bg-background selection:bg-primary selection:text-on-primary">
 
+<!-- Sidebar Overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden" onclick="closeSidebar()"></div>
+
+<!-- Sidebar -->
+<div id="sidebar" class="fixed top-0 left-0 h-full w-72 bg-white z-50 transform -translate-x-full transition-transform duration-300 shadow-2xl">
+    <div class="flex justify-between items-center px-6 h-20 border-b border-black/10">
+        <span class="font-black uppercase tracking-widest text-[#1b1b1b]">Menu</span>
+        <button onclick="closeSidebar()" class="hover:opacity-70 transition-opacity">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </div>
+    <nav class="px-6 py-8 space-y-6">
+        <a href="{% url 'home' %}" class="flex items-center gap-4 font-black uppercase tracking-widest text-sm hover:text-primary transition-colors">
+            <span class="material-symbols-outlined">grid_view</span>
+            Home
+        </a>
+        <a href="{% url 'search' %}" class="flex items-center gap-4 font-black uppercase tracking-widest text-sm hover:text-primary transition-colors">
+            <span class="material-symbols-outlined">search</span>
+            Discover
+        </a>
+        <a href="{% url 'cart' %}" class="flex items-center gap-4 font-black uppercase tracking-widest text-sm hover:text-primary transition-colors">
+            <span class="material-symbols-outlined">shopping_bag</span>
+            Cart
+        </a>
+        <div class="h-px bg-black/10"></div>
+        {% if user.is_authenticated %}
+        <p class="text-xs font-black uppercase tracking-widest text-black/40">Logged in as {{ user.username }}</p>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="flex items-center gap-4 font-black uppercase tracking-widest text-sm hover:text-primary transition-colors">
+                <span class="material-symbols-outlined">logout</span>
+                Logout
+            </button>
+        </form>
+        {% else %}
+        <a href="{% url 'login' %}" class="flex items-center gap-4 font-black uppercase tracking-widest text-sm hover:text-primary transition-colors">
+            <span class="material-symbols-outlined">login</span>
+            Login
+        </a>
+        <a href="{% url 'register' %}" class="flex items-center gap-4 font-black uppercase tracking-widest text-sm hover:text-primary transition-colors">
+            <span class="material-symbols-outlined">person_add</span>
+            Register
+        </a>
+        {% endif %}
+    </nav>
+</div>
+
 <!-- TopAppBar -->
-<header class="bg-[#f9f9f9]/80 backdrop-blur-lg fixed top-0 w-full z-50">
+<header class="bg-[#f9f9f9]/80 backdrop-blur-lg fixed top-0 w-full z-30">
     <div class="flex justify-between items-center px-6 h-20 w-full">
         <div class="flex items-center gap-4">
-            <span class="material-symbols-outlined text-[#1b1b1b] cursor-pointer hover:opacity-70">menu</span>
+            <button onclick="openSidebar()" class="active:scale-95 duration-200 hover:opacity-70 transition-opacity">
+                <span class="material-symbols-outlined text-[#1b1b1b]">menu</span>
+            </button>
             <span class="text-xl font-black tracking-widest text-[#1b1b1b] uppercase">THE ARTISAN EDITORIAL</span>
         </div>
         <div class="flex items-center gap-4">
@@ -187,7 +236,7 @@
 </main>
 
 <!-- Bottom Nav -->
-<nav class="bg-white fixed bottom-0 w-full z-50 rounded-t-2xl shadow-2xl">
+<nav class="bg-white fixed bottom-0 w-full z-30 rounded-t-2xl shadow-2xl">
     <div class="flex justify-around items-center h-20 px-4">
         <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#a43700]">
             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">grid_view</span>
@@ -207,6 +256,20 @@
         </a>
     </div>
 </nav>
+
+<script>
+    function openSidebar() {
+        document.getElementById('sidebar').classList.remove('-translate-x-full');
+        document.getElementById('sidebar-overlay').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebar() {
+        document.getElementById('sidebar').classList.add('-translate-x-full');
+        document.getElementById('sidebar-overlay').classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+</script>
 
 </body>
 </html>
