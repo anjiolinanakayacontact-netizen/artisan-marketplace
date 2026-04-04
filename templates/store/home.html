@@ -123,23 +123,69 @@
 
 <main class="pt-20 pb-24">
 
-    <!-- Hero Section -->
-    <section class="relative px-6 pt-6 pb-12">
-        <div class="relative w-full aspect-[4/5] overflow-hidden shadow-2xl">
-            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800"
-                 alt="Traditional Filipino weaving"
-                 class="w-full h-full object-cover grayscale contrast-125"/>
-            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-            <div class="absolute bottom-10 left-8 right-8 text-white">
-                <h1 class="font-headline font-black text-5xl leading-none uppercase tracking-tighter">Handcrafted<br/>With Soul</h1>
-                <p class="mt-4 font-body text-sm opacity-90 max-w-[240px] uppercase tracking-widest leading-relaxed">Modern Filipino craftsmanship defined.</p>
-                <a href="{% url 'search' %}"
-                   class="inline-block mt-8 bg-primary text-white px-10 py-4 font-black text-xs uppercase tracking-[0.2em] hover:opacity-90 active:scale-95 transition-all">
-                    Explore Collection
-                </a>
+    <!-- Hero Section - Quote Slider -->
+<section class="relative px-6 pt-6 pb-12">
+    <div class="relative w-full aspect-[4/5] overflow-hidden shadow-2xl bg-black">
+
+        <!-- Slides -->
+        <div id="slider" class="flex transition-transform duration-700 ease-in-out h-full">
+
+            <!-- Slide 1 -->
+            <div class="min-w-full h-full flex flex-col items-center justify-center px-10 text-center">
+                <span class="text-primary text-6xl font-black mb-8">"</span>
+                <p class="text-white text-lg font-bold leading-relaxed tracking-wide mb-8">
+                    Get inspired and empowered by Art, so you won't be in denial of science. When one feels disempowered, she or he tends to be in denial of truths.
+                </p>
+                <div class="h-px w-12 bg-primary mb-4"></div>
+                <span class="text-white/60 text-xs font-black uppercase tracking-[0.3em]">Anjiolina Nakaya</span>
+                <span class="text-primary text-[10px] font-bold uppercase tracking-widest mt-1">Co-Founder</span>
             </div>
+
+            <!-- Slide 2 -->
+            <div class="min-w-full h-full flex flex-col items-center justify-center px-10 text-center">
+                <span class="text-primary text-6xl font-black mb-8">"</span>
+                <p class="text-white text-lg font-bold leading-relaxed tracking-wide mb-8">
+                    Any Historical error committed should be welcomed as an opportunity for education.
+                </p>
+                <div class="h-px w-12 bg-primary mb-4"></div>
+                <span class="text-white/60 text-xs font-black uppercase tracking-[0.3em]">Xiao Chua</span>
+                <span class="text-primary text-[10px] font-bold uppercase tracking-widest mt-1">Co-Founder</span>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="min-w-full h-full flex flex-col items-center justify-center px-10 text-center">
+                <span class="text-primary text-6xl font-black mb-8">"</span>
+                <p class="text-white text-lg font-bold leading-relaxed tracking-wide mb-8">
+                    Fostering critical thinking is the point of teaching history.
+                </p>
+                <div class="h-px w-12 bg-primary mb-4"></div>
+                <span class="text-white/60 text-xs font-black uppercase tracking-[0.3em]">John Rey Ramos</span>
+                <span class="text-primary text-[10px] font-bold uppercase tracking-widest mt-1">Co-Founder</span>
+            </div>
+
         </div>
-    </section>
+
+        <!-- Left Arrow -->
+        <button onclick="prevSlide()"
+                class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-primary transition-colors flex items-center justify-center">
+            <span class="material-symbols-outlined text-white">chevron_left</span>
+        </button>
+
+        <!-- Right Arrow -->
+        <button onclick="nextSlide()"
+                class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-primary transition-colors flex items-center justify-center">
+            <span class="material-symbols-outlined text-white">chevron_right</span>
+        </button>
+
+        <!-- Dots -->
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+            <button onclick="goToSlide(0)" id="dot-0" class="w-2 h-2 bg-primary rounded-full transition-all"></button>
+            <button onclick="goToSlide(1)" id="dot-1" class="w-2 h-2 bg-white/30 rounded-full transition-all"></button>
+            <button onclick="goToSlide(2)" id="dot-2" class="w-2 h-2 bg-white/30 rounded-full transition-all"></button>
+        </div>
+
+    </div>
+</section>
 
     <!-- Categories Row -->
     <section class="px-6 mb-16">
@@ -256,6 +302,7 @@
 </nav>
 
 <script>
+    // Sidebar
     function openSidebar() {
         document.getElementById('sidebar').classList.remove('-translate-x-full');
         document.getElementById('sidebar-overlay').classList.remove('hidden');
@@ -266,6 +313,37 @@
         document.getElementById('sidebar-overlay').classList.add('hidden');
         document.body.style.overflow = '';
     }
+
+    // Slider
+    let currentSlide = 0;
+    const totalSlides = 3;
+
+    function updateSlider() {
+        document.getElementById('slider').style.transform = `translateX(-${currentSlide * 100}%)`;
+        for (let i = 0; i < totalSlides; i++) {
+            document.getElementById(`dot-${i}`).className = i === currentSlide
+                ? 'w-2 h-2 bg-primary rounded-full transition-all'
+                : 'w-2 h-2 bg-white/30 rounded-full transition-all';
+        }
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateSlider();
+    }
+
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateSlider();
+    }
+
+    function goToSlide(index) {
+        currentSlide = index;
+        updateSlider();
+    }
+
+    // Auto slide every 5 seconds
+    setInterval(nextSlide, 5000);
 </script>
 
 </body>
