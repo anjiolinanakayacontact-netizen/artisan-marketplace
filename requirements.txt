@@ -74,6 +74,8 @@ ptyprocess==0.7.0
 pure_eval==0.2.3
 pycparser==2.23
 Pygments==2.19.2
+PyJWT[crypto]==2.10.1   # added
+cryptography==44.0.2     # added (required for crypto extra)
 python-dateutil==2.9.0.post0
 python-json-logger==4.0.0
 PyYAML==6.0.3
