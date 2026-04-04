@@ -71,7 +71,7 @@
         <div class="h-px bg-black/10"></div>
         {% if user.is_authenticated %}
         <p class="text-xs font-black uppercase tracking-widest text-black/40">Logged in as {{ user.username }}</p>
-        <form method="post" action="{% url 'logout' %}">
+        <form method="post" action="{% url 'account_logout' %}">
             {% csrf_token %}
             <button type="submit" class="flex items-center gap-4 font-black uppercase tracking-widest text-sm hover:text-primary transition-colors">
                 <span class="material-symbols-outlined">logout</span>
@@ -79,11 +79,11 @@
             </button>
         </form>
         {% else %}
-        <a href="{% url 'login' %}" class="flex items-center gap-4 font-black uppercase tracking-widest text-sm hover:text-primary transition-colors">
+        <a href="{% url 'account_login' %}" class="flex items-center gap-4 font-black uppercase tracking-widest text-sm hover:text-primary transition-colors">
             <span class="material-symbols-outlined">login</span>
             Login
         </a>
-        <a href="{% url 'register' %}" class="flex items-center gap-4 font-black uppercase tracking-widest text-sm hover:text-primary transition-colors">
+        <a href="{% url 'account_signup' %}" class="flex items-center gap-4 font-black uppercase tracking-widest text-sm hover:text-primary transition-colors">
             <span class="material-symbols-outlined">person_add</span>
             Register
         </a>
@@ -103,13 +103,13 @@
         <div class="flex items-center gap-4">
             {% if user.is_authenticated %}
             <span class="text-xs font-bold text-[#1b1b1b] hidden sm:block uppercase tracking-widest">{{ user.username }}</span>
-            <form method="post" action="{% url 'logout' %}">
+            <form method="post" action="{% url 'account_logout' %}">
                 {% csrf_token %}
                 <button type="submit" class="text-xs font-bold text-[#1b1b1b] hover:text-primary uppercase tracking-widest transition-colors">Logout</button>
             </form>
             {% else %}
-            <a href="{% url 'login' %}" class="text-xs font-bold text-[#1b1b1b] hover:text-primary uppercase tracking-widest transition-colors">Login</a>
-            <a href="{% url 'register' %}" class="text-xs font-bold bg-black text-white px-4 py-2 hover:bg-primary transition-colors uppercase tracking-widest">Register</a>
+            <a href="{% url 'account_login' %}" class="text-xs font-bold text-[#1b1b1b] hover:text-primary uppercase tracking-widest transition-colors">Login</a>
+            <a href="{% url 'account_signup' %}" class="text-xs font-bold bg-black text-white px-4 py-2 hover:bg-primary transition-colors uppercase tracking-widest">Register</a>
             {% endif %}
             <a href="{% url 'cart' %}" class="relative active:scale-95 duration-200 cursor-pointer hover:opacity-70">
                 <span class="material-symbols-outlined text-[#1b1b1b]">shopping_bag</span>
