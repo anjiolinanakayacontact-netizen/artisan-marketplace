@@ -4,144 +4,201 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Sign In - Kuntani Studios</title>
+<title>Sign In – Artisan Market</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
-    tailwind.config = {
-        darkMode: "class",
-        theme: {
-            extend: {
-                colors: {
-                    "primary": "#E65100", "on-primary": "#ffffff",
-                    "background": "#ffffff", "on-background": "#1b1b1b",
-                    "surface": "#ffffff", "on-surface": "#1b1b1b",
-                    "surface-container": "#f3f3f3",
-                    "outline": "#1b1b1b", "outline-variant": "#e0e0e0",
-                },
-                fontFamily: { "headline": ["Plus Jakarta Sans"], "body": ["Plus Jakarta Sans"] },
-                borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
-            },
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "surface-tint": "#a83900",
+          "on-tertiary-fixed": "#001b3f",
+          "primary-container": "#cd4700",
+          "on-tertiary-fixed-variant": "#00458f",
+          "primary-fixed-dim": "#ffb59a",
+          "surface-container-low": "#f3f3f3",
+          "surface": "#f9f9f9",
+          "primary-fixed": "#ffdbcf",
+          "on-secondary-fixed-variant": "#474747",
+          "on-error-container": "#93000a",
+          "secondary-container": "#e2e2e2",
+          "on-secondary": "#ffffff",
+          "tertiary-container": "#0072e4",
+          "inverse-surface": "#303030",
+          "outline": "#8f7066",
+          "on-tertiary-container": "#fefcff",
+          "on-tertiary": "#ffffff",
+          "inverse-primary": "#ffb59a",
+          "error-container": "#ffdad6",
+          "secondary": "#5e5e5e",
+          "background": "#f9f9f9",
+          "surface-container-highest": "#e2e2e2",
+          "on-primary-container": "#fffbff",
+          "inverse-on-surface": "#f1f1f1",
+          "tertiary": "#005ab7",
+          "secondary-fixed-dim": "#c6c6c6",
+          "on-primary-fixed": "#380d00",
+          "on-primary-fixed-variant": "#802a00",
+          "on-primary": "#ffffff",
+          "surface-dim": "#dadada",
+          "surface-container-high": "#e8e8e8",
+          "surface-bright": "#f9f9f9",
+          "tertiary-fixed-dim": "#abc7ff",
+          "on-surface-variant": "#5a4138",
+          "outline-variant": "#e3bfb2",
+          "on-surface": "#1b1b1b",
+          "on-error": "#ffffff",
+          "surface-container-lowest": "#ffffff",
+          "on-background": "#1b1b1b",
+          "surface-variant": "#e2e2e2",
+          "on-secondary-fixed": "#1b1b1b",
+          "error": "#ba1a1a",
+          "primary": "#a43700",
+          "on-secondary-container": "#646464",
+          "surface-container": "#eeeeee",
+          "secondary-fixed": "#e2e2e2",
+          "tertiary-fixed": "#d7e2ff"
         },
-    }
+        fontFamily: {
+          "headline": ["Plus Jakarta Sans"],
+          "body": ["Plus Jakarta Sans"],
+          "label": ["Plus Jakarta Sans"]
+        },
+        borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+      },
+    },
+  }
 </script>
 <style>
-    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-    body { min-height: max(884px, 100dvh); font-family: 'Plus Jakarta Sans', sans-serif; }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  body { min-height: max(884px, 100dvh); }
 </style>
 </head>
-<body class="bg-background text-on-background flex flex-col min-h-screen">
+<body class="bg-surface text-on-surface flex flex-col min-h-screen">
 
 <!-- TopAppBar -->
-<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-lg border-b border-black/5">
-    <div class="flex justify-between items-center px-6 h-20 w-full">
-        <div class="flex items-center gap-4">
-            <a href="{% url 'home' %}" class="text-[#1b1b1b] hover:opacity-70 transition-opacity active:scale-95">
-                <span class="material-symbols-outlined">arrow_back</span>
-            </a>
-            <span class="font-black uppercase text-xl tracking-widest text-[#1b1b1b]">THE ARTISAN EDITORIAL</span>
-        </div>
-        <a href="{% url 'cart' %}" class="text-[#1b1b1b] hover:opacity-70 transition-opacity">
-            <span class="material-symbols-outlined">shopping_bag</span>
-        </a>
+<header class="w-full top-0 z-50 bg-[#f9f9f9] dark:bg-[#1b1b1b]">
+  <div class="flex items-center justify-between px-6 py-4 w-full">
+    <div class="flex items-center gap-4">
+      <a href="{% url 'home' %}" class="active:scale-95 transition-transform hover:opacity-80 transition-opacity text-[#1b1b1b] dark:text-[#f9f9f9]">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </a>
+      <h1 class="font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-[#a43700] dark:text-[#cd4700] text-xl">Artisan Market</h1>
     </div>
+    <div class="hidden md:flex items-center gap-6">
+      <a href="{% url 'home' %}" class="font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-[#1b1b1b] dark:text-[#f9f9f9] hover:opacity-80 transition-opacity">Shop</a>
+      <a href="#" class="font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-[#1b1b1b] dark:text-[#f9f9f9] hover:opacity-80 transition-opacity">Artisans</a>
+      <a href="#" class="font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-[#1b1b1b] dark:text-[#f9f9f9] hover:opacity-80 transition-opacity">Journal</a>
+    </div>
+  </div>
 </header>
 
-<main class="flex-grow pt-28 pb-32 px-6 flex flex-col items-center justify-center">
-
-    <!-- Brand -->
-    <div class="text-center mb-12">
-        <div class="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto mb-6">
-            <span class="material-symbols-outlined text-white text-3xl">login</span>
-        </div>
-        <h2 class="font-black text-4xl tracking-tight text-on-surface mb-2">Sign In</h2>
-        <p class="text-on-surface/50 font-medium text-sm">Don't have an account?
-            <a href="{% url 'register' %}" class="text-primary font-black hover:underline">Then please sign up.</a>
-        </p>
+<main class="flex-grow flex items-center justify-center px-4 py-12 md:py-20">
+  <div class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <!-- Left Side: Editorial Content (same as register) -->
+    <div class="hidden md:block relative h-[600px] overflow-hidden rounded-xl">
+      <img alt="Artisan workshop" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-iWVRv4nA-gYxvf3aSbNC5yu-jx-d23YydfMb5QxITptxqJykIsDktlKg_iRbpTFDOB2TC9FXopj5X7bfY48DPr4GTNw047zUJq8CoX8YvEs0F48-wbQH2toRynOQfUyVU0un1Kitu_IHpYMRSx7DWSIxy1NMSsCKox8flyFFntVJ4doTsw0VmauRO-cP6alczJY2DT4fR_w-BYI66mz7lUJwMrmSjXS0re0jOCtsrpSPrcIuHBvK0XsK2eXnpSg4gV74uIpEQkGB"/>
+      <div class="absolute inset-0 bg-gradient-to-t from-on-surface/80 to-transparent flex flex-col justify-end p-12">
+        <span class="text-white/70 text-sm font-bold tracking-[0.2em] mb-4">THE MODERN WEAVER</span>
+        <h2 class="text-white text-4xl font-extrabold leading-tight mb-4">Welcome back.</h2>
+        <p class="text-white/80 text-lg max-w-md">Sign in to continue your journey through local craft and heritage.</p>
+      </div>
     </div>
 
-    <!-- Card -->
-    <div class="w-full max-w-md bg-white border-2 border-black rounded-lg p-10">
+    <!-- Right Side: Login Form -->
+    <div class="w-full max-w-md mx-auto">
+      <div class="mb-10">
+        <h2 class="text-4xl font-extrabold tracking-tight text-on-surface mb-3">Welcome Back</h2>
+        <p class="text-secondary leading-relaxed">Sign in to your account</p>
+      </div>
 
-        <!-- Tabs -->
-        <div class="flex mb-10 border-b-2 border-black/10">
-            <div class="flex-1 py-4 text-sm font-black uppercase tracking-widest border-b-4 border-primary text-on-surface text-center">
-                Sign In
-            </div>
-            <a href="{% url 'register' %}"
-               class="flex-1 py-4 text-sm font-bold uppercase tracking-widest text-on-surface/40 hover:text-on-surface transition-colors text-center">
-                Sign Up
-            </a>
+      <!-- Error Messages -->
+      {% if form.errors %}
+        <div class="mb-6 p-4 border-l-4 border-primary bg-primary/5 text-primary text-sm font-medium rounded-r">
+          {% if form.non_field_errors %}
+            {{ form.non_field_errors.0 }}
+          {% else %}
+            Invalid username or password.
+          {% endif %}
         </div>
+      {% endif %}
 
-        <!-- Error Messages -->
-        {% if form.errors %}
-        <div class="mb-6 p-4 border-2 border-primary bg-primary/5 text-primary text-xs font-black uppercase tracking-widest">
-            {% if form.non_field_errors %}
-                {{ form.non_field_errors.0 }}
-            {% else %}
-                Invalid username or password.
-            {% endif %}
-        </div>
+      <form method="post" action="{% url 'login' %}" class="space-y-6">
+        {% csrf_token %}
+        {% if next %}
+          <input type="hidden" name="next" value="{{ next }}">
         {% endif %}
 
-        <form method="post" class="space-y-6" action="{% url 'login' %}">
-            {% csrf_token %}
-            {% if next %}
-                <input type="hidden" name="next" value="{{ next }}">
-            {% endif %}
+        <!-- Username -->
+        <div class="space-y-2">
+          <label class="text-xs font-bold tracking-widest text-on-surface/60 uppercase" for="username">Username</label>
+          <input name="username" id="username" type="text" placeholder="serafina_reyes"
+                 value="{{ form.username.value|default:'' }}"
+                 class="w-full px-0 py-3 bg-transparent border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-colors placeholder:text-on-surface/20 text-lg"/>
+          {% if form.username.errors %}
+            <p class="text-primary text-xs font-bold mt-1">{{ form.username.errors.0 }}</p>
+          {% endif %}
+        </div>
 
-            <!-- Username -->
-            <div class="space-y-2">
-                <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-on-surface/60">Username</label>
-                <input name="username" type="text" placeholder="your_username"
-                       value="{{ form.username.value|default:'' }}"
-                       class="w-full bg-white border-b-2 border-black/20 focus:border-primary rounded-none py-3 px-0 text-on-surface font-medium placeholder:text-on-surface/20 focus:ring-0 transition-colors text-base"/>
-                {% if form.username.errors %}
-                <p class="text-primary text-xs font-bold">{{ form.username.errors.0 }}</p>
-                {% endif %}
-            </div>
+        <!-- Password -->
+        <div class="space-y-2">
+          <label class="text-xs font-bold tracking-widest text-on-surface/60 uppercase" for="password">Password</label>
+          <input name="password" id="password" type="password" placeholder="••••••••"
+                 class="w-full px-0 py-3 bg-transparent border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-colors placeholder:text-on-surface/20 text-lg"/>
+          {% if form.password.errors %}
+            <p class="text-primary text-xs font-bold mt-1">{{ form.password.errors.0 }}</p>
+          {% endif %}
+        </div>
 
-            <!-- Password -->
-            <div class="space-y-2">
-                <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-on-surface/60">Password</label>
-                <input name="password" type="password" placeholder="••••••••"
-                       class="w-full bg-white border-b-2 border-black/20 focus:border-primary rounded-none py-3 px-0 text-on-surface font-medium placeholder:text-on-surface/20 focus:ring-0 transition-colors text-base"/>
-                {% if form.password.errors %}
-                <p class="text-primary text-xs font-bold">{{ form.password.errors.0 }}</p>
-                {% endif %}
-            </div>
+        <div class="pt-4">
+          <button type="submit"
+                  class="w-full bg-gradient-to-r from-primary to-primary-container text-white py-4 rounded-full font-bold text-base tracking-widest active:scale-[0.98] transition-all shadow-lg shadow-primary/20">
+            SIGN IN
+          </button>
+        </div>
 
-            <!-- Submit -->
-            <div class="pt-4">
-                <button type="submit"
-                        class="w-full bg-primary text-white py-5 font-black uppercase tracking-widest hover:bg-black transition-colors active:scale-[0.98] duration-150 text-sm">
-                    Sign In
-                </button>
-            </div>
-        </form>
+        <div class="relative flex py-4 items-center">
+          <div class="flex-grow border-t border-outline-variant/30"></div>
+          <span class="flex-shrink mx-4 text-xs font-bold text-on-surface/40 uppercase tracking-widest">Or continue with</span>
+          <div class="flex-grow border-t border-outline-variant/30"></div>
+        </div>
+
+        <button type="button" class="w-full flex items-center justify-center gap-3 border-2 border-on-surface py-4 rounded-full font-bold text-base hover:bg-on-surface hover:text-white transition-all active:scale-[0.98]">
+          <svg class="w-5 h-5" viewBox="0 0 24 24">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="currentColor"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="currentColor"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="currentColor"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="currentColor"/>
+          </svg>
+          Google
+        </button>
+
+        <p class="text-center text-secondary text-sm pt-4">
+          Don’t have an account?
+          <a href="{% url 'register' %}" class="text-primary font-bold hover:underline ml-1">Sign Up</a>
+        </p>
+      </form>
     </div>
+  </div>
 </main>
 
-<!-- Bottom Nav -->
-<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-4 bg-white z-50 rounded-t-2xl shadow-2xl">
-    <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors">
-        <span class="material-symbols-outlined">grid_view</span>
-        <span class="text-[10px] font-bold uppercase tracking-widest mt-1">Curated</span>
-    </a>
-    <a href="{% url 'search' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors">
-        <span class="material-symbols-outlined">search</span>
-        <span class="text-[10px] font-bold uppercase tracking-widest mt-1">Discover</span>
-    </a>
-    <a href="#" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors">
-        <span class="material-symbols-outlined">groups</span>
-        <span class="text-[10px] font-bold uppercase tracking-widest mt-1">Artisans</span>
-    </a>
-    <a href="{% url 'login' %}" class="flex flex-col items-center justify-center text-[#E65100]">
-        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
-        <span class="text-[10px] font-bold uppercase tracking-widest mt-1">Vault</span>
-    </a>
-</nav>
+<!-- Footer (same as register) -->
+<footer class="w-full mt-auto bg-[#f3f3f3] dark:bg-[#121212]">
+  <div class="flex flex-col md:flex-row justify-between items-center px-8 py-12 w-full gap-4">
+    <div class="flex flex-col items-center md:items-start gap-2">
+      <span class="text-lg font-bold text-[#1b1b1b] dark:text-[#f9f9f9]">Artisan Market</span>
+      <p class="font-['Plus_Jakarta_Sans'] text-sm leading-relaxed text-[#1b1b1b]/60 dark:text-[#f9f9f9]/60">© 2025 Artisan Market. The Modern Weaver.</p>
+    </div>
+    <div class="flex gap-8">
+      <a href="#" class="font-['Plus_Jakarta_Sans'] text-sm leading-relaxed text-[#1b1b1b]/60 dark:text-[#f9f9f9]/60 hover:text-[#a43700] dark:hover:text-[#cd4700] transition-colors">Privacy Policy</a>
+      <a href="#" class="font-['Plus_Jakarta_Sans'] text-sm leading-relaxed text-[#1b1b1b]/60 dark:text-[#f9f9f9]/60 hover:text-[#a43700] dark:hover:text-[#cd4700] transition-colors">Terms of Service</a>
+      <a href="#" class="font-['Plus_Jakarta_Sans'] text-sm leading-relaxed text-[#1b1b1b]/60 dark:text-[#f9f9f9]/60 hover:text-[#a43700] dark:hover:text-[#cd4700] transition-colors">Help Center</a>
+    </div>
+  </div>
+</footer>
 </body>
 </html>
