@@ -163,6 +163,12 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 # Skip the "You are about to sign in" confirmation page
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
+# Allow users to authenticate using only their email address (no password)
+SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
+
+# Automatically connect social account if email matches existing user
+SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
+
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {

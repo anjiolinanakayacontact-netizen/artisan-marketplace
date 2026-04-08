@@ -105,6 +105,9 @@
       <div class="mb-6 p-4 border-l-4 border-primary bg-primary/5 text-primary text-sm font-medium rounded-r">
         {% if form.non_field_errors %}
           {{ form.non_field_errors.0 }}
+        {% elif form.email.errors %}
+          {{ form.email.errors.0 }}
+          <a href="{% url 'login' %}" class="font-bold underline ml-1">Sign In</a>
         {% else %}
           Please correct the errors below.
         {% endif %}
@@ -132,7 +135,10 @@
                value="{{ form.email.value|default:'' }}"
                class="w-full px-0 py-3 bg-transparent border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-colors placeholder:text-on-surface/20 text-lg"/>
         {% if form.email.errors %}
-          <p class="text-primary text-xs font-bold mt-1">{{ form.email.errors.0 }}</p>
+          <p class="text-primary text-xs font-bold mt-1">
+            {{ form.email.errors.0 }}
+            <a href="{% url 'login' %}" class="font-bold underline ml-1">Sign In</a>
+          </p>
         {% endif %}
       </div>
 

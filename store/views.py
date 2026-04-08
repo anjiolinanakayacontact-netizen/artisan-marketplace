@@ -15,6 +15,14 @@ class CustomUserCreationForm(UserCreationForm):
         model = User
         fields = ('username', 'email', 'password1', 'password2')
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email and User.objects.filter(email=email).exists():
+            raise forms.ValidationError(
+                'This email is already registered. Please sign in instead.'
+            )
+        return email
+
     def save(self, commit=True):
         user = super().save(commit=False)
         user.email = self.cleaned_data['email']
@@ -188,7 +196,6 @@ def register(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # FIX: Specify the backend because you have multiple authentication backends
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return redirect('home')
     else:
