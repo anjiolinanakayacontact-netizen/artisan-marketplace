@@ -151,7 +151,6 @@ LOGOUT_REDIRECT_URL = 'home'         # after logout
 
 
 # ========== DJANGO-ALLAUTH CONFIGURATION ==========
-# New recommended settings (replaces deprecated ACCOUNT_AUTHENTICATION_METHOD, etc.)
 # Allow login using email address
 ACCOUNT_LOGIN_METHODS = {'email'}
 
@@ -160,6 +159,9 @@ ACCOUNT_SIGNUP_FIELDS = ['username*', 'email', 'password1*', 'password2*']
 
 # Disable email verification during development
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+# Skip the "You are about to sign in" confirmation page
+SOCIALACCOUNT_LOGIN_ON_GET = True
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
