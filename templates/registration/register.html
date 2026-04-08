@@ -70,9 +70,9 @@
                class="flex-1 py-4 text-sm font-bold uppercase tracking-widest text-on-surface/40 hover:text-on-surface transition-colors text-center">
                 Sign In
             </a>
-            <button class="flex-1 py-4 text-sm font-black uppercase tracking-widest border-b-4 border-primary text-on-surface">
+            <div class="flex-1 py-4 text-sm font-black uppercase tracking-widest border-b-4 border-primary text-on-surface text-center">
                 Sign Up
-            </button>
+            </div>
         </div>
 
         <!-- Error Messages -->
@@ -82,7 +82,7 @@
         </div>
         {% endif %}
 
-        <form method="post" class="space-y-6">
+        <form method="post" class="space-y-6" action="{% url 'register' %}">
             {% csrf_token %}
 
             <!-- Email (optional) -->
@@ -91,7 +91,11 @@
                     Email <span class="text-on-surface/30">(optional)</span>
                 </label>
                 <input name="email" type="email" placeholder="you@example.com"
+                       value="{{ form.email.value|default:'' }}"
                        class="w-full bg-white border-b-2 border-black/20 focus:border-primary rounded-none py-3 px-0 text-on-surface font-medium placeholder:text-on-surface/20 focus:ring-0 transition-colors text-base"/>
+                {% if form.email.errors %}
+                <p class="text-primary text-xs font-bold">{{ form.email.errors.0 }}</p>
+                {% endif %}
             </div>
 
             <!-- Username -->
@@ -151,10 +155,8 @@
                     Sign Up
                 </button>
             </div>
-
         </form>
     </div>
-
 </main>
 
 <!-- Bottom Nav -->
@@ -176,6 +178,5 @@
         <span class="text-[10px] font-bold uppercase tracking-widest mt-1">Vault</span>
     </a>
 </nav>
-
 </body>
 </html>
