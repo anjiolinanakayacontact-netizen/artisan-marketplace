@@ -161,9 +161,14 @@ ACCOUNT_SIGNUP_FIELDS = ['username*', 'email', 'password1*', 'password2*']
 # Disable email verification during development
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
-# (Optional) If you want to keep email required, change to ['username*', 'email*', ...]
-# but your template marks email as optional, so we leave it optional.
-
-# (Optional) For better security in production, set:
-# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-# ACCOUNT_EMAIL_REQUIRED = True   (not used directly anymore – handled by SIGNUP_FIELDS)
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': os.environ.get('GOOGLE_CLIENT_ID', ''),
+            'secret': os.environ.get('GOOGLE_CLIENT_SECRET', ''),
+            'key': ''
+        },
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+    }
+}
