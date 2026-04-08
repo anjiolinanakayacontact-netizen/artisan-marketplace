@@ -1,0 +1,181 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Register - Kuntani Studios</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#E65100", "on-primary": "#ffffff",
+                    "background": "#ffffff", "on-background": "#1b1b1b",
+                    "surface": "#ffffff", "on-surface": "#1b1b1b",
+                    "surface-container": "#f3f3f3",
+                    "outline": "#1b1b1b", "outline-variant": "#e0e0e0",
+                },
+                fontFamily: { "headline": ["Plus Jakarta Sans"], "body": ["Plus Jakarta Sans"] },
+                borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    body { min-height: max(884px, 100dvh); font-family: 'Plus Jakarta Sans', sans-serif; }
+</style>
+</head>
+<body class="bg-background text-on-background flex flex-col min-h-screen">
+
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-lg border-b border-black/5">
+    <div class="flex justify-between items-center px-6 h-20 w-full">
+        <div class="flex items-center gap-4">
+            <a href="{% url 'home' %}" class="text-[#1b1b1b] hover:opacity-70 transition-opacity active:scale-95">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+            <span class="font-black uppercase text-xl tracking-widest text-[#1b1b1b]">THE ARTISAN EDITORIAL</span>
+        </div>
+        <a href="{% url 'cart' %}" class="text-[#1b1b1b] hover:opacity-70 transition-opacity">
+            <span class="material-symbols-outlined">shopping_bag</span>
+        </a>
+    </div>
+</header>
+
+<main class="flex-grow pt-28 pb-32 px-6 flex flex-col items-center justify-center">
+
+    <!-- Brand -->
+    <div class="text-center mb-12">
+        <div class="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto mb-6">
+            <span class="material-symbols-outlined text-white text-3xl">person_add</span>
+        </div>
+        <h2 class="font-black text-4xl tracking-tight text-on-surface mb-2">Sign Up</h2>
+        <p class="text-on-surface/50 font-medium text-sm">Already have an account?
+            <a href="{% url 'login' %}" class="text-primary font-black hover:underline">Then please sign in.</a>
+        </p>
+    </div>
+
+    <!-- Card -->
+    <div class="w-full max-w-md bg-white border-2 border-black rounded-lg p-10">
+
+        <!-- Tabs -->
+        <div class="flex mb-10 border-b-2 border-black/10">
+            <a href="{% url 'login' %}"
+               class="flex-1 py-4 text-sm font-bold uppercase tracking-widest text-on-surface/40 hover:text-on-surface transition-colors text-center">
+                Sign In
+            </a>
+            <button class="flex-1 py-4 text-sm font-black uppercase tracking-widest border-b-4 border-primary text-on-surface">
+                Sign Up
+            </button>
+        </div>
+
+        <!-- Error Messages -->
+        {% if form.errors %}
+        <div class="mb-6 p-4 border-2 border-primary bg-primary/5 text-primary text-xs font-black uppercase tracking-widest">
+            Please fix the errors below.
+        </div>
+        {% endif %}
+
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+
+            <!-- Email (optional) -->
+            <div class="space-y-2">
+                <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-on-surface/60">
+                    Email <span class="text-on-surface/30">(optional)</span>
+                </label>
+                <input name="email" type="email" placeholder="you@example.com"
+                       class="w-full bg-white border-b-2 border-black/20 focus:border-primary rounded-none py-3 px-0 text-on-surface font-medium placeholder:text-on-surface/20 focus:ring-0 transition-colors text-base"/>
+            </div>
+
+            <!-- Username -->
+            <div class="space-y-2">
+                <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-on-surface/60">Username</label>
+                <input name="username" type="text" placeholder="your_username"
+                       value="{{ form.username.value|default:'' }}"
+                       class="w-full bg-white border-b-2 border-black/20 focus:border-primary rounded-none py-3 px-0 text-on-surface font-medium placeholder:text-on-surface/20 focus:ring-0 transition-colors text-base"/>
+                {% if form.username.errors %}
+                <p class="text-primary text-xs font-bold">{{ form.username.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Password -->
+            <div class="space-y-2">
+                <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-on-surface/60">Password</label>
+                <input name="password1" type="password" placeholder="••••••••"
+                       class="w-full bg-white border-b-2 border-black/20 focus:border-primary rounded-none py-3 px-0 text-on-surface font-medium placeholder:text-on-surface/20 focus:ring-0 transition-colors text-base"/>
+                {% if form.password1.errors %}
+                <p class="text-primary text-xs font-bold">{{ form.password1.errors.0 }}</p>
+                {% endif %}
+                <!-- Password Rules -->
+                <ul class="mt-3 space-y-1">
+                    <li class="flex items-start gap-2 text-[10px] text-on-surface/40 font-medium">
+                        <span class="material-symbols-outlined text-xs mt-0.5">circle</span>
+                        Your password can't be too similar to your other personal information.
+                    </li>
+                    <li class="flex items-start gap-2 text-[10px] text-on-surface/40 font-medium">
+                        <span class="material-symbols-outlined text-xs mt-0.5">circle</span>
+                        Your password must contain at least 8 characters.
+                    </li>
+                    <li class="flex items-start gap-2 text-[10px] text-on-surface/40 font-medium">
+                        <span class="material-symbols-outlined text-xs mt-0.5">circle</span>
+                        Your password can't be a commonly used password.
+                    </li>
+                    <li class="flex items-start gap-2 text-[10px] text-on-surface/40 font-medium">
+                        <span class="material-symbols-outlined text-xs mt-0.5">circle</span>
+                        Your password can't be entirely numeric.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Password Again -->
+            <div class="space-y-2">
+                <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-on-surface/60">Password (again)</label>
+                <input name="password2" type="password" placeholder="••••••••"
+                       class="w-full bg-white border-b-2 border-black/20 focus:border-primary rounded-none py-3 px-0 text-on-surface font-medium placeholder:text-on-surface/20 focus:ring-0 transition-colors text-base"/>
+                {% if form.password2.errors %}
+                <p class="text-primary text-xs font-bold">{{ form.password2.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Submit -->
+            <div class="pt-4">
+                <button type="submit"
+                        class="w-full bg-primary text-white py-5 font-black uppercase tracking-widest hover:bg-black transition-colors active:scale-[0.98] duration-150 text-sm">
+                    Sign Up
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+</main>
+
+<!-- Bottom Nav -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-4 bg-white z-50 rounded-t-2xl shadow-2xl">
+    <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors">
+        <span class="material-symbols-outlined">grid_view</span>
+        <span class="text-[10px] font-bold uppercase tracking-widest mt-1">Curated</span>
+    </a>
+    <a href="{% url 'search' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors">
+        <span class="material-symbols-outlined">search</span>
+        <span class="text-[10px] font-bold uppercase tracking-widest mt-1">Discover</span>
+    </a>
+    <a href="#" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors">
+        <span class="material-symbols-outlined">groups</span>
+        <span class="text-[10px] font-bold uppercase tracking-widest mt-1">Artisans</span>
+    </a>
+    <a href="{% url 'login' %}" class="flex flex-col items-center justify-center text-[#E65100]">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+        <span class="text-[10px] font-bold uppercase tracking-widest mt-1">Vault</span>
+    </a>
+</nav>
+
+</body>
+</html>
