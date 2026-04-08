@@ -143,18 +143,27 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Authentication & redirects
-LOGIN_URL = '/login/'          # matches your custom login URL
-LOGIN_REDIRECT_URL = 'home'    # after successful login
-LOGOUT_REDIRECT_URL = 'home'   # after logout
 
-# Redirect after successful login (or signup via Google)
-LOGIN_REDIRECT_URL = '/'          # or 'home' or your dashboard URL
-ACCOUNT_LOGOUT_REDIRECT_URL = '/' # wherever you want after logout
+# ========== AUTHENTICATION & REDIRECTS ==========
+LOGIN_URL = '/login/'                # matches your custom login URL
+LOGIN_REDIRECT_URL = 'home'          # after successful login (email/password or Google)
+LOGOUT_REDIRECT_URL = 'home'         # after logout
 
-# For email verification (set False to skip during development)
-ACCOUNT_EMAIL_VERIFICATION = 'none'   # change to 'mandatory' in production
-ACCOUNT_EMAIL_REQUIRED = True
 
-ACCOUNT_USERNAME_REQUIRED = False   # users can sign up with email only
-ACCOUNT_AUTHENTICATION_METHOD = 'email'  # login with email instead of username
+# ========== DJANGO-ALLAUTH CONFIGURATION ==========
+# New recommended settings (replaces deprecated ACCOUNT_AUTHENTICATION_METHOD, etc.)
+# Allow login using email address
+ACCOUNT_LOGIN_METHODS = {'email'}
+
+# Signup fields: username is required, email is optional, password required
+ACCOUNT_SIGNUP_FIELDS = ['username*', 'email', 'password1*', 'password2*']
+
+# Disable email verification during development
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+# (Optional) If you want to keep email required, change to ['username*', 'email*', ...]
+# but your template marks email as optional, so we leave it optional.
+
+# (Optional) For better security in production, set:
+# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+# ACCOUNT_EMAIL_REQUIRED = True   (not used directly anymore – handled by SIGNUP_FIELDS)
