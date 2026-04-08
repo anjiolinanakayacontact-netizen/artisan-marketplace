@@ -147,3 +147,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_URL = '/login/'          # matches your custom login URL
 LOGIN_REDIRECT_URL = 'home'    # after successful login
 LOGOUT_REDIRECT_URL = 'home'   # after logout
+
+# Redirect after successful login (or signup via Google)
+LOGIN_REDIRECT_URL = '/'          # or 'home' or your dashboard URL
+ACCOUNT_LOGOUT_REDIRECT_URL = '/' # wherever you want after logout
+
+# For email verification (set False to skip during development)
+ACCOUNT_EMAIL_VERIFICATION = 'none'   # change to 'mandatory' in production
+ACCOUNT_EMAIL_REQUIRED = True
+
+ACCOUNT_USERNAME_REQUIRED = False   # users can sign up with email only
+ACCOUNT_AUTHENTICATION_METHOD = 'email'  # login with email instead of username
