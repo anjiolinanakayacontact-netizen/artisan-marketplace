@@ -4,12 +4,16 @@ def checkout(request):
     cart_items, total = cart_items_data(cart)
     
     if request.method == 'POST':
+        # Use logged-in user's info
+        full_name = request.user.get_full_name() or request.user.username
+        email = request.user.email
+        
         order = Order.objects.create(
             user=request.user,
-            full_name=request.POST.get('full_name'),
-            email=request.POST.get('email'),      # <-- new email field
-            payment_method=request.POST.get('payment_method'),
-            total=total,                          # no shipping fee
+            full_name=full_name,
+            email=email,
+            payment_method=request.POST.get('payment_method'),  # will be "Maya"
+            total=total,
         )
         for item in cart_items:
             OrderItem.objects.create(
