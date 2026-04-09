@@ -1,205 +1,117 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html class="light" lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>{{ product.name }} | The Artisan Editorial</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "primary": "#E65100",
-              "on-primary": "#ffffff",
-              "background": "#ffffff",
-              "surface": "#ffffff",
-              "on-surface": "#1b1b1b",
-              "on-surface-variant": "#4a4a4a",
-              "surface-container-low": "#f9f9f9",
-              "surface-container-high": "#f3f3f3",
-              "outline": "#1b1b1b",
-            },
-            fontFamily: {
-              "headline": ["Plus Jakarta Sans"],
-              "body": ["Inter"],
-              "label": ["Inter"]
-            },
-            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
-          },
-        },
-      }
-    </script>
+
+{% block title %}{{ product.name }} | The Artisan Editorial{% endblock %}
+
+{% block extra_head %}
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        body {
-            min-height: max(884px, 100dvh);
-        }
-    </style>
-</head>
-<body class="bg-background text-on-surface font-body min-h-screen flex flex-col">
+    /* No extra styles needed, but keep if any */
+</style>
+{% endblock %}
 
-<!-- TopAppBar -->
-<header class="fixed top-0 w-full z-50 bg-[#f9f9f9]/80 dark:bg-[#1b1b1b]/80 backdrop-blur-lg">
-<div class="flex justify-between items-center px-6 h-20 w-full">
-  <a href="{% url 'home' %}" class="text-[#1b1b1b] dark:text-[#f9f9f9] active:scale-95 duration-200 hover:opacity-70 transition-opacity">
-    <span class="material-symbols-outlined">arrow_back</span>
-  </a>
-  <h1 class="text-xl font-black tracking-widest text-[#1b1b1b] dark:text-[#f9f9f9] font-['Plus_Jakarta_Sans'] uppercase">THE ARTISAN EDITORIAL</h1>
-  <a href="{% url 'cart' %}" class="relative text-[#1b1b1b] dark:text-[#f9f9f9] active:scale-95 duration-200 hover:opacity-70 transition-opacity">
-    <span class="material-symbols-outlined">shopping_bag</span>
-    {% if cart_count %}
-    <span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{{ cart_count }}</span>
-    {% endif %}
-  </a>
-</div>
-</header>
+{% block content %}
 
-<main class="flex-grow pt-24 pb-32">
-
-  <!-- Hero Image Section -->
-  <section class="px-6">
+<!-- Hero Image Section -->
+<section class="px-6">
     <div class="relative w-full aspect-[4/5] rounded-lg overflow-hidden bg-surface-container-low">
-      {% if product.image %}
-        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
-      {% else %}
-        <div class="w-full h-full flex items-center justify-center bg-surface-container-high">
-          <span class="material-symbols-outlined text-6xl text-on-surface/20">image</span>
-        </div>
-      {% endif %}
-      <div class="absolute top-6 left-6">
-        <span class="bg-[#E65100] text-white font-label px-4 py-1.5 rounded-none text-xs font-bold uppercase tracking-[0.2em]">
-          {% if product.category %}{{ product.category.name }}{% else %}Artisan{% endif %}
-        </span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Product Details -->
-  <section class="px-6 mt-10">
-    <div class="flex flex-col space-y-3">
-      <h2 class="font-headline text-4xl font-black text-on-surface tracking-tighter leading-none uppercase">
-        {{ product.name }}
-      </h2>
-      <!-- Artisan Link -->
-      <a href="{% url 'artisan_profile' product.artisan_profile.pk %}" class="flex items-center space-x-3 w-fit group">
-        <div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden">
-          {% if product.artisan_profile.photo %}
-            <img src="{{ product.artisan_profile.photo.url }}" alt="{{ product.artisan_profile.name }}" class="w-full h-full object-cover">
-          {% else %}
+        {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+        {% else %}
             <div class="w-full h-full flex items-center justify-center bg-surface-container-high">
-              <span class="material-symbols-outlined text-on-surface/20">person</span>
+                <span class="material-symbols-outlined text-6xl text-on-surface/20">image</span>
             </div>
-          {% endif %}
+        {% endif %}
+        <div class="absolute top-6 left-6">
+            <span class="bg-[#E65100] text-white font-label px-4 py-1.5 rounded-none text-xs font-bold uppercase tracking-[0.2em]">
+                {% if product.category %}{{ product.category.name }}{% else %}Artisan{% endif %}
+            </span>
         </div>
-        <div class="flex flex-col">
-          <span class="font-label text-xs text-on-surface-variant font-bold uppercase tracking-wider">Master Artisan</span>
-          <div class="flex items-center space-x-1">
-            <span class="font-headline text-sm text-on-surface font-black group-hover:text-primary transition-colors">{{ product.artisan }}</span>
-            <span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
-          </div>
-        </div>
-      </a>
+    </div>
+</section>
+
+<!-- Product Details -->
+<section class="px-6 mt-10">
+    <div class="flex flex-col space-y-3">
+        <h2 class="font-headline text-4xl font-black text-on-surface tracking-tighter leading-none uppercase">
+            {{ product.name }}
+        </h2>
+        <!-- Artisan Link -->
+        <a href="{% url 'artisan_profile' product.artisan_profile.pk %}" class="flex items-center space-x-3 w-fit group">
+            <div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden">
+                {% if product.artisan_profile.photo %}
+                    <img src="{{ product.artisan_profile.photo.url }}" alt="{{ product.artisan_profile.name }}" class="w-full h-full object-cover">
+                {% else %}
+                    <div class="w-full h-full flex items-center justify-center bg-surface-container-high">
+                        <span class="material-symbols-outlined text-on-surface/20">person</span>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="flex flex-col">
+                <span class="font-label text-xs text-on-surface-variant font-bold uppercase tracking-wider">Master Artisan</span>
+                <div class="flex items-center space-x-1">
+                    <span class="font-headline text-sm text-on-surface font-black group-hover:text-primary transition-colors">{{ product.artisan }}</span>
+                    <span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
+                </div>
+            </div>
+        </a>
     </div>
 
     <!-- Price -->
     <div class="mt-8 flex items-baseline space-x-3">
-      <span class="font-headline text-3xl font-black text-[#E65100]">₱{{ product.price }}</span>
-      <!-- Optional: if you have original price field, you can add a strikethrough -->
-      {# <span class="text-lg text-on-surface-variant line-through font-label opacity-40 italic">₱{{ product.original_price }}</span> #}
+        <span class="font-headline text-3xl font-black text-[#E65100]">₱{{ product.price }}</span>
+        {# Optional: if you have original price field, add strikethrough #}
     </div>
 
     <!-- Description -->
     <div class="mt-8 border-l-4 border-[#1b1b1b] pl-6">
-      <p class="text-on-surface-variant leading-relaxed text-[1rem] font-medium">
-        {{ product.description }}
-      </p>
+        <p class="text-on-surface-variant leading-relaxed text-[1rem] font-medium">
+            {{ product.description }}
+        </p>
     </div>
 
     <!-- Add to Cart Form -->
     <div class="mt-12 space-y-6">
-      <form method="post" action="{% url 'add_to_cart' product.pk %}" id="add-to-cart-form">
-        {% csrf_token %}
-        <input type="hidden" name="quantity" id="quantity-input" value="1">
-      </form>
-      <div class="flex items-center justify-between py-6 border-y border-on-surface/10">
-        <span class="font-label font-black text-xs uppercase tracking-[0.2em] text-on-surface">Quantity</span>
-        <div class="flex items-center border-2 border-on-surface rounded-none overflow-hidden">
-          <button type="button" onclick="changeQuantity(-1)" class="w-12 h-12 flex items-center justify-center text-on-surface active:bg-on-surface active:text-white transition-all">
-            <span class="material-symbols-outlined">remove</span>
-          </button>
-          <span id="quantity-display" class="w-12 text-center font-headline font-black text-lg border-x-2 border-on-surface">1</span>
-          <button type="button" onclick="changeQuantity(1)" class="w-12 h-12 flex items-center justify-center text-on-surface active:bg-on-surface active:text-white transition-all">
-            <span class="material-symbols-outlined">add</span>
-          </button>
+        <form method="post" action="{% url 'add_to_cart' product.pk %}" id="add-to-cart-form">
+            {% csrf_token %}
+            <input type="hidden" name="quantity" id="quantity-input" value="1">
+        </form>
+        <div class="flex items-center justify-between py-6 border-y border-on-surface/10">
+            <span class="font-label font-black text-xs uppercase tracking-[0.2em] text-on-surface">Quantity</span>
+            <div class="flex items-center border-2 border-on-surface rounded-none overflow-hidden">
+                <button type="button" onclick="changeQuantity(-1)" class="w-12 h-12 flex items-center justify-center text-on-surface active:bg-on-surface active:text-white transition-all">
+                    <span class="material-symbols-outlined">remove</span>
+                </button>
+                <span id="quantity-display" class="w-12 text-center font-headline font-black text-lg border-x-2 border-on-surface">1</span>
+                <button type="button" onclick="changeQuantity(1)" class="w-12 h-12 flex items-center justify-center text-on-surface active:bg-on-surface active:text-white transition-all">
+                    <span class="material-symbols-outlined">add</span>
+                </button>
+            </div>
         </div>
-      </div>
-      <button type="submit" form="add-to-cart-form" class="w-full bg-[#1b1b1b] text-white font-headline font-black py-6 text-sm uppercase tracking-[0.3em] active:bg-[#E65100] active:scale-[0.98] transition-all">
-        Add to Cart
-      </button>
+        <button type="submit" form="add-to-cart-form" class="w-full bg-[#1b1b1b] text-white font-headline font-black py-6 text-sm uppercase tracking-[0.3em] active:bg-[#E65100] active:scale-[0.98] transition-all">
+            Add to Cart
+        </button>
     </div>
 
     <!-- Back to Search / Home Link -->
     <div class="mt-12 flex justify-center">
-      <a href="{% url 'search' %}" class="flex items-center space-x-2 text-on-surface font-label font-black text-xs uppercase tracking-widest hover:text-[#E65100] transition-colors">
-        <span class="material-symbols-outlined text-sm">chevron_left</span>
-        <span>Back to Archive</span>
-      </a>
+        <a href="{% url 'search' %}" class="flex items-center space-x-2 text-on-surface font-label font-black text-xs uppercase tracking-widest hover:text-[#E65100] transition-colors">
+            <span class="material-symbols-outlined text-sm">chevron_left</span>
+            <span>Back to Archive</span>
+        </a>
     </div>
-  </section>
-</main>
+</section>
 
-<!-- Footer -->
-<footer class="w-full py-16 px-8 mt-auto bg-[#1b1b1b] text-white flex flex-col items-center space-y-8">
-  <div class="text-2xl font-black tracking-tighter uppercase font-headline">The Artisan Editorial</div>
-  <div class="w-12 h-[2px] bg-[#E65100]"></div>
-  <p class="font-['Inter'] text-xs leading-relaxed text-center opacity-60 uppercase tracking-widest">
-    Handcrafted with Love in the Philippines
-  </p>
-  <div class="flex flex-wrap justify-center gap-8 text-[10px] font-black uppercase tracking-[0.2em]">
-    <a href="{% url 'home' %}" class="hover:text-[#E65100] transition-all">About</a>
-    <a href="{% url 'artisan_directory' %}" class="hover:text-[#E65100] transition-all">Artisans</a>
-    <a href="{% url 'search' %}" class="hover:text-[#E65100] transition-all">Journal</a>
-  </div>
-</footer>
+{% endblock %}
 
-<!-- Bottom Navigation -->
-<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#ffffff] dark:bg-[#121212] z-50 rounded-t-2xl shadow-2xl">
-  <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300 ease-out">
-    <span class="material-symbols-outlined">grid_view</span>
-    <span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta mt-1">Curated</span>
-  </a>
-  <a href="{% url 'search' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300 ease-out">
-    <span class="material-symbols-outlined">search</span>
-    <span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta mt-1">Discover</span>
-  </a>
-  <!-- Artisans link points to artisan_directory -->
-  <a href="{% url 'artisan_directory' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300 ease-out">
-    <span class="material-symbols-outlined">groups</span>
-    <span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta mt-1">Artisans</span>
-  </a>
-  <a href="{% url 'cart' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300 ease-out">
-    <span class="material-symbols-outlined">shopping_bag</span>
-    <span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta mt-1">Vault</span>
-  </a>
-</nav>
-
+{% block extra_scripts %}
 <script>
-  function changeQuantity(delta) {
-    const quantitySpan = document.getElementById('quantity-display');
-    let current = parseInt(quantitySpan.innerText);
-    let newValue = current + delta;
-    if (newValue < 1) newValue = 1;
-    quantitySpan.innerText = newValue;
-    document.getElementById('quantity-input').value = newValue;
-  }
+    function changeQuantity(delta) {
+        const quantitySpan = document.getElementById('quantity-display');
+        let current = parseInt(quantitySpan.innerText);
+        let newValue = current + delta;
+        if (newValue < 1) newValue = 1;
+        quantitySpan.innerText = newValue;
+        document.getElementById('quantity-input').value = newValue;
+    }
 </script>
-
-</body>
-</html>
+{% endblock %}

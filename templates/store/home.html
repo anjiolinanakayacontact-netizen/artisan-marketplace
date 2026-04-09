@@ -1,129 +1,17 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html class="light" lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>THE ARTISAN EDITORIAL - The Woven Narrative</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-    tailwind.config = {
-        darkMode: "class",
-        theme: {
-            extend: {
-                colors: {
-                    "primary": "#E65100", "on-primary": "#ffffff",
-                    "surface": "#ffffff", "on-surface": "#1b1b1b",
-                    "background": "#ffffff", "on-background": "#1b1b1b",
-                    "surface-container": "#f3f3f3",
-                    "surface-container-high": "#ebebeb",
-                    "outline": "#1b1b1b", "secondary": "#1b1b1b"
-                },
-                fontFamily: {
-                    "headline": ["Plus Jakarta Sans"],
-                    "body": ["Inter"],
-                    "label": ["Plus Jakarta Sans"]
-                },
-                borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
-            },
-        },
-    }
-</script>
+
+{% block title %}THE ARTISAN EDITORIAL - The Woven Narrative{% endblock %}
+
+{% block extra_head %}
 <style>
-    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    body { background-color: #ffffff; color: #1b1b1b; font-family: 'Inter', sans-serif; min-height: max(884px, 100dvh); }
 </style>
-</head>
-<body class="bg-background selection:bg-primary selection:text-on-primary">
+{% endblock %}
 
-<!-- Sidebar Overlay -->
-<div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden" onclick="closeSidebar()"></div>
-
-<!-- Sidebar -->
-<div id="sidebar" class="fixed top-0 left-0 h-full w-72 bg-white z-50 transform -translate-x-full transition-transform duration-300 shadow-2xl">
-    <div class="flex justify-between items-center px-6 h-20 border-b border-black/10">
-        <span class="font-black uppercase tracking-widest text-[#1b1b1b]">Menu</span>
-        <button onclick="closeSidebar()" class="hover:opacity-70 transition-opacity">
-            <span class="material-symbols-outlined">close</span>
-        </button>
-    </div>
-    <nav class="px-6 py-8 space-y-6">
-        <a href="{% url 'home' %}" class="flex items-center gap-4 font-black uppercase tracking-widest text-sm hover:text-primary transition-colors">
-            <span class="material-symbols-outlined">grid_view</span>
-            Home
-        </a>
-        <a href="{% url 'search' %}" class="flex items-center gap-4 font-black uppercase tracking-widest text-sm hover:text-primary transition-colors">
-            <span class="material-symbols-outlined">search</span>
-            Discover
-        </a>
-        <a href="{% url 'cart' %}" class="flex items-center gap-4 font-black uppercase tracking-widest text-sm hover:text-primary transition-colors">
-            <span class="material-symbols-outlined">shopping_bag</span>
-            Cart
-        </a>
-        <a href="{% url 'checkout' %}" class="flex items-center gap-4 font-black uppercase tracking-widest text-sm hover:text-primary transition-colors">
-            <span class="material-symbols-outlined">receipt_long</span>
-            Checkout
-        </a>
-        <div class="h-px bg-black/10"></div>
-        {% if user.is_authenticated %}
-        <p class="text-xs font-black uppercase tracking-widest text-black/40">Logged in as {{ user.username }}</p>
-        <form method="post" action="{% url 'account_logout' %}">
-            {% csrf_token %}
-            <button type="submit" class="flex items-center gap-4 font-black uppercase tracking-widest text-sm hover:text-primary transition-colors">
-                <span class="material-symbols-outlined">logout</span>
-                Logout
-            </button>
-        </form>
-        {% else %}
-        <a href="{% url 'account_login' %}" class="flex items-center gap-4 font-black uppercase tracking-widest text-sm hover:text-primary transition-colors">
-            <span class="material-symbols-outlined">login</span>
-            Login
-        </a>
-        <a href="{% url 'account_signup' %}" class="flex items-center gap-4 font-black uppercase tracking-widest text-sm hover:text-primary transition-colors">
-            <span class="material-symbols-outlined">person_add</span>
-            Register
-        </a>
-        {% endif %}
-    </nav>
-</div>
-
-<!-- TopAppBar -->
-<header class="bg-[#f9f9f9]/80 backdrop-blur-lg fixed top-0 w-full z-30">
-    <div class="flex justify-between items-center px-6 h-20 w-full">
-        <div class="flex items-center gap-4">
-            <button onclick="openSidebar()" class="active:scale-95 duration-200 hover:opacity-70 transition-opacity">
-                <span class="material-symbols-outlined text-[#1b1b1b]">menu</span>
-            </button>
-            <span class="text-xl font-black tracking-widest text-[#1b1b1b] uppercase">THE ARTISAN EDITORIAL</span>
-        </div>
-        <div class="flex items-center gap-4">
-            {% if user.is_authenticated %}
-            <span class="text-xs font-bold text-[#1b1b1b] hidden sm:block uppercase tracking-widest">{{ user.username }}</span>
-            <form method="post" action="{% url 'account_logout' %}">
-                {% csrf_token %}
-                <button type="submit" class="text-xs font-bold text-[#1b1b1b] hover:text-primary uppercase tracking-widest transition-colors">Logout</button>
-            </form>
-            {% else %}
-            <a href="{% url 'account_login' %}" class="text-xs font-bold text-[#1b1b1b] hover:text-primary uppercase tracking-widest transition-colors">Login</a>
-            <a href="{% url 'account_signup' %}" class="text-xs font-bold bg-black text-white px-4 py-2 hover:bg-primary transition-colors uppercase tracking-widest">Register</a>
-            {% endif %}
-            <a href="{% url 'cart' %}" class="relative active:scale-95 duration-200 cursor-pointer hover:opacity-70">
-                <span class="material-symbols-outlined text-[#1b1b1b]">shopping_bag</span>
-                {% if cart_count %}
-                <span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{{ cart_count }}</span>
-                {% endif %}
-            </a>
-        </div>
-    </div>
-</header>
-
-<main class="pt-20 pb-24">
-
-    <!-- Hero Section - Quote Slider -->
+{% block content %}
+<!-- Hero Section - Quote Slider -->
 <section class="relative px-6 pt-6 pb-12">
     <div class="relative w-full aspect-[4/5] overflow-hidden shadow-2xl bg-black">
 
@@ -187,90 +75,90 @@
     </div>
 </section>
 
-    <!-- Categories Row -->
-    <section class="px-6 mb-16">
-        <h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] mb-8 text-on-surface">Curated Categories</h2>
-        <div class="flex gap-10 overflow-x-auto pb-4 no-scrollbar">
-            {% for category in categories %}
-            <a href="{% url 'search' %}?category={{ category.id }}" class="flex flex-col items-center gap-3 min-w-fit group">
-                <div class="w-14 h-14 bg-surface-container-high flex items-center justify-center text-on-surface group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-                    <span class="material-symbols-outlined text-2xl">category</span>
-                </div>
-                <span class="font-label text-[10px] font-black uppercase tracking-widest text-on-surface">{{ category.name }}</span>
-            </a>
-            {% empty %}
-            <p class="text-on-surface/50 text-sm">No categories yet.</p>
-            {% endfor %}
-        </div>
-    </section>
+<!-- Categories Row -->
+<section class="px-6 mb-16">
+    <h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] mb-8 text-on-surface">Curated Categories</h2>
+    <div class="flex gap-10 overflow-x-auto pb-4 no-scrollbar">
+        {% for category in categories %}
+        <a href="{% url 'search' %}?category={{ category.id }}" class="flex flex-col items-center gap-3 min-w-fit group">
+            <div class="w-14 h-14 bg-surface-container-high flex items-center justify-center text-on-surface group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                <span class="material-symbols-outlined text-2xl">category</span>
+            </div>
+            <span class="font-label text-[10px] font-black uppercase tracking-widest text-on-surface">{{ category.name }}</span>
+        </a>
+        {% empty %}
+        <p class="text-on-surface/50 text-sm">No categories yet.</p>
+        {% endfor %}
+    </div>
+</section>
 
-    <!-- Featured Artisans -->
-    <section class="bg-black text-white py-16 px-6 mb-16">
-        <div class="flex justify-between items-end mb-10">
-            <div>
-                <h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] text-white">The Master Artisans</h2>
-                <p class="text-[10px] text-white/50 font-medium uppercase mt-2 tracking-widest">Preserving Heritage</p>
+<!-- Featured Artisans -->
+<section class="bg-black text-white py-16 px-6 mb-16">
+    <div class="flex justify-between items-end mb-10">
+        <div>
+            <h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] text-white">The Master Artisans</h2>
+            <p class="text-[10px] text-white/50 font-medium uppercase mt-2 tracking-widest">Preserving Heritage</p>
+        </div>
+    </div>
+    <div class="flex gap-8 overflow-x-auto no-scrollbar">
+        {% for artisan in artisans %}
+        <a href="{% url 'artisan_profile' artisan.pk %}" class="flex flex-col items-center min-w-[80px]">
+            <div class="w-20 h-20 grayscale hover:grayscale-0 transition-all duration-500 mb-3 border border-white/20 p-1 overflow-hidden">
+                {% if artisan.photo %}
+                <img src="{{ artisan.photo.url }}" alt="{{ artisan.name }}" class="w-full h-full object-cover"/>
+                {% else %}
+                <div class="w-full h-full bg-white/10 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white">person</span>
+                </div>
+                {% endif %}
+            </div>
+            <span class="font-label text-[9px] font-black tracking-widest uppercase text-white text-center">{{ artisan.name }}</span>
+        </a>
+        {% empty %}
+        <p class="text-white/50 text-sm">No artisans yet.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Product Grid -->
+<section class="px-6 mb-16">
+    <h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] mb-10 text-on-surface">The Seasonal Drop</h2>
+    <div class="grid grid-cols-2 gap-x-6 gap-y-12">
+        {% for product in products %}
+        <div class="group">
+            <div class="aspect-square bg-surface-container overflow-hidden mb-5 relative group-hover:shadow-xl transition-all duration-500">
+                {% if product.image %}
+                <a href="{% url 'product_detail' product.pk %}">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"/>
+                </a>
+                {% else %}
+                <a href="{% url 'product_detail' product.pk %}" class="w-full h-full flex items-center justify-center">
+                    <span class="material-symbols-outlined text-4xl text-on-surface/20">image</span>
+                </a>
+                {% endif %}
+            </div>
+            <h3 class="font-headline font-black text-[10px] uppercase tracking-widest text-on-surface truncate">{{ product.name }}</h3>
+            <p class="text-[9px] text-on-surface/50 mb-3 uppercase tracking-tighter">{{ product.artisan }}</p>
+            <div class="flex items-center justify-between border-t border-black/5 pt-3">
+                <span class="font-headline font-black text-primary text-sm">₱{{ product.price }}</span>
+                <form method="post" action="{% url 'add_to_cart' product.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="bg-black text-white w-10 h-10 flex items-center justify-center active:scale-90 transition-transform hover:bg-primary">
+                        <span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+                    </button>
+                </form>
             </div>
         </div>
-        <div class="flex gap-8 overflow-x-auto no-scrollbar">
-            {% for artisan in artisans %}
-            <a href="{% url 'artisan_profile' artisan.pk %}" class="flex flex-col items-center min-w-[80px]">
-                <div class="w-20 h-20 grayscale hover:grayscale-0 transition-all duration-500 mb-3 border border-white/20 p-1 overflow-hidden">
-                    {% if artisan.photo %}
-                    <img src="{{ artisan.photo.url }}" alt="{{ artisan.name }}" class="w-full h-full object-cover"/>
-                    {% else %}
-                    <div class="w-full h-full bg-white/10 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-white">person</span>
-                    </div>
-                    {% endif %}
-                </div>
-                <span class="font-label text-[9px] font-black tracking-widest uppercase text-white text-center">{{ artisan.name }}</span>
-            </a>
-            {% empty %}
-            <p class="text-white/50 text-sm">No artisans yet.</p>
-            {% endfor %}
+        {% empty %}
+        <div class="col-span-2 text-center py-12 text-on-surface/50">
+            No products yet. Add some in the admin panel!
         </div>
-    </section>
+        {% endfor %}
+    </div>
+</section>
 
-    <!-- Product Grid -->
-    <section class="px-6 mb-16">
-        <h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] mb-10 text-on-surface">The Seasonal Drop</h2>
-        <div class="grid grid-cols-2 gap-x-6 gap-y-12">
-            {% for product in products %}
-            <div class="group">
-                <div class="aspect-square bg-surface-container overflow-hidden mb-5 relative group-hover:shadow-xl transition-all duration-500">
-                    {% if product.image %}
-                    <a href="{% url 'product_detail' product.pk %}">
-                        <img src="{{ product.image.url }}" alt="{{ product.name }}"
-                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"/>
-                    </a>
-                    {% else %}
-                    <a href="{% url 'product_detail' product.pk %}" class="w-full h-full flex items-center justify-center">
-                        <span class="material-symbols-outlined text-4xl text-on-surface/20">image</span>
-                    </a>
-                    {% endif %}
-                </div>
-                <h3 class="font-headline font-black text-[10px] uppercase tracking-widest text-on-surface truncate">{{ product.name }}</h3>
-                <p class="text-[9px] text-on-surface/50 mb-3 uppercase tracking-tighter">{{ product.artisan }}</p>
-                <div class="flex items-center justify-between border-t border-black/5 pt-3">
-                    <span class="font-headline font-black text-primary text-sm">₱{{ product.price }}</span>
-                    <form method="post" action="{% url 'add_to_cart' product.pk %}">
-                        {% csrf_token %}
-                        <button type="submit" class="bg-black text-white w-10 h-10 flex items-center justify-center active:scale-90 transition-transform hover:bg-primary">
-                            <span class="material-symbols-outlined text-sm">add_shopping_cart</span>
-                        </button>
-                    </form>
-                </div>
-            </div>
-            {% empty %}
-            <div class="col-span-2 text-center py-12 text-on-surface/50">
-                No products yet. Add some in the admin panel!
-            </div>
-            {% endfor %}
-        </div>
-    </section>
-
-    <!-- Footer -->
+<!-- Footer -->
 <footer class="bg-black text-white w-full py-16 px-8 mt-auto flex flex-col items-center space-y-4 text-center">
     <span class="text-white font-black font-headline text-lg uppercase tracking-[0.4em]">Kuntani Studios</span>
     <p class="text-white/60 text-xs font-medium tracking-widest max-w-xs leading-relaxed">
@@ -279,76 +167,50 @@
     <div class="h-px w-12 bg-primary mt-2"></div>
     <p class="font-['Plus_Jakarta_Sans'] text-[9px] uppercase tracking-[0.2em] text-white opacity-40">All products are handcrafted in the Philippines</p>
 </footer>
+{% endblock %}
 
-</main>
-
-<!-- Bottom Nav -->
-<nav class="bg-white fixed bottom-0 w-full z-30 rounded-t-2xl shadow-2xl">
-    <div class="flex justify-around items-center h-20 px-4">
-        <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#a43700]">
-            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">grid_view</span>
-            <span class="text-[10px] font-bold uppercase tracking-widest mt-1">Curated</span>
-        </a>
-        <a href="{% url 'search' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors">
-            <span class="material-symbols-outlined">search</span>
-            <span class="text-[10px] font-bold uppercase tracking-widest mt-1">Discover</span>
-        </a>
-        <!-- Artisans link now points to the new artisan directory -->
-        <a href="{% url 'artisan_directory' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors">
-            <span class="material-symbols-outlined">groups</span>
-            <span class="text-[10px] font-bold uppercase tracking-widest mt-1">Artisans</span>
-        </a>
-        <a href="{% url 'cart' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors">
-            <span class="material-symbols-outlined">shopping_bag</span>
-            <span class="text-[10px] font-bold uppercase tracking-widest mt-1">Vault</span>
-        </a>
-    </div>
-</nav>
-
+{% block extra_scripts %}
 <script>
-    // Sidebar
-    function openSidebar() {
-        document.getElementById('sidebar').classList.remove('-translate-x-full');
-        document.getElementById('sidebar-overlay').classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-    }
-    function closeSidebar() {
-        document.getElementById('sidebar').classList.add('-translate-x-full');
-        document.getElementById('sidebar-overlay').classList.add('hidden');
-        document.body.style.overflow = '';
-    }
-
-    // Slider
+    // Slider functionality
     let currentSlide = 0;
     const totalSlides = 3;
 
     function updateSlider() {
-        document.getElementById('slider').style.transform = `translateX(-${currentSlide * 100}%)`;
+        const slider = document.getElementById('slider');
+        if (!slider) return;
+        slider.style.transform = `translateX(-${currentSlide * 100}%)`;
         for (let i = 0; i < totalSlides; i++) {
-            document.getElementById(`dot-${i}`).className = i === currentSlide
-                ? 'w-2 h-2 bg-primary rounded-full transition-all'
-                : 'w-2 h-2 bg-white/30 rounded-full transition-all';
+            const dot = document.getElementById(`dot-${i}`);
+            if (dot) {
+                dot.className = i === currentSlide
+                    ? 'w-2 h-2 bg-primary rounded-full transition-all'
+                    : 'w-2 h-2 bg-white/30 rounded-full transition-all';
+            }
         }
     }
 
-    function nextSlide() {
+    window.nextSlide = function() {
         currentSlide = (currentSlide + 1) % totalSlides;
         updateSlider();
-    }
+    };
 
-    function prevSlide() {
+    window.prevSlide = function() {
         currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
         updateSlider();
-    }
+    };
 
-    function goToSlide(index) {
+    window.goToSlide = function(index) {
         currentSlide = index;
         updateSlider();
-    }
+    };
 
     // Auto slide every 5 seconds
-    setInterval(nextSlide, 5000);
+    let autoSlideInterval = setInterval(() => {
+        if (document.getElementById('slider')) {
+            nextSlide();
+        } else {
+            clearInterval(autoSlideInterval);
+        }
+    }, 5000);
 </script>
-
-</body>
-</html>
+{% endblock %}

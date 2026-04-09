@@ -1,168 +1,77 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html class="light" lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Artisan Profile - The Artisan Editorial</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "primary": "#E65100",
-              "on-primary": "#ffffff",
-              "surface": "#ffffff",
-              "on-surface": "#1b1b1b",
-              "surface-variant": "#f3f3f3",
-              "on-surface-variant": "#1b1b1b",
-              "outline": "#1b1b1b",
-              "outline-variant": "#e0e0e0",
-              "background": "#ffffff",
-              "on-background": "#1b1b1b"
-            },
-            fontFamily: {
-              "headline": ["Plus Jakarta Sans"],
-              "body": ["Inter"],
-              "label": ["Inter"]
-            },
-            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
-          },
-        },
-      }
-    </script>
-<style>
-      .material-symbols-outlined {
-        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-      }
-      body {
-        -webkit-tap-highlight-color: transparent;
-        min-height: max(884px, 100dvh);
-      }
-    </style>
-</head>
-<body class="bg-background text-on-background font-body selection:bg-primary/20">
 
-<!-- TopAppBar -->
-<header class="fixed top-0 w-full z-50 bg-[#f9f9f9]/80 dark:bg-[#1b1b1b]/80 backdrop-blur-lg flex justify-between items-center px-6 h-20">
-  <button onclick="openSidebar()" class="text-[#1b1b1b] active:scale-95 duration-200 hover:opacity-70 transition-opacity">
-    <span class="material-symbols-outlined">menu</span>
-  </button>
-  <a href="{% url 'home' %}" class="text-xl font-black tracking-widest text-[#1b1b1b] dark:text-[#f9f9f9] font-headline uppercase">THE ARTISAN EDITORIAL</a>
-  <a href="{% url 'cart' %}" class="relative active:scale-95 duration-200 hover:opacity-70 transition-opacity">
-    <span class="material-symbols-outlined text-[#1b1b1b]">shopping_bag</span>
-    {% if cart_count %}
-    <span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{{ cart_count }}</span>
-    {% endif %}
-  </a>
-</header>
+{% block title %}{{ artisan.name }} | Artisan Profile - The Artisan Editorial{% endblock %}
 
-<main class="pt-24 pb-24">
+{% block content %}
 
-  <!-- Hero Section -->
-  <section class="px-6 pt-4 pb-4">
+<!-- Hero Section -->
+<section class="px-6 pt-4 pb-4">
     <div class="relative w-full aspect-[4/5] rounded-lg overflow-hidden border border-outline/5 mb-8">
-      {% if artisan.photo %}
-        <img src="{{ artisan.photo.url }}" alt="{{ artisan.name }}" class="w-full h-full object-cover">
-      {% else %}
-        <div class="w-full h-full bg-surface-variant flex items-center justify-center">
-          <span class="material-symbols-outlined text-6xl text-on-surface/20">person</span>
+        {% if artisan.photo %}
+            <img src="{{ artisan.photo.url }}" alt="{{ artisan.name }}" class="w-full h-full object-cover">
+        {% else %}
+            <div class="w-full h-full bg-surface-variant flex items-center justify-center">
+                <span class="material-symbols-outlined text-6xl text-on-surface/20">person</span>
+            </div>
+        {% endif %}
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+        <div class="absolute bottom-8 left-8 right-8 text-white">
+            <span class="inline-block bg-primary text-white px-3 py-1 rounded text-[10px] font-black uppercase tracking-[0.2em] mb-4">{{ artisan.specialty|default:"Artisan" }}</span>
+            <h2 class="text-5xl font-headline font-black tracking-tighter leading-none mb-2">{{ artisan.name }}</h2>
+            <div class="flex items-center gap-2 text-white/80 font-semibold uppercase tracking-widest text-[10px]">
+                <span class="material-symbols-outlined text-sm">location_on</span>
+                <span>{{ artisan.location|default:"Philippines" }}</span>
+            </div>
         </div>
-      {% endif %}
-      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-      <div class="absolute bottom-8 left-8 right-8 text-white">
-        <span class="inline-block bg-primary text-white px-3 py-1 rounded text-[10px] font-black uppercase tracking-[0.2em] mb-4">{{ artisan.specialty|default:"Artisan" }}</span>
-        <h2 class="text-5xl font-headline font-black tracking-tighter leading-none mb-2">{{ artisan.name }}</h2>
-        <div class="flex items-center gap-2 text-white/80 font-semibold uppercase tracking-widest text-[10px]">
-          <span class="material-symbols-outlined text-sm">location_on</span>
-          <span>{{ artisan.location|default:"Philippines" }}</span>
-        </div>
-      </div>
     </div>
 
     <!-- Bio (without buttons) -->
     <div class="bg-surface-variant p-10 rounded-lg mb-12 relative overflow-hidden border border-outline-variant">
-      <div class="absolute -top-4 -right-4 opacity-5">
-        <span class="material-symbols-outlined text-[120px]">format_quote</span>
-      </div>
-      <p class="text-xl leading-relaxed text-on-surface font-semibold italic">
-        {{ artisan.bio|default:"Every piece is handcrafted with care." }}
-      </p>
-      <!-- Inquire and Share Story buttons removed -->
+        <div class="absolute -top-4 -right-4 opacity-5">
+            <span class="material-symbols-outlined text-[120px]">format_quote</span>
+        </div>
+        <p class="text-xl leading-relaxed text-on-surface font-semibold italic">
+            {{ artisan.bio|default:"Every piece is handcrafted with care." }}
+        </p>
     </div>
-  </section>
+</section>
 
-  <!-- Product Grid Header -->
-  <div class="px-6 mb-8 flex justify-between items-end border-b border-outline-variant pb-4">
+<!-- Product Grid Header -->
+<div class="px-6 mb-8 flex justify-between items-end border-b border-outline-variant pb-4">
     <div>
-      <h3 class="text-3xl font-headline font-black text-on-surface tracking-tighter uppercase">Artisan Collection</h3>
-      <p class="text-[10px] font-bold text-on-surface/60 uppercase tracking-widest mt-1">Handcrafted works by {{ artisan.name }}</p>
+        <h3 class="text-3xl font-headline font-black text-on-surface tracking-tighter uppercase">Artisan Collection</h3>
+        <p class="text-[10px] font-bold text-on-surface/60 uppercase tracking-widest mt-1">Handcrafted works by {{ artisan.name }}</p>
     </div>
     <span class="text-primary font-black text-xs uppercase tracking-widest border-b-2 border-primary pb-1 cursor-pointer">View All</span>
-  </div>
+</div>
 
-  <!-- Product Grid (Dynamic) -->
-  <section class="px-6 grid grid-cols-2 gap-x-6 gap-y-10">
+<!-- Product Grid (Dynamic) -->
+<section class="px-6 grid grid-cols-2 gap-x-6 gap-y-10">
     {% for product in products %}
-      <div class="{% if forloop.first %}col-span-2{% endif %} group">
-        <div class="bg-surface-variant rounded-lg overflow-hidden aspect-{% if forloop.first %}video{% else %}square{% endif %} mb-4 border border-outline-variant">
-          {% if product.image %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-          {% else %}
-            <div class="w-full h-full flex items-center justify-center bg-surface-variant">
-              <span class="material-symbols-outlined text-4xl text-on-surface/20">image</span>
+        <div class="{% if forloop.first %}col-span-2{% endif %} group">
+            <div class="bg-surface-variant rounded-lg overflow-hidden aspect-{% if forloop.first %}video{% else %}square{% endif %} mb-4 border border-outline-variant">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                {% else %}
+                    <div class="w-full h-full flex items-center justify-center bg-surface-variant">
+                        <span class="material-symbols-outlined text-4xl text-on-surface/20">image</span>
+                    </div>
+                {% endif %}
             </div>
-          {% endif %}
+            <div class="flex justify-between items-start">
+                <div>
+                    <h4 class="font-headline font-black text-lg uppercase tracking-tight">{{ product.name }}</h4>
+                    <p class="text-[10px] font-bold text-on-surface/50 uppercase tracking-widest mt-1">{{ product.artisan }}</p>
+                </div>
+                <p class="font-black text-primary text-lg">₱{{ product.price }}</p>
+            </div>
         </div>
-        <div class="flex justify-between items-start">
-          <div>
-            <h4 class="font-headline font-black text-lg uppercase tracking-tight">{{ product.name }}</h4>
-            <p class="text-[10px] font-bold text-on-surface/50 uppercase tracking-widest mt-1">{{ product.artisan }}</p>
-          </div>
-          <p class="font-black text-primary text-lg">₱{{ product.price }}</p>
-        </div>
-      </div>
     {% empty %}
-      <div class="col-span-2 text-center py-12 text-on-surface/50">
-        No products available for this artisan.
-      </div>
+        <div class="col-span-2 text-center py-12 text-on-surface/50">
+            No products available for this artisan.
+        </div>
     {% endfor %}
-  </section>
+</section>
 
-  <!-- Ethical Craftsmanship section completely removed -->
-
-</main>
-
-<!-- Bottom Navigation (Mobile) -->
-<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#ffffff] dark:bg-[#121212] z-50 rounded-t-2xl shadow-2xl">
-  <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300 ease-out">
-    <span class="material-symbols-outlined">grid_view</span>
-    <span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Curated</span>
-  </a>
-  <a href="{% url 'search' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300 ease-out">
-    <span class="material-symbols-outlined">search</span>
-    <span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Discover</span>
-  </a>
-  <a href="{% url 'artisan_directory' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300 ease-out">
-    <span class="material-symbols-outlined">diversity_3</span>
-    <span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Artisans</span>
-  </a>
-  <a href="{% url 'cart' %}" class="flex flex-col items-center justify-center text-[#a43700] dark:text-[#ff8a50] relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-[#a43700] after:rounded-full active:scale-90 duration-300 ease-out">
-    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shopping_bag</span>
-    <span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Vault</span>
-  </a>
-</nav>
-
-<!-- Sidebar (simple implementation) -->
-<script>
-  function openSidebar() {
-    alert('Sidebar menu - you can implement a full sidebar here.');
-  }
-</script>
-
-</body>
-</html>
+{% endblock %}
