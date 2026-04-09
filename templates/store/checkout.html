@@ -1,33 +1,203 @@
-@login_required
-def checkout(request):
-    cart = get_or_create_cart(request)
-    cart_items, total = cart_items_data(cart)
-    
-    if request.method == 'POST':
-        # Use logged-in user's info
-        full_name = request.user.get_full_name() or request.user.username
-        email = request.user.email
-        
-        order = Order.objects.create(
-            user=request.user,
-            full_name=full_name,
-            email=email,
-            payment_method=request.POST.get('payment_method'),  # will be "Maya"
-            total=total,
-        )
-        for item in cart_items:
-            OrderItem.objects.create(
-                order=order,
-                product=item['product'],
-                quantity=item['quantity'],
-                price=item['product'].price,
-            )
-        # Clear cart after order
-        cart.items.all().delete()
-        return redirect('order_success')
-    
-    return render(request, 'store/checkout.html', {
-        'cart_items': cart_items,
-        'total': total,
-        'cart_count': cart.get_item_count(),
-    })
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout | Artisan Market</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#f1f1f1",
+                        "surface-tint": "#a83900",
+                        "outline": "#8f7066",
+                        "on-tertiary-fixed": "#001b3f",
+                        "surface-variant": "#e2e2e2",
+                        "primary-container": "#cd4700",
+                        "primary": "#a43700",
+                        "secondary": "#5e5e5e",
+                        "primary-fixed": "#ffdbcf",
+                        "surface-bright": "#f9f9f9",
+                        "surface-container-highest": "#e2e2e2",
+                        "secondary-container": "#e2e2e2",
+                        "on-surface": "#1b1b1b",
+                        "on-secondary-fixed": "#1b1b1b",
+                        "tertiary-container": "#0072e4",
+                        "on-tertiary-fixed-variant": "#00458f",
+                        "inverse-surface": "#303030",
+                        "on-surface-variant": "#5a4138",
+                        "on-tertiary-container": "#fefcff",
+                        "on-primary-fixed": "#380d00",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "on-error-container": "#93000a",
+                        "on-primary-container": "#fffbff",
+                        "tertiary-fixed": "#d7e2ff",
+                        "tertiary": "#005ab7",
+                        "on-secondary-container": "#646464",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#802a00",
+                        "surface": "#f9f9f9",
+                        "background": "#f9f9f9",
+                        "surface-dim": "#dadada",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#ffb59a",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#eeeeee",
+                        "surface-container-high": "#e8e8e8",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#ffb59a",
+                        "on-background": "#1b1b1b",
+                        "on-secondary-fixed-variant": "#474747",
+                        "surface-container-low": "#f3f3f3",
+                        "secondary-fixed": "#e2e2e2",
+                        "outline-variant": "#e3bfb2",
+                        "tertiary-fixed-dim": "#abc7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-shadow { box-shadow: 0 20px 40px rgba(27, 27, 27, 0.06); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased mb-24">
+
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-[#f9f9f9] dark:bg-[#1b1b1b] flex items-center justify-between px-6 h-16">
+    <a href="{% url 'cart' %}" class="flex items-center">
+        <span class="material-symbols-outlined text-orange-700 dark:text-orange-500 cursor-pointer hover:opacity-80 transition-opacity active:scale-95">arrow_back</span>
+    </a>
+    <h1 class="text-xl font-bold text-[#1b1b1b] dark:text-[#f9f9f9] font-['Plus_Jakarta_Sans'] tracking-tight">Checkout</h1>
+    <div class="w-6"></div>
+</header>
+
+<main class="max-w-7xl mx-auto px-6 py-10 lg:flex lg:gap-16">
+    <!-- Left Column: Payment Method (only Maya) -->
+    <div class="flex-1 space-y-12">
+        <section>
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-2xl font-bold tracking-tight">Payment Method</h2>
+            </div>
+            <!-- Notice: Only Maya available -->
+            <div class="mb-4 text-sm text-primary bg-primary/10 px-4 py-2 rounded-lg inline-block">
+                ⚡ Only Maya is available at the moment
+            </div>
+            <form method="post" id="checkout-form">
+                {% csrf_token %}
+                <div class="grid grid-cols-1 gap-4">
+                    <div class="relative border-2 border-primary bg-surface-container-lowest p-6 rounded-xl flex items-center justify-between editorial-shadow">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-on-surface flex items-center justify-center rounded-lg">
+                                <span class="text-white font-black italic text-xl">m</span>
+                            </div>
+                            <div>
+                                <p class="font-bold">Maya</p>
+                                <p class="text-sm opacity-60">Pay with your digital wallet</p>
+                            </div>
+                        </div>
+                        <div class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center">
+                            <div class="w-3 h-3 bg-primary rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="payment_method" value="Maya">
+            </form>
+        </section>
+    </div>
+
+    <!-- Right Column: Order Summary (Dynamic) -->
+    <aside class="lg:w-[400px] mt-16 lg:mt-0">
+        <div class="sticky top-24 bg-surface-container-lowest p-8 rounded-xl editorial-shadow space-y-8">
+            <h2 class="text-xl font-bold tracking-tight">Order Summary</h2>
+
+            <div class="space-y-6">
+                {% for item in cart_items %}
+                <div class="flex gap-4">
+                    <div class="w-20 h-24 bg-surface-container-low rounded-lg overflow-hidden flex-shrink-0">
+                        {% if item.product.image %}
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="w-full h-full object-cover">
+                        {% else %}
+                        <div class="w-full h-full flex items-center justify-center bg-surface-variant">
+                            <span class="material-symbols-outlined text-on-surface/20">image</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="flex flex-col justify-between py-1">
+                        <div>
+                            <p class="font-bold text-on-surface leading-tight">{{ item.product.name }}</p>
+                            <p class="text-xs opacity-60 mt-1">{{ item.product.artisan }}</p>
+                        </div>
+                        <p class="font-bold text-primary">₱{{ item.subtotal }}</p>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="text-center text-on-surface/60">Your cart is empty.</p>
+                {% endfor %}
+            </div>
+
+            <div class="pt-8 space-y-4 border-t border-outline-variant/15">
+                <div class="flex justify-between text-lg font-extrabold pt-4">
+                    <span>Total</span>
+                    <span class="text-primary-container">₱{{ total }}</span>
+                </div>
+            </div>
+
+            <button type="submit" form="checkout-form" class="w-full bg-gradient-to-r from-primary to-primary-container text-white py-5 rounded-full font-bold text-lg shadow-lg hover:opacity-90 transition-all active:scale-95">
+                Place Order
+            </button>
+            <p class="text-[10px] text-center uppercase tracking-widest opacity-40 font-bold">Secure Editorial Checkout System</p>
+        </div>
+    </aside>
+</main>
+
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 bg-[#f9f9f9]/80 dark:bg-[#1b1b1b]/80 backdrop-blur-md border-t border-[#e3bfb2]/15 shadow-[0_-20px_40px_rgba(27,27,27,0.06)]">
+    <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#1b1b1b] dark:text-[#f9f9f9] opacity-60 hover:text-orange-700 transition-colors">
+        <span class="material-symbols-outlined">storefront</span>
+        <span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest">Shop</span>
+    </a>
+    <a href="{% url 'order_history' %}" class="flex flex-col items-center justify-center text-[#1b1b1b] dark:text-[#f9f9f9] opacity-60 hover:text-orange-700 transition-colors">
+        <span class="material-symbols-outlined">receipt_long</span>
+        <span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest">Orders</span>
+    </a>
+    <a href="{% url 'cart' %}" class="flex flex-col items-center justify-center bg-orange-700 text-white rounded-full px-4 py-1 active:scale-90 duration-200">
+        <span class="material-symbols-outlined">shopping_bag</span>
+        <span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest">Cart</span>
+    </a>
+    <a href="{% url 'profile' %}" class="flex flex-col items-center justify-center text-[#1b1b1b] dark:text-[#f9f9f9] opacity-60 hover:text-orange-700 transition-colors">
+        <span class="material-symbols-outlined">person</span>
+        <span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest">Profile</span>
+    </a>
+</nav>
+
+</body>
+</html>
