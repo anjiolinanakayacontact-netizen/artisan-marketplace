@@ -26,13 +26,14 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/', blank=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    download_link = models.URLField(max_length=500, blank=True, null=True, help_text="Google Drive direct download link for the software product")
     def __str__(self):
         return self.name
 
 class Order(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     full_name = models.CharField(max_length=200)
-    email = models.EmailField()                     # NEW: only email, no phone/address
+    email = models.EmailField()
     payment_method = models.CharField(max_length=50)
     total = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
