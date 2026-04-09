@@ -184,23 +184,23 @@
     </aside>
 </main>
 
-<!-- BottomNavBar (Mobile Only) -->
+<!-- BottomNavBar (Mobile Only) – Now matches home/cart layout -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 bg-[#f9f9f9]/80 dark:bg-[#1b1b1b]/80 backdrop-blur-md border-t border-[#e3bfb2]/15 shadow-[0_-20px_40px_rgba(27,27,27,0.06)]">
     <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#1b1b1b] dark:text-[#f9f9f9] opacity-60 hover:text-orange-700 transition-colors">
-        <span class="material-symbols-outlined">storefront</span>
-        <span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest">Shop</span>
+        <span class="material-symbols-outlined">grid_view</span>
+        <span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest">Curated</span>
     </a>
     <a href="{% url 'search' %}" class="flex flex-col items-center justify-center text-[#1b1b1b] dark:text-[#f9f9f9] opacity-60 hover:text-orange-700 transition-colors">
-        <span class="material-symbols-outlined">receipt_long</span>
-        <span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest">Orders</span>
+        <span class="material-symbols-outlined">search</span>
+        <span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest">Discover</span>
+    </a>
+    <a href="{% url 'artisan_directory' %}" class="flex flex-col items-center justify-center text-[#1b1b1b] dark:text-[#f9f9f9] opacity-60 hover:text-orange-700 transition-colors">
+        <span class="material-symbols-outlined">groups</span>
+        <span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest">Artisans</span>
     </a>
     <a href="{% url 'cart' %}" class="flex flex-col items-center justify-center bg-orange-700 text-white rounded-full px-4 py-1 active:scale-90 duration-200">
         <span class="material-symbols-outlined">shopping_bag</span>
-        <span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest">Cart</span>
-    </a>
-    <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#1b1b1b] dark:text-[#f9f9f9] opacity-60 hover:text-orange-700 transition-colors">
-        <span class="material-symbols-outlined">person</span>
-        <span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest">Profile</span>
+        <span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest">Vault</span>
     </a>
 </nav>
 

@@ -1,6 +1,7 @@
+{% load static %}
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
+<html class="light" lang="en">
+<head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Artisan Profile - The Artisan Editorial</title>
@@ -45,124 +46,149 @@
     </style>
 </head>
 <body class="bg-background text-on-background font-body selection:bg-primary/20">
-<!-- TopAppBar from COMPONENTS_13 -->
-<header class="fixed top-0 w-full z-50 bg-[#f9f9f9]/80 dark:bg-[#1b1b1b]/80 backdrop-blur-lg flex justify-between items-center px-6 h-20 w-full">
-<button class="text-[#1b1b1b] active:scale-95 duration-200 hover:opacity-70 transition-opacity">
-<span class="material-symbols-outlined" data-icon="menu">menu</span>
-</button>
-<h1 class="text-xl font-black tracking-widest text-[#1b1b1b] dark:text-[#f9f9f9] font-headline uppercase">THE ARTISAN EDITORIAL</h1>
-<button class="text-[#1b1b1b] active:scale-95 duration-200 hover:opacity-70 transition-opacity">
-<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
-</button>
+
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#f9f9f9]/80 dark:bg-[#1b1b1b]/80 backdrop-blur-lg flex justify-between items-center px-6 h-20">
+  <button onclick="openSidebar()" class="text-[#1b1b1b] active:scale-95 duration-200 hover:opacity-70 transition-opacity">
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+  <a href="{% url 'home' %}" class="text-xl font-black tracking-widest text-[#1b1b1b] dark:text-[#f9f9f9] font-headline uppercase">THE ARTISAN EDITORIAL</a>
+  <a href="{% url 'cart' %}" class="relative active:scale-95 duration-200 hover:opacity-70 transition-opacity">
+    <span class="material-symbols-outlined text-[#1b1b1b]">shopping_bag</span>
+    {% if cart_count %}
+    <span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{{ cart_count }}</span>
+    {% endif %}
+  </a>
 </header>
+
 <main class="pt-24 pb-24">
-<!-- Hero Section -->
-<section class="px-6 pt-4 pb-4">
-<div class="relative w-full aspect-[4/5] rounded-lg overflow-hidden border border-outline/5 mb-8">
-<img alt="Mang Jose weaving" class="w-full h-full object-cover" data-alt="Elderly Filipino artisan weaving traditional textiles" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCujcAyp-yvuXS21MemJmizbX-4xa0CPd3gafQQY4kCE68emv7eGf97_oUQZyVVtDXu5NA6c0ZxQG3B9sJBgSWJEVbnvi8XQWoIr41gQurBMcDYjN1Vrx_iwpqmShleoOiL7E-kKzFlBrHJJTxL-MbYmN2NJnx1HDeMMEugPlWcZ2QuWXz97MvRKV8sTYyNjE2-bDiXLMwd-te-ziuAup9IchN7iHttqyZC-qoJvmKJOpHyrq4ERAHiWFMV69HkntCamO71XXY6FHhh"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-<div class="absolute bottom-8 left-8 right-8 text-white">
-<span class="inline-block bg-primary text-white px-3 py-1 rounded text-[10px] font-black uppercase tracking-[0.2em] mb-4">Master Weaver</span>
-<h2 class="text-5xl font-headline font-black tracking-tighter leading-none mb-2">Mang Jose</h2>
-<div class="flex items-center gap-2 text-white/80 font-semibold uppercase tracking-widest text-[10px]">
-<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
-<span>Ilocos Sur, Philippines</span>
-</div>
-</div>
-</div>
-<!-- Bio -->
-<div class="bg-surface-variant p-10 rounded-lg mb-12 relative overflow-hidden border border-outline-variant">
-<div class="absolute -top-4 -right-4 opacity-5">
-<span class="material-symbols-outlined text-[120px]" data-icon="format_quote">format_quote</span>
-</div>
-<p class="text-xl leading-relaxed text-on-surface font-semibold italic">
-                "Mang Jose has been a master weaver for over 30 years, specializing in Abel Iloco fabrics."
-            </p>
-<div class="mt-8 flex gap-3">
-<button class="bg-primary text-on-primary px-8 py-4 rounded-full font-bold text-xs uppercase tracking-widest active:scale-95 transition-all shadow-lg shadow-primary/20">
-                    Inquire
-                </button>
-<button class="bg-on-surface text-surface px-8 py-4 rounded-full font-bold text-xs uppercase tracking-widest active:scale-95 transition-all">
-                    Share Story
-                </button>
-</div>
-</div>
-</section>
-<!-- Product Grid Header -->
-<div class="px-6 mb-8 flex justify-between items-end border-b border-outline-variant pb-4">
-<div>
-<h3 class="text-3xl font-headline font-black text-on-surface tracking-tighter uppercase">Artisan Collection</h3>
-<p class="text-[10px] font-bold text-on-surface/60 uppercase tracking-widest mt-1">Handcrafted works by Mang Jose</p>
-</div>
-<span class="text-primary font-black text-xs uppercase tracking-widest border-b-2 border-primary pb-1 cursor-pointer">View All</span>
-</div>
-<!-- The "Weave" Gallery (Asymmetric Product Grid) -->
-<section class="px-6 grid grid-cols-2 gap-x-6 gap-y-10">
-<!-- Product 1: Large -->
-<div class="col-span-2 group">
-<div class="bg-surface-variant rounded-lg overflow-hidden aspect-video mb-4 border border-outline-variant">
-<img alt="Handwoven Scarf" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Intricate blue and white handwoven textile scarf" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD81c8e9KDj1nNmZ0mY4KHDhJU8oFE0wChohNlcm6SfoIzgDvJGqnNtj6xZt4C2TGHOSDIovTO1dKbd5v7KGyzQc0yTO-MgscupKMExIZKFSn3M3n7_9kY_Gvvquh-CNgaSpw9xzwDBpP1FnyvohTXGv4tVBkdsA5MimvZ_6kjHErP3UOZRYgQk_TcgqMdYVby5azvWAItpyjjbRFdwF-691FqAhLGbxx5oc1TjiuSGAe-d_oOZKDa0hnFKv3iX4zZ3_owip8SVXEA"/>
-</div>
-<div class="flex justify-between items-start">
-<div>
-<h4 class="font-headline font-black text-lg uppercase tracking-tight">Traditional Abel Scarf</h4>
-<p class="text-[10px] font-bold text-on-surface/50 uppercase tracking-widest mt-1">Cotton, Natural Indigo</p>
-</div>
-<p class="font-black text-primary text-lg">₱2,450</p>
-</div>
-</div>
-<!-- Product 2 -->
-<div class="group">
-<div class="bg-surface-variant rounded-lg overflow-hidden aspect-square mb-4 border border-outline-variant">
-<img alt="Woven Table Runner" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Earth-toned woven fabric table runner" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4uYtm1JzX4Ph9LLRVbWu1L1MZuj1qHDBhGTcnREF6Eopu2zXv258Y2tVHx1IyWkrW6CAClszqjPt14gt5D1411A9QIjosRVVulrdGuPL3pKrrJpMlMSjYDICu4FeK7TE4PD_USvTGdTgIwc08JSv6y6FO49c6Mi19ZCjB3r4eV5LjHXdsS0SCHv6G-2DT3v2qyjmJTCK29VPTvgdHE25BgzBOYJnM78VgRX96bwLnqeucU2EQAaWt1KJ-WbRoUaEyt2AsXbr_l6Pe"/>
-</div>
-<h4 class="font-headline font-black text-sm uppercase tracking-tight">Inabel Table Runner</h4>
-<p class="font-black text-primary text-sm mt-1">₱1,800</p>
-</div>
-<!-- Product 3 -->
-<div class="group">
-<div class="bg-surface-variant rounded-lg overflow-hidden aspect-[3/4] mb-4 border border-outline-variant">
-<img alt="Throw Pillow Cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Geometric pattern handwoven pillow cases" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBMVH7ICyf1XKpScTdBTnURSSGpVOBEPF2szXamp7rg8B5FNinkdrKM6laUcJGqvV5MnXf8Bdz2TtW6eWwa8wc8TBEg945h8I-dbb-yLckVt3FQdpnXGGZGNssHjEa203yXsJhr00Rkh2hQYkj5DXnsc2PdGGGjldcuMuBLOlmVLhFCg5acSZdt5x1rxcxZU-yQP5U15mtS6mMf5E3OFq_nZhu7azJ_89ERRZfT0CKqWoCmIj8Gthdx3uG0i7y9YdLTWllNCKVuflb"/>
-</div>
-<h4 class="font-headline font-black text-sm uppercase tracking-tight">Geometric Lumbar Case</h4>
-<p class="font-black text-primary text-sm mt-1">₱950</p>
-</div>
-</section>
-<!-- Signature Component -->
-<section class="mt-16 px-6">
-<div class="bg-on-surface text-surface p-10 rounded-lg">
-<h3 class="text-2xl font-headline font-black mb-6 flex items-center gap-3 uppercase tracking-tighter">
-<span class="material-symbols-outlined text-primary" data-icon="eco">eco</span>
-                Ethical Craftsmanship
-            </h3>
-<div class="space-y-6 text-sm leading-relaxed">
-<p class="font-medium text-surface/80">Every thread in Mang Jose's workshop is sourced from local cotton farmers in Northern Luzon, ensuring a 100% sustainable loop.</p>
-<div class="h-[1px] bg-surface/10 w-full"></div>
-<div class="flex justify-between items-center text-[10px] font-black uppercase tracking-[0.2em]">
-<span class="text-surface/60">Production Time</span>
-<span class="text-primary">4-6 Days / Piece</span>
-</div>
-</div>
-</div>
-</section>
+
+  <!-- Hero Section -->
+  <section class="px-6 pt-4 pb-4">
+    <div class="relative w-full aspect-[4/5] rounded-lg overflow-hidden border border-outline/5 mb-8">
+      {% if artisan.photo %}
+        <img src="{{ artisan.photo.url }}" alt="{{ artisan.name }}" class="w-full h-full object-cover">
+      {% else %}
+        <div class="w-full h-full bg-surface-variant flex items-center justify-center">
+          <span class="material-symbols-outlined text-6xl text-on-surface/20">person</span>
+        </div>
+      {% endif %}
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+      <div class="absolute bottom-8 left-8 right-8 text-white">
+        <span class="inline-block bg-primary text-white px-3 py-1 rounded text-[10px] font-black uppercase tracking-[0.2em] mb-4">{{ artisan.specialty|default:"Artisan" }}</span>
+        <h2 class="text-5xl font-headline font-black tracking-tighter leading-none mb-2">{{ artisan.name }}</h2>
+        <div class="flex items-center gap-2 text-white/80 font-semibold uppercase tracking-widest text-[10px]">
+          <span class="material-symbols-outlined text-sm">location_on</span>
+          <span>{{ artisan.location|default:"Philippines" }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bio -->
+    <div class="bg-surface-variant p-10 rounded-lg mb-12 relative overflow-hidden border border-outline-variant">
+      <div class="absolute -top-4 -right-4 opacity-5">
+        <span class="material-symbols-outlined text-[120px]">format_quote</span>
+      </div>
+      <p class="text-xl leading-relaxed text-on-surface font-semibold italic">
+        {{ artisan.bio|default:"Every piece is handcrafted with care." }}
+      </p>
+      <div class="mt-8 flex gap-3">
+        <button class="bg-primary text-on-primary px-8 py-4 rounded-full font-bold text-xs uppercase tracking-widest active:scale-95 transition-all shadow-lg shadow-primary/20">
+          Inquire
+        </button>
+        <button class="bg-on-surface text-surface px-8 py-4 rounded-full font-bold text-xs uppercase tracking-widest active:scale-95 transition-all">
+          Share Story
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Grid Header -->
+  <div class="px-6 mb-8 flex justify-between items-end border-b border-outline-variant pb-4">
+    <div>
+      <h3 class="text-3xl font-headline font-black text-on-surface tracking-tighter uppercase">Artisan Collection</h3>
+      <p class="text-[10px] font-bold text-on-surface/60 uppercase tracking-widest mt-1">Handcrafted works by {{ artisan.name }}</p>
+    </div>
+    <span class="text-primary font-black text-xs uppercase tracking-widest border-b-2 border-primary pb-1 cursor-pointer">View All</span>
+  </div>
+
+  <!-- Product Grid (Dynamic) -->
+  <section class="px-6 grid grid-cols-2 gap-x-6 gap-y-10">
+    {% for product in products %}
+      <div class="{% if forloop.first %}col-span-2{% endif %} group">
+        <div class="bg-surface-variant rounded-lg overflow-hidden aspect-{% if forloop.first %}video{% else %}square{% endif %} mb-4 border border-outline-variant">
+          {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          {% else %}
+            <div class="w-full h-full flex items-center justify-center bg-surface-variant">
+              <span class="material-symbols-outlined text-4xl text-on-surface/20">image</span>
+            </div>
+          {% endif %}
+        </div>
+        <div class="flex justify-between items-start">
+          <div>
+            <h4 class="font-headline font-black text-lg uppercase tracking-tight">{{ product.name }}</h4>
+            <p class="text-[10px] font-bold text-on-surface/50 uppercase tracking-widest mt-1">{{ product.artisan }}</p>
+          </div>
+          <p class="font-black text-primary text-lg">₱{{ product.price }}</p>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-span-2 text-center py-12 text-on-surface/50">
+        No products available for this artisan.
+      </div>
+    {% endfor %}
+  </section>
+
+  <!-- Craftsmanship Note -->
+  {% if artisan.craftsmanship_note or artisan.production_time %}
+  <section class="mt-16 px-6">
+    <div class="bg-on-surface text-surface p-10 rounded-lg">
+      <h3 class="text-2xl font-headline font-black mb-6 flex items-center gap-3 uppercase tracking-tighter">
+        <span class="material-symbols-outlined text-primary">eco</span>
+        Ethical Craftsmanship
+      </h3>
+      <div class="space-y-6 text-sm leading-relaxed">
+        <p class="font-medium text-surface/80">{{ artisan.craftsmanship_note|default:"Every piece is handcrafted with care." }}</p>
+        <div class="h-[1px] bg-surface/10 w-full"></div>
+        <div class="flex justify-between items-center text-[10px] font-black uppercase tracking-[0.2em]">
+          <span class="text-surface/60">Production Time</span>
+          <span class="text-primary">{{ artisan.production_time|default:"3-5 Days / Piece" }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
 </main>
-<!-- BottomNavBar from COMPONENTS_13 -->
+
+<!-- Bottom Navigation (Mobile) -->
 <nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#ffffff] dark:bg-[#121212] z-50 rounded-t-2xl shadow-2xl">
-<a class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300 ease-out" href="#">
-<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
-<span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Curated</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300 ease-out" href="#">
-<span class="material-symbols-outlined" data-icon="search">search</span>
-<span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Discover</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300 ease-out" href="#">
-<span class="material-symbols-outlined" data-icon="diversity_3">diversity_3</span>
-<span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Artisans</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#a43700] dark:text-[#ff8a50] relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-[#a43700] after:rounded-full active:scale-90 duration-300 ease-out" href="#">
-<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
-<span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Vault</span>
-</a>
+  <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300 ease-out">
+    <span class="material-symbols-outlined">grid_view</span>
+    <span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Curated</span>
+  </a>
+  <a href="{% url 'search' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300 ease-out">
+    <span class="material-symbols-outlined">search</span>
+    <span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Discover</span>
+  </a>
+  <!-- Artisans link now points to artisan_directory -->
+  <a href="{% url 'artisan_directory' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300 ease-out">
+    <span class="material-symbols-outlined">diversity_3</span>
+    <span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Artisans</span>
+  </a>
+  <a href="{% url 'cart' %}" class="flex flex-col items-center justify-center text-[#a43700] dark:text-[#ff8a50] relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-[#a43700] after:rounded-full active:scale-90 duration-300 ease-out">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shopping_bag</span>
+    <span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Vault</span>
+  </a>
 </nav>
-</body></html>
+
+<!-- Sidebar (simple implementation) -->
+<script>
+  function openSidebar() {
+    alert('Sidebar menu - you can implement a full sidebar here.');
+  }
+</script>
+
+</body>
+</html>

@@ -293,7 +293,8 @@
             <span class="material-symbols-outlined">search</span>
             <span class="text-[10px] font-bold uppercase tracking-widest mt-1">Discover</span>
         </a>
-        <a href="{% url 'search' %}?sort=newest" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors">
+        <!-- Artisans link now points to the new artisan directory -->
+        <a href="{% url 'artisan_directory' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors">
             <span class="material-symbols-outlined">groups</span>
             <span class="text-[10px] font-bold uppercase tracking-widest mt-1">Artisans</span>
         </a>

@@ -1,27 +1,111 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artisan Marketplace</title>
-    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#E65100",
+                        "on-primary": "#ffffff",
+                        "surface": "#ffffff",
+                        "on-surface": "#1b1b1b",
+                        "background": "#ffffff",
+                        "on-background": "#1b1b1b",
+                        "surface-container": "#f3f3f3",
+                        "surface-container-high": "#ebebeb",
+                        "outline": "#1b1b1b",
+                        "outline-variant": "#e0e0e0",
+                    },
+                    fontFamily: {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Inter"],
+                        "label": ["Plus Jakarta Sans"],
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        body { background-color: #ffffff; color: #1b1b1b; font-family: 'Inter', sans-serif; }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
 </head>
-<body class="bg-amber-50 text-gray-800">
-    <nav class="bg-amber-800 text-white px-6 py-4 flex justify-between items-center">
-        <a href="{% url 'home' %}" class="text-2xl font-bold tracking-wide">🧵 Artisan Market</a>
-        <div class="flex gap-4 items-center">
-            {% if user.is_authenticated %}
-                <span class="text-amber-200">Hi, {{ user.username }}!</span>
-                <a href="{% url 'logout' %}" class="bg-amber-700 hover:bg-amber-600 px-4 py-2 rounded-lg transition">Logout</a>
-            {% else %}
-                <a href="{% url 'login' %}" class="hover:text-amber-200 transition">Login</a>
-                <a href="{% url 'register' %}" class="bg-white text-amber-800 font-semibold px-4 py-2 rounded-lg hover:bg-amber-100 transition">Register</a>
+<body class="bg-background text-on-surface font-body antialiased">
+
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#f9f9f9]/80 backdrop-blur-lg flex justify-between items-center px-6 h-20">
+    <div class="flex items-center gap-4">
+        <a href="{% url 'home' %}" class="active:scale-95 duration-200 hover:opacity-70 transition-opacity">
+            <span class="material-symbols-outlined text-[#1b1b1b]">menu</span>
+        </a>
+        <h1 class="text-xl font-black tracking-widest text-[#1b1b1b] uppercase font-headline">THE ARTISAN EDITORIAL</h1>
+    </div>
+    <div class="flex items-center gap-4">
+        {% if user.is_authenticated %}
+            <span class="text-xs font-bold text-[#1b1b1b] hidden sm:block uppercase tracking-widest">{{ user.username }}</span>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="text-xs font-bold text-[#1b1b1b] hover:text-primary uppercase tracking-widest transition-colors">Logout</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}" class="text-xs font-bold text-[#1b1b1b] hover:text-primary uppercase tracking-widest transition-colors">Login</a>
+            <a href="{% url 'register' %}" class="text-xs font-bold bg-black text-white px-4 py-2 hover:bg-primary transition-colors uppercase tracking-widest">Register</a>
+        {% endif %}
+        <a href="{% url 'cart' %}" class="relative active:scale-95 duration-200 cursor-pointer hover:opacity-70">
+            <span class="material-symbols-outlined text-[#1b1b1b]">shopping_bag</span>
+            {% if cart_count %}
+            <span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{{ cart_count }}</span>
             {% endif %}
-        </div>
-    </nav>
-    <main class="max-w-6xl mx-auto px-4 py-8">
-        {% block content %}{% endblock %}
-    </main>
+        </a>
+    </div>
+</header>
+
+<main class="pt-28 pb-32 px-6 max-w-7xl mx-auto">
+    {% block content %}
+    {% endblock %}
+</main>
+
+<!-- Bottom Navigation (Mobile) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#ffffff] z-50 rounded-t-2xl shadow-2xl">
+    <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300">
+        <span class="material-symbols-outlined">grid_view</span>
+        <span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Curated</span>
+    </a>
+    <a href="{% url 'search' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300">
+        <span class="material-symbols-outlined">search</span>
+        <span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Discover</span>
+    </a>
+    <a href="{% url 'artisan_directory' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300">
+        <span class="material-symbols-outlined">groups</span>
+        <span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Artisans</span>
+    </a>
+    <a href="{% url 'cart' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300">
+        <span class="material-symbols-outlined">shopping_bag</span>
+        <span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Vault</span>
+    </a>
+</nav>
+
+<script>
+    // Simple sidebar placeholder (can be extended)
+    function openSidebar() {
+        alert('Sidebar coming soon');
+    }
+</script>
 </body>
 </html>

@@ -7,6 +7,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('product/<int:pk>/', views.product_detail, name='product_detail'),
     path('artisan/<int:pk>/', views.artisan_profile, name='artisan_profile'),
+    path('artisans/', views.artisan_directory, name='artisan_directory'),  # <-- NEW
     path('search/', views.search, name='search'),
     path('cart/', views.cart_view, name='cart'),
     path('cart/add/<int:pk>/', views.add_to_cart, name='add_to_cart'),

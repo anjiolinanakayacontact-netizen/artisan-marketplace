@@ -107,6 +107,16 @@ def artisan_profile(request, pk):
         'cart_count': cart_count,
     })
 
+def artisan_directory(request):
+    """Display all artisans in a directory layout."""
+    artisans = Artisan.objects.all().order_by('name')
+    cart = get_or_create_cart(request)
+    cart_count = cart.get_item_count()
+    return render(request, 'store/artisan_directory.html', {
+        'artisans': artisans,
+        'cart_count': cart_count,
+    })
+
 def search(request):
     query = request.GET.get('q', '')
     category_id = request.GET.get('category', '')
