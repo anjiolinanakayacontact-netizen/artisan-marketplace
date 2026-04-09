@@ -181,12 +181,11 @@ def decrease_cart(request, pk):
 def cart_view(request):
     cart = get_or_create_cart(request)
     cart_items, total = cart_items_data(cart)
-    grand_total = total + 150
+    # No shipping fee – grand_total is same as total
     cart_count = cart.get_item_count()
     return render(request, 'store/cart.html', {
         'cart_items': cart_items,
         'total': total,
-        'grand_total': grand_total,
         'cart_count': cart_count,
     })
 
@@ -194,7 +193,7 @@ def cart_view(request):
 def checkout(request):
     cart = get_or_create_cart(request)
     cart_items, total = cart_items_data(cart)
-    grand_total = total + 150
+    # No shipping fee – total is the final amount
     if request.method == 'POST':
         order = Order.objects.create(
             user=request.user,
@@ -205,7 +204,7 @@ def checkout(request):
             city=request.POST.get('city'),
             province=request.POST.get('province'),
             payment_method=request.POST.get('payment_method'),
-            total=grand_total,
+            total=total,  # ← changed from grand_total to total
         )
         for item in cart_items:
             OrderItem.objects.create(
@@ -220,7 +219,7 @@ def checkout(request):
     return render(request, 'store/checkout.html', {
         'cart_items': cart_items,
         'total': total,
-        'grand_total': grand_total,
+        # grand_total removed – use total in checkout template
     })
 
 def order_success(request):
