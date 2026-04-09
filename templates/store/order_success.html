@@ -1,170 +1,29 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
 
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "primary": "#E65100",
-              "on-primary": "#ffffff",
-              "background": "#ffffff",
-              "on-background": "#000000",
-              "surface": "#ffffff",
-              "on-surface": "#000000",
-              "surface-variant": "#f5f5f5",
-              "on-surface-variant": "#424242",
-              "outline": "#e0e0e0",
-              "secondary": "#000000",
-              "on-secondary": "#ffffff",
-              "secondary-container": "#f3f3f3"
-            },
-            fontFamily: {
-              "headline": ["Plus Jakarta Sans"],
-              "body": ["Inter"],
-              "label": ["Inter"]
-            },
-            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
-          },
-        },
-      }
-    </script>
-<style>
-      .material-symbols-outlined {
-        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-      }
-      body {
-        background-color: #ffffff;
-        color: #000000;
-      }
-    </style>
-</head>
-<body class="font-body selection:bg-primary/20">
-<!-- TopAppBar from COMPONENTS_13 -->
-<nav class="fixed top-0 w-full z-50 bg-[#ffffff]/80 dark:bg-[#1b1b1b]/80 backdrop-blur-lg flex justify-between items-center px-6 h-20 w-full">
-<button class="text-[#000000] dark:text-[#f9f9f9] hover:opacity-70 transition-opacity active:scale-95 duration-200">
-<span class="material-symbols-outlined" data-icon="menu">menu</span>
-</button>
-<h1 class="text-xl font-black tracking-widest text-[#1b1b1b] dark:text-[#f9f9f9] font-headline uppercase">THE ARTISAN EDITORIAL</h1>
-<button class="text-[#E65100] dark:text-[#ff8a50] hover:opacity-70 transition-opacity active:scale-95 duration-200">
-<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
-</button>
-</nav>
-<main class="pt-28 pb-32 px-6 max-w-2xl mx-auto">
-<!-- Success Header -->
-<section class="flex flex-col items-center text-center mb-16">
-<div class="w-20 h-20 bg-black rounded-full flex items-center justify-center mb-6">
-<span class="material-symbols-outlined text-white text-4xl" data-icon="check" style="font-variation-settings: 'wght' 700;">check</span>
-</div>
-<h2 class="font-headline text-4xl font-extrabold text-black mb-4 tracking-tight">Confirmed.</h2>
-<p class="text-gray-500 font-medium mb-1">Your order is being prepared by our artisans.</p>
-<p class="text-xs font-bold uppercase tracking-widest text-primary">ID: #AM-94423-WEAVING</p>
-</section>
-<!-- Refreshed Item List Style -->
-<section class="mb-12 border-t-2 border-black pt-8">
-<h3 class="font-headline text-xs font-black uppercase tracking-[0.2em] mb-8 text-black">Order Manifest</h3>
-<div class="space-y-6">
-<div class="flex justify-between items-start">
-<div>
-<p class="font-bold text-lg text-black">Hand-Woven Abacá Basket</p>
-<p class="text-xs text-gray-500 uppercase tracking-wider">Laguna Workshop • Qty 1</p>
-</div>
-<span class="font-bold text-black">₱2,450.00</span>
-</div>
-<div class="flex justify-between items-start">
-<div>
-<p class="font-bold text-lg text-black">Terracotta Clay Pitcher</p>
-<p class="text-xs text-gray-500 uppercase tracking-wider">Vigan Pottery • Qty 1</p>
-</div>
-<span class="font-bold text-black">₱1,800.00</span>
-</div>
-<div class="pt-8 mt-8 border-t border-gray-100 flex justify-between items-end">
-<span class="font-headline text-xs font-black uppercase tracking-[0.2em]">Total Amount</span>
-<span class="font-headline text-3xl font-black text-primary">₱4,250.00</span>
-</div>
-</div>
-</section>
-<!-- Artisan Image -->
-<div class="mb-16 rounded-xl overflow-hidden aspect-[16/9] relative group bg-black">
-<img alt="Artisan weaving workshop" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXzTJzQpgBxYXdvwW7cLpPNAXmf7MUEo2c8Hj4PTbpk81YP2xfqu3CaDDNnF0-xx_GP8jysDNy1kVYJ6YJB5Cgj74CDILh6yKWfabI6AWyOiTYFACiHAsRqcppToq6QgBX5gbemGGlnkv4XNwAcioqmuj91Sicje9HM-pIWUohQGewNZvj0dCc7ewmnb5tCLwOwREx7ggKhms59SP_nB4Bf4Rrv6zNM82RbtqOBRn_fuR5GHOsEN0qYs0i0Cj-HwZbNZ-X4Xnk0R-J"/>
-<div class="absolute bottom-6 left-6">
-<span class="bg-white text-black px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em]">Artisan Workshop</span>
-</div>
-</div>
-<!-- Refreshed Tracking Map Section -->
-<section class="mb-12">
-<div class="flex items-end justify-between mb-6">
-<h3 class="font-headline text-xs font-black uppercase tracking-[0.2em] text-black">Live Logistics</h3>
-<span class="text-[10px] font-bold uppercase tracking-widest text-primary flex items-center gap-2">
-<span class="w-1.5 h-1.5 bg-primary rounded-full animate-ping"></span>
-                In Transit: Laguna
-            </span>
-</div>
-<div class="bg-black rounded-2xl p-1 overflow-hidden shadow-2xl">
-<div class="aspect-video w-full rounded-xl overflow-hidden relative">
-<img alt="Map of delivery route" class="w-full h-full object-cover opacity-40 grayscale contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnOgOUe8cXiuA95yTZq0mH6_N5VPDgU7fVTMb6YoKzBz1W_PUBySbF_k1O49YedR2jfkN5DHFj63i7td7_u2gh01cVklpq-ixqNaU44IBLinRsWpClZMK_BlBEL7kYEBs3O4z3cyUwiYxmOadfgS9Ao_3TwRHPn7Wo_RRWi3ReF8mote0OgDNApY_toDwNHeHIPCJ8yG6pShdoEanpR3BOf6WNAym5fGMTDFRneS4Bf7bWmSKFXoRJo14WfO9_1qiYOFJcHkokB3wQ"/>
-<!-- Tracking Overlay -->
-<div class="absolute inset-0 flex items-center justify-center p-12">
-<div class="w-full h-0.5 bg-white/20 relative">
-<div class="absolute top-0 left-0 w-1/2 h-full bg-primary shadow-[0_0_15px_#E65100]"></div>
-<!-- Origin -->
-<div class="absolute -top-2 left-0 w-4 h-4 bg-white rounded-full border-4 border-black"></div>
-<!-- Courier -->
-<div class="absolute -top-4 left-1/2 -ml-4 w-8 h-8 bg-primary rounded-full flex items-center justify-center shadow-lg">
-<span class="material-symbols-outlined text-white text-sm" data-icon="local_shipping">local_shipping</span>
-</div>
-<!-- Destination -->
-<div class="absolute -top-2 right-0 w-4 h-4 bg-white/40 rounded-full border-4 border-black"></div>
-</div>
-</div>
-</div>
-<div class="p-6 flex flex-col sm:flex-row gap-6 items-center justify-between bg-black">
-<div class="flex items-center gap-4">
-<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary">
-<img alt="Courier Avatar" class="w-full h-full object-cover grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjZJXj31ZUsQ_ROTZXRfMRAil1EhB2T1Bjo4MemYfMAOZf9TGU8XK_8Y5cvmHekwiuAstWKsGDmWNicoTTisrP0DuLXrdl0VkohyVfGN1dEr52UhuDLV7QweJL_OncIhVnqhJwOQ6Ipl4o3nCQaC40q8K2W3v9ValCAWc_fczQxNzGvnl0tuiyThl9Te58VYUgRTsX7-y0OKTEY63NyDpNdh-lpWSdzGtIl3i0jExg2JhaBTV0LLrjJPIvtkx98EFl3tKZW_kWCbQT"/>
-</div>
-<div>
-<p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.2em]">Logistics Expert</p>
-<p class="font-bold text-white text-lg">Rafael M.</p>
-</div>
-</div>
-<button class="w-full sm:w-auto bg-primary text-white px-10 py-4 rounded-full font-black text-xs uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all active:scale-95">
-                    Track Journey
-                </button>
-</div>
-</div>
-</section>
-<!-- Artisanal Note -->
-<div class="border-l-4 border-primary bg-gray-50 p-6 flex items-start gap-4">
-<span class="material-symbols-outlined text-primary" data-icon="auto_awesome">auto_awesome</span>
-<p class="text-xs font-medium text-gray-600 leading-relaxed uppercase tracking-wider">
-            Each piece is unique. Slight variations in weave and tone are intentional marks of the artisan's hand.
+{% block title %}Order Confirmed | Artisan Market{% endblock %}
+
+{% block content %}
+<main class="max-w-2xl mx-auto px-6 py-20 text-center">
+    <div class="bg-white rounded-xl shadow-lg p-8">
+        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <span class="material-symbols-outlined text-green-600 text-4xl">check_circle</span>
+        </div>
+        <h1 class="text-3xl font-black mb-4">Confirmed!</h1>
+        <p class="text-gray-600 mb-6">
+            Thank you for your order. Your purchase has been received.
         </p>
-</div>
+        <div class="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-8">
+            <p class="text-orange-800 font-medium">
+                📧 Please check your email for order details and download links.
+            </p>
+            <p class="text-sm text-orange-600 mt-1">
+                If you don't see the email within a few minutes, check your spam folder.
+            </p>
+        </div>
+        <a href="{% url 'home' %}" class="inline-block bg-primary text-white px-8 py-3 rounded-full font-bold hover:opacity-90 transition">
+            Continue Shopping
+        </a>
+    </div>
 </main>
-<!-- BottomNavBar from COMPONENTS_13 -->
-<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#ffffff] dark:bg-[#121212] z-50 rounded-t-2xl shadow-2xl border-t border-black/5">
-<a class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#E65100] transition-colors" href="#">
-<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
-<span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Curated</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#E65100] transition-colors" href="#">
-<span class="material-symbols-outlined" data-icon="search">search</span>
-<span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Discover</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#E65100] dark:text-[#ff8a50] relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-[#E65100] after:rounded-full" href="#">
-<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
-<span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Vault</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#E65100] transition-colors" href="#">
-<span class="material-symbols-outlined" data-icon="person">person</span>
-<span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Profile</span>
-</a>
-</nav>
-</body></html>
+{% endblock %}
