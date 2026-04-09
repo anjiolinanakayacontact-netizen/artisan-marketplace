@@ -84,7 +84,7 @@
       </div>
     </div>
 
-    <!-- Bio -->
+    <!-- Bio (without buttons) -->
     <div class="bg-surface-variant p-10 rounded-lg mb-12 relative overflow-hidden border border-outline-variant">
       <div class="absolute -top-4 -right-4 opacity-5">
         <span class="material-symbols-outlined text-[120px]">format_quote</span>
@@ -92,14 +92,7 @@
       <p class="text-xl leading-relaxed text-on-surface font-semibold italic">
         {{ artisan.bio|default:"Every piece is handcrafted with care." }}
       </p>
-      <div class="mt-8 flex gap-3">
-        <button class="bg-primary text-on-primary px-8 py-4 rounded-full font-bold text-xs uppercase tracking-widest active:scale-95 transition-all shadow-lg shadow-primary/20">
-          Inquire
-        </button>
-        <button class="bg-on-surface text-surface px-8 py-4 rounded-full font-bold text-xs uppercase tracking-widest active:scale-95 transition-all">
-          Share Story
-        </button>
-      </div>
+      <!-- Inquire and Share Story buttons removed -->
     </div>
   </section>
 
@@ -140,25 +133,7 @@
     {% endfor %}
   </section>
 
-  <!-- Craftsmanship Note -->
-  {% if artisan.craftsmanship_note or artisan.production_time %}
-  <section class="mt-16 px-6">
-    <div class="bg-on-surface text-surface p-10 rounded-lg">
-      <h3 class="text-2xl font-headline font-black mb-6 flex items-center gap-3 uppercase tracking-tighter">
-        <span class="material-symbols-outlined text-primary">eco</span>
-        Ethical Craftsmanship
-      </h3>
-      <div class="space-y-6 text-sm leading-relaxed">
-        <p class="font-medium text-surface/80">{{ artisan.craftsmanship_note|default:"Every piece is handcrafted with care." }}</p>
-        <div class="h-[1px] bg-surface/10 w-full"></div>
-        <div class="flex justify-between items-center text-[10px] font-black uppercase tracking-[0.2em]">
-          <span class="text-surface/60">Production Time</span>
-          <span class="text-primary">{{ artisan.production_time|default:"3-5 Days / Piece" }}</span>
-        </div>
-      </div>
-    </div>
-  </section>
-  {% endif %}
+  <!-- Ethical Craftsmanship section completely removed -->
 
 </main>
 
@@ -172,7 +147,6 @@
     <span class="material-symbols-outlined">search</span>
     <span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Discover</span>
   </a>
-  <!-- Artisans link now points to artisan_directory -->
   <a href="{% url 'artisan_directory' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 dark:text-[#f9f9f9]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300 ease-out">
     <span class="material-symbols-outlined">diversity_3</span>
     <span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Artisans</span>
