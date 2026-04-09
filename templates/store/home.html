@@ -11,13 +11,11 @@
 {% endblock %}
 
 {% block content %}
-<!-- Hero Section - Quote Slider -->
+
+<!-- Hero Section - Quote Slider (unchanged) -->
 <section class="relative px-6 pt-6 pb-12">
     <div class="relative w-full aspect-[4/5] overflow-hidden shadow-2xl bg-black">
-
-        <!-- Slides -->
         <div id="slider" class="flex transition-transform duration-700 ease-in-out h-full">
-
             <!-- Slide 1 -->
             <div class="min-w-full h-full flex flex-col items-center justify-center px-10 text-center">
                 <span class="text-primary text-6xl font-black mb-8">"</span>
@@ -28,7 +26,6 @@
                 <span class="text-white/60 text-xs font-black uppercase tracking-[0.3em]">Anjiolina Nakaya</span>
                 <span class="text-primary text-[10px] font-bold uppercase tracking-widest mt-1">Co-Founder</span>
             </div>
-
             <!-- Slide 2 -->
             <div class="min-w-full h-full flex flex-col items-center justify-center px-10 text-center">
                 <span class="text-primary text-6xl font-black mb-8">"</span>
@@ -39,7 +36,6 @@
                 <span class="text-white/60 text-xs font-black uppercase tracking-[0.3em]">Xiao Chua</span>
                 <span class="text-primary text-[10px] font-bold uppercase tracking-widest mt-1">Co-Founder</span>
             </div>
-
             <!-- Slide 3 -->
             <div class="min-w-full h-full flex flex-col items-center justify-center px-10 text-center">
                 <span class="text-primary text-6xl font-black mb-8">"</span>
@@ -50,32 +46,22 @@
                 <span class="text-white/60 text-xs font-black uppercase tracking-[0.3em]">John Rey Ramos</span>
                 <span class="text-primary text-[10px] font-bold uppercase tracking-widest mt-1">Co-Founder</span>
             </div>
-
         </div>
-
-        <!-- Left Arrow -->
-        <button onclick="prevSlide()"
-                class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-primary transition-colors flex items-center justify-center">
+        <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-primary transition-colors flex items-center justify-center">
             <span class="material-symbols-outlined text-white">chevron_left</span>
         </button>
-
-        <!-- Right Arrow -->
-        <button onclick="nextSlide()"
-                class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-primary transition-colors flex items-center justify-center">
+        <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-primary transition-colors flex items-center justify-center">
             <span class="material-symbols-outlined text-white">chevron_right</span>
         </button>
-
-        <!-- Dots -->
         <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
             <button onclick="goToSlide(0)" id="dot-0" class="w-2 h-2 bg-primary rounded-full transition-all"></button>
             <button onclick="goToSlide(1)" id="dot-1" class="w-2 h-2 bg-white/30 rounded-full transition-all"></button>
             <button onclick="goToSlide(2)" id="dot-2" class="w-2 h-2 bg-white/30 rounded-full transition-all"></button>
         </div>
-
     </div>
 </section>
 
-<!-- Categories Row -->
+<!-- Categories Row (unchanged) -->
 <section class="px-6 mb-16">
     <h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] mb-8 text-on-surface">Curated Categories</h2>
     <div class="flex gap-10 overflow-x-auto pb-4 no-scrollbar">
@@ -92,7 +78,7 @@
     </div>
 </section>
 
-<!-- Featured Artisans -->
+<!-- Featured Artisans (unchanged) -->
 <section class="bg-black text-white py-16 px-6 mb-16">
     <div class="flex justify-between items-end mb-10">
         <div>
@@ -120,12 +106,13 @@
     </div>
 </section>
 
-<!-- Product Grid -->
+<!-- Product Grid with VISIBLE Add to Cart Buttons -->
 <section class="px-6 mb-16">
     <h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] mb-10 text-on-surface">The Seasonal Drop</h2>
     <div class="grid grid-cols-2 gap-x-6 gap-y-12">
         {% for product in products %}
-        <div class="group">
+        <div class="group relative">
+            <!-- Product image container (black box) – ensures fit without zoom -->
             <div class="aspect-square bg-surface-container overflow-hidden mb-5 relative group-hover:shadow-xl transition-all duration-500">
                 {% if product.image %}
                 <a href="{% url 'product_detail' product.pk %}">
@@ -142,9 +129,10 @@
             <p class="text-[9px] text-on-surface/50 mb-3 uppercase tracking-tighter">{{ product.artisan }}</p>
             <div class="flex items-center justify-between border-t border-black/5 pt-3">
                 <span class="font-headline font-black text-primary text-sm">₱{{ product.price }}</span>
+                <!-- BUTTON – visible and properly styled -->
                 <form method="post" action="{% url 'add_to_cart' product.pk %}">
                     {% csrf_token %}
-                    <button type="submit" class="bg-black text-white w-10 h-10 flex items-center justify-center active:scale-90 transition-transform hover:bg-primary">
+                    <button type="submit" class="bg-black text-white w-10 h-10 flex items-center justify-center active:scale-90 transition-transform hover:bg-primary rounded-full">
                         <span class="material-symbols-outlined text-sm">add_shopping_cart</span>
                     </button>
                 </form>
@@ -158,15 +146,16 @@
     </div>
 </section>
 
-<!-- Footer -->
+<!-- Footer (moved inside content, but base.html already has footer? Actually base.html does NOT have footer, so we keep it here) -->
 <footer class="bg-black text-white w-full py-16 px-8 mt-auto flex flex-col items-center space-y-4 text-center">
-    <span class="text-white font-black font-headline text-lg uppercase tracking-[0.4em]">Kuntani Studios</span>
+    <span class="text-white font-black font-headline text-lg uppercase tracking-[0.4em]">KUNTANI STUDIOS</span>
     <p class="text-white/60 text-xs font-medium tracking-widest max-w-xs leading-relaxed">
         Host of The Kuntani Festival — bridging arts and sciences through interdisciplinary collaboration
     </p>
     <div class="h-px w-12 bg-primary mt-2"></div>
-    <p class="font-['Plus_Jakarta_Sans'] text-[9px] uppercase tracking-[0.2em] text-white opacity-40">All products are handcrafted in the Philippines</p>
+    <p class="font-['Plus_Jakarta_Sans'] text-[9px] uppercase tracking-[0.2em] text-white opacity-40">ALL PRODUCTS ARE HANDCRAFTED IN THE PHILIPPINES</p>
 </footer>
+
 {% endblock %}
 
 {% block extra_scripts %}
