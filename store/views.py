@@ -198,13 +198,9 @@ def checkout(request):
         order = Order.objects.create(
             user=request.user,
             full_name=request.POST.get('full_name'),
-            phone=request.POST.get('phone'),
-            address=request.POST.get('address'),
-            barangay=request.POST.get('barangay'),
-            city=request.POST.get('city'),
-            province=request.POST.get('province'),
+            email=request.POST.get('email'),          # Only email, no phone/address
             payment_method=request.POST.get('payment_method'),
-            total=total,  # ← changed from grand_total to total
+            total=total,                              # Subtotal only (no shipping)
         )
         for item in cart_items:
             OrderItem.objects.create(
@@ -219,7 +215,7 @@ def checkout(request):
     return render(request, 'store/checkout.html', {
         'cart_items': cart_items,
         'total': total,
-        # grand_total removed – use total in checkout template
+        'cart_count': cart.get_item_count(),
     })
 
 def order_success(request):

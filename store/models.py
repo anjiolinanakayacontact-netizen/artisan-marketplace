@@ -32,11 +32,7 @@ class Product(models.Model):
 class Order(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     full_name = models.CharField(max_length=200)
-    phone = models.CharField(max_length=20)
-    address = models.CharField(max_length=300)
-    barangay = models.CharField(max_length=100)
-    city = models.CharField(max_length=100)
-    province = models.CharField(max_length=100)
+    email = models.EmailField()                     # NEW: only email, no phone/address
     payment_method = models.CharField(max_length=50)
     total = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -51,7 +47,7 @@ class OrderItem(models.Model):
     def __str__(self):
         return f"{self.quantity}x {self.product.name}"
 
-# ========== NEW CART MODELS ==========
+# ========== CART MODELS ==========
 class Cart(models.Model):
     user = models.OneToOneField('auth.User', on_delete=models.CASCADE, null=True, blank=True, related_name='cart')
     session_key = models.CharField(max_length=40, null=True, blank=True, unique=True)
@@ -74,7 +70,7 @@ class CartItem(models.Model):
     quantity = models.PositiveIntegerField(default=1)
 
     class Meta:
-        unique_together = ('cart', 'product')  # one product per cart
+        unique_together = ('cart', 'product')
 
     def __str__(self):
         return f"{self.quantity} × {self.product.name}"

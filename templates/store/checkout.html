@@ -1,251 +1,29 @@
-<!DOCTYPE html>
-<html class="light" lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Checkout | The Artisan Editorial</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#E65100",
-                        "on-primary": "#ffffff",
-                        "surface": "#ffffff",
-                        "on-surface": "#1b1b1b",
-                        "background": "#ffffff",
-                        "on-background": "#1b1b1b",
-                        "outline": "#e0e0e0",
-                        "surface-container": "#f9f9f9",
-                        "surface-container-high": "#f3f3f3"
-                    },
-                    fontFamily: {
-                        "headline": ["Plus Jakarta Sans"],
-                        "body": ["Inter"],
-                        "label": ["Inter"],
-                        "plus-jakarta": ["Plus Jakarta Sans"]
-                    },
-                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
-                },
-            },
-        }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        body {
-            background-color: #ffffff;
-            color: #1b1b1b;
-            font-family: 'Inter', sans-serif;
-        }
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-    </style>
-<style>
-        body {
-            min-height: max(884px, 100dvh);
-        }
-    </style>
-</head>
-<body class="min-h-screen flex flex-col bg-white text-[#1b1b1b]">
-
-<!-- TopAppBar -->
-<header class="fixed top-0 w-full z-50 bg-[#f9f9f9]/80 backdrop-blur-lg flex justify-between items-center px-6 h-20">
-<a href="{% url 'cart' %}" class="active:scale-95 duration-200 text-[#a43700]">
-<span class="material-symbols-outlined">arrow_back</span>
-</a>
-<h1 class="font-plus-jakarta tracking-tighter font-bold uppercase text-xl font-black tracking-widest text-[#1b1b1b]">THE ARTISAN EDITORIAL</h1>
-<a href="{% url 'cart' %}" class="active:scale-95 duration-200 text-[#a43700] relative">
-<span class="material-symbols-outlined">shopping_bag</span>
-{% if cart_count %}
-<span class="absolute -top-1 -right-1 bg-[#E65100] text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{{ cart_count }}</span>
-{% endif %}
-</a>
-</header>
-
-<main class="mt-20 mb-32 px-6 flex-grow">
-    <!-- Progress Stepper -->
-    <nav class="py-8">
-        <div class="flex items-center justify-between relative">
-            <div class="absolute top-1/2 left-0 w-full h-0.5 bg-gray-100 -translate-y-1/2 z-0"></div>
-            <div class="absolute top-1/2 left-0 w-1/2 h-0.5 bg-primary -translate-y-1/2 z-0"></div>
-            <div class="relative z-10 flex flex-col items-center gap-2">
-                <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs">1</div>
-                <span class="text-[9px] font-bold uppercase tracking-widest text-primary">Address</span>
-            </div>
-            <div class="relative z-10 flex flex-col items-center gap-2">
-                <div class="w-8 h-8 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center font-bold text-xs border border-gray-200">2</div>
-                <span class="text-[9px] font-medium uppercase tracking-widest text-gray-400">Payment</span>
-            </div>
-            <div class="relative z-10 flex flex-col items-center gap-2">
-                <div class="w-8 h-8 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center font-bold text-xs border border-gray-200">3</div>
-                <span class="text-[9px] font-medium uppercase tracking-widest text-gray-400">Review</span>
-            </div>
-        </div>
-    </nav>
-
-    <form method="post">
-        {% csrf_token %}
-
-        <!-- Address Form Section -->
-        <section class="mb-10">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="font-headline text-xl font-black text-black uppercase tracking-tight">Shipping Details</h2>
-                <span class="text-[9px] border border-black px-2 py-0.5 rounded-sm text-black font-bold uppercase tracking-widest">Required</span>
-            </div>
-            <div class="space-y-4">
-                <div class="flex flex-col gap-1.5">
-                    <label class="text-[10px] font-bold uppercase tracking-widest text-black">Full Name</label>
-                    <input name="full_name" class="w-full bg-white border-2 border-gray-100 rounded-none p-4 focus:border-primary focus:ring-0 text-black font-body text-sm" placeholder="Juan Dela Cruz" type="text" required/>
-                </div>
-                <div class="flex flex-col gap-1.5">
-                    <label class="text-[10px] font-bold uppercase tracking-widest text-black">Phone Number</label>
-                    <input name="phone" class="w-full bg-white border-2 border-gray-100 rounded-none p-4 focus:border-primary focus:ring-0 text-black font-body text-sm" placeholder="+63 9XX XXX XXXX" type="tel" required/>
-                </div>
-                <div class="flex flex-col gap-1.5">
-                    <label class="text-[10px] font-bold uppercase tracking-widest text-black">Street Address</label>
-                    <input name="address" class="w-full bg-white border-2 border-gray-100 rounded-none p-4 focus:border-primary focus:ring-0 text-black font-body text-sm" placeholder="House No., Street Name" type="text" required/>
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="flex flex-col gap-1.5">
-                        <label class="text-[10px] font-bold uppercase tracking-widest text-black">Barangay</label>
-                        <input name="barangay" class="w-full bg-white border-2 border-gray-100 rounded-none p-4 focus:border-primary focus:ring-0 text-black font-body text-sm" placeholder="Brgy. 123" type="text" required/>
-                    </div>
-                    <div class="flex flex-col gap-1.5">
-                        <label class="text-[10px] font-bold uppercase tracking-widest text-black">City</label>
-                        <input name="city" class="w-full bg-white border-2 border-gray-100 rounded-none p-4 focus:border-primary focus:ring-0 text-black font-body text-sm" placeholder="Manila" type="text" required/>
-                    </div>
-                </div>
-                <div class="flex flex-col gap-1.5">
-                    <label class="text-[10px] font-bold uppercase tracking-widest text-black">Province</label>
-                    <input name="province" class="w-full bg-white border-2 border-gray-100 rounded-none p-4 focus:border-primary focus:ring-0 text-black font-body text-sm" placeholder="Metro Manila" type="text" required/>
-                </div>
-            </div>
-        </section>
-
-        <!-- Payment Options -->
-        <section class="mb-10">
-            <h2 class="font-headline text-xl font-black text-black mb-6 uppercase tracking-tight">Payment Method</h2>
-            <div class="space-y-3">
-                <label class="relative flex items-center p-4 rounded-none bg-white border-2 border-gray-100 transition-all cursor-pointer has-[:checked]:border-primary shadow-sm">
-                    <input name="payment_method" value="GCash" class="hidden peer" type="radio" checked/>
-                    <div class="flex items-center gap-4 w-full">
-                        <div class="w-10 h-10 rounded-full bg-[#E65100]/10 flex items-center justify-center text-primary">
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
-                        </div>
-                        <div class="flex-grow">
-                            <p class="font-bold text-black text-sm">GCash</p>
-                            <p class="text-[10px] text-gray-500 uppercase tracking-tighter">Instant E-Wallet Transfer</p>
-                        </div>
-                        <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-primary flex items-center justify-center">
-                            <div class="w-2.5 h-2.5 rounded-full bg-primary opacity-0 peer-checked:opacity-100"></div>
-                        </div>
-                    </div>
-                </label>
-                <label class="relative flex items-center p-4 rounded-none bg-white border-2 border-gray-100 transition-all cursor-pointer has-[:checked]:border-primary shadow-sm">
-                    <input name="payment_method" value="Maya" class="hidden peer" type="radio"/>
-                    <div class="flex items-center gap-4 w-full">
-                        <div class="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center text-black">
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
-                        </div>
-                        <div class="flex-grow">
-                            <p class="font-bold text-black text-sm">Maya</p>
-                            <p class="text-[10px] text-gray-500 uppercase tracking-tighter">Digital Bank &amp; Wallet</p>
-                        </div>
-                        <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-primary flex items-center justify-center">
-                            <div class="w-2.5 h-2.5 rounded-full bg-primary opacity-0 peer-checked:opacity-100"></div>
-                        </div>
-                    </div>
-                </label>
-                <label class="relative flex items-center p-4 rounded-none bg-white border-2 border-gray-100 transition-all cursor-pointer has-[:checked]:border-primary shadow-sm">
-                    <input name="payment_method" value="COD" class="hidden peer" type="radio"/>
-                    <div class="flex items-center gap-4 w-full">
-                        <div class="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center text-black">
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
-                        </div>
-                        <div class="flex-grow">
-                            <p class="font-bold text-black text-sm">Cash on Delivery</p>
-                            <p class="text-[10px] text-gray-500 uppercase tracking-tighter">Pay upon receiving package</p>
-                        </div>
-                        <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-primary flex items-center justify-center">
-                            <div class="w-2.5 h-2.5 rounded-full bg-primary opacity-0 peer-checked:opacity-100"></div>
-                        </div>
-                    </div>
-                </label>
-            </div>
-        </section>
-
-        <!-- Order Summary (Dynamic) -->
-        <section class="bg-gray-50 rounded-lg p-6 mb-12 border border-gray-100">
-            <h2 class="font-headline text-md font-black text-black mb-4 flex items-center gap-2 uppercase tracking-widest">
-                <span class="material-symbols-outlined text-sm">receipt_long</span>
-                Order Summary
-            </h2>
-            <div class="space-y-4">
-                {% for item in cart_items %}
-                <div class="flex justify-between items-center text-sm">
-                    <div class="flex gap-3 items-center">
-                        <div class="w-10 h-10 rounded-none bg-white border border-gray-200 overflow-hidden">
-                            {% if item.product.image %}
-                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="w-full h-full object-cover"/>
-                            {% else %}
-                            <div class="w-full h-full flex items-center justify-center bg-gray-100">
-                                <span class="material-symbols-outlined text-sm text-gray-400">image</span>
-                            </div>
-                            {% endif %}
-                        </div>
-                        <span class="font-medium text-xs">{{ item.product.name }} (x{{ item.quantity }})</span>
-                    </div>
-                    <span class="font-bold">₱{{ item.subtotal }}</span>
-                </div>
-                {% empty %}
-                <p class="text-center text-gray-500">Your cart is empty.</p>
-                {% endfor %}
-
-                <div class="pt-4 border-t border-gray-200 space-y-2">
-                    <div class="flex justify-between text-[10px] text-gray-500 font-bold uppercase">
-                        <span>Subtotal</span>
-                        <span>₱{{ total }}</span>
-                    </div>
-                    <!-- Shipping fee row removed -->
-                    <div class="flex justify-between items-center pt-2 text-black">
-                        <span class="font-black uppercase tracking-widest text-[10px]">Total Amount</span>
-                        <span class="text-xl font-black">₱{{ total }}</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA Action -->
-        <div class="fixed bottom-20 left-0 w-full p-6 bg-white/95 backdrop-blur-sm z-40 border-t border-gray-100">
-            <button type="submit" class="w-full bg-[#E65100] text-white font-headline font-black py-4 rounded-none shadow-lg active:scale-95 duration-200 uppercase tracking-widest text-sm">
-                Place Order
-            </button>
-        </div>
-    </form>
-</main>
-
-<!-- BottomNavBar -->
-<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#ffffff] z-50 rounded-t-2xl shadow-2xl">
-    <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors">
-        <span class="material-symbols-outlined">grid_view</span>
-        <span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta">Curated</span>
-    </a>
-    <a href="{% url 'search' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors">
-        <span class="material-symbols-outlined">search</span>
-        <span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta">Discover</span>
-    </a>
-    <a href="{% url 'cart' %}" class="flex flex-col items-center justify-center text-[#a43700] relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-[#a43700] after:rounded-full">
-        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shopping_bag</span>
-        <span class="text-[10px] font-bold uppercase tracking-widest font-plus-jakarta">Vault</span>
-    </a>
-</nav>
-
-</body>
-</html>
+@login_required
+def checkout(request):
+    cart = get_or_create_cart(request)
+    cart_items, total = cart_items_data(cart)
+    
+    if request.method == 'POST':
+        order = Order.objects.create(
+            user=request.user,
+            full_name=request.POST.get('full_name'),
+            email=request.POST.get('email'),      # <-- new email field
+            payment_method=request.POST.get('payment_method'),
+            total=total,                          # no shipping fee
+        )
+        for item in cart_items:
+            OrderItem.objects.create(
+                order=order,
+                product=item['product'],
+                quantity=item['quantity'],
+                price=item['product'].price,
+            )
+        # Clear cart after order
+        cart.items.all().delete()
+        return redirect('order_success')
+    
+    return render(request, 'store/checkout.html', {
+        'cart_items': cart_items,
+        'total': total,
+        'cart_count': cart.get_item_count(),
+    })
