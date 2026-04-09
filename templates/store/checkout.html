@@ -101,14 +101,14 @@
 </header>
 
 <main class="max-w-7xl mx-auto px-6 py-10 lg:flex lg:gap-16">
-    <!-- Left Column: Payment Method (only Maya) -->
+    <!-- Left Column: Payment Method (only Maya QR) -->
     <div class="flex-1 space-y-12">
         <section>
             <div class="flex items-center justify-between mb-8">
                 <h2 class="text-2xl font-bold tracking-tight">Payment Method</h2>
             </div>
             <div class="mb-4 text-sm text-primary bg-primary/10 px-4 py-2 rounded-lg inline-block">
-                ⚡ Only Maya is available at the moment
+                ⚡ Only Maya QR is available at the moment
             </div>
             <form method="post" id="checkout-form">
                 {% csrf_token %}
@@ -119,8 +119,8 @@
                                 <span class="text-white font-black italic text-xl">m</span>
                             </div>
                             <div>
-                                <p class="font-bold">Maya</p>
-                                <p class="text-sm opacity-60">Pay with your digital wallet</p>
+                                <p class="font-bold">Maya QR</p>
+                                <p class="text-sm opacity-60">Scan to pay with your Maya app</p>
                             </div>
                         </div>
                         <div class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center">
@@ -128,7 +128,7 @@
                         </div>
                     </div>
                 </div>
-                <input type="hidden" name="payment_method" value="Maya">
+                <input type="hidden" name="payment_method" value="Maya QR">
             </form>
         </section>
     </div>
@@ -170,6 +170,7 @@
                 </div>
             </div>
 
+            <!-- Place Order button now submits the form -->
             <button type="submit" form="checkout-form" class="w-full bg-gradient-to-r from-primary to-primary-container text-white py-5 rounded-full font-bold text-lg shadow-lg hover:opacity-90 transition-all active:scale-95">
                 Place Order
             </button>
@@ -178,7 +179,7 @@
     </aside>
 </main>
 
-<!-- BottomNavBar (Mobile Only) – All URLs now valid -->
+<!-- BottomNavBar (Mobile Only) -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 bg-[#f9f9f9]/80 dark:bg-[#1b1b1b]/80 backdrop-blur-md border-t border-[#e3bfb2]/15 shadow-[0_-20px_40px_rgba(27,27,27,0.06)]">
     <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#1b1b1b] dark:text-[#f9f9f9] opacity-60 hover:text-orange-700 transition-colors">
         <span class="material-symbols-outlined">storefront</span>

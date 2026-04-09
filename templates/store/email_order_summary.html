@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Thank you for your order, {{ user.username }}!</h2>
+    <p>Your order <strong>#{{ order.id }}</strong> has been received.</p>
+    <h3>Order Summary</h3>
+    <ul>
+        {% for item in items %}
+        <li>{{ item.product.name }} x{{ item.quantity }} – ₱{{ item.subtotal }}</li>
+        {% endfor %}
+    </ul>
+    <p><strong>Total: ₱{{ total }}</strong></p>
+    <p>Your software product is attached below (or click the link):</p>
+    <p><a href="https://yourdomain.com/download/software.zip">Download your software</a></p>
+    <p>Thank you for shopping with us!</p>
+</body>
+</html>

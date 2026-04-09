@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django import forms
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.conf import settings
+from django.template.loader import render_to_string
 from .models import Product, Category, Artisan, Order, OrderItem, Cart, CartItem
 
 # ── Custom Registration Form with Email ──────────────────
@@ -35,7 +38,6 @@ def get_or_create_cart(request):
     """Return the Cart object for the current user/session."""
     if request.user.is_authenticated:
         cart, _ = Cart.objects.get_or_create(user=request.user, session_key=None)
-        # If there's an existing session cart, merge it (optional but good)
         if request.session.session_key:
             session_cart = Cart.objects.filter(session_key=request.session.session_key, user=None).first()
             if session_cart:
@@ -148,7 +150,6 @@ def add_to_cart(request, pk):
 
 def remove_from_cart(request, pk):
     cart = get_or_create_cart(request)
-    # pk here is product id (consistent with old url naming)
     cart.items.filter(product__pk=pk).delete()
     return redirect('cart')
 
@@ -181,7 +182,6 @@ def decrease_cart(request, pk):
 def cart_view(request):
     cart = get_or_create_cart(request)
     cart_items, total = cart_items_data(cart)
-    # No shipping fee – grand_total is same as total
     cart_count = cart.get_item_count()
     return render(request, 'store/cart.html', {
         'cart_items': cart_items,
@@ -193,14 +193,15 @@ def cart_view(request):
 def checkout(request):
     cart = get_or_create_cart(request)
     cart_items, total = cart_items_data(cart)
-    # No shipping fee – total is the final amount
+
     if request.method == 'POST':
+        # Create order
         order = Order.objects.create(
             user=request.user,
-            full_name=request.POST.get('full_name'),
-            email=request.POST.get('email'),          # Only email, no phone/address
+            full_name=request.user.get_full_name() or request.user.username,
+            email=request.user.email,          # use logged-in user's email
             payment_method=request.POST.get('payment_method'),
-            total=total,                              # Subtotal only (no shipping)
+            total=total,
         )
         for item in cart_items:
             OrderItem.objects.create(
@@ -209,9 +210,46 @@ def checkout(request):
                 quantity=item['quantity'],
                 price=item['product'].price,
             )
+
+        # ---- Send email to buyer with software product ----
+        subject = f'Your digital product from Artisan Market (Order #{order.id})'
+        # Build a simple plain text message
+        message = f"""
+Hello {order.full_name},
+
+Thank you for your purchase! Here is your software product:
+
+Order ID: {order.id}
+Total paid: ₱{total}
+
+Items:
+"""
+        for item in cart_items:
+            message += f"- {item['product'].name} x{item['quantity']} = ₱{item['subtotal']}\n"
+        message += """
+Your download link (valid for 24 hours):
+https://yourdomain.com/download/software.zip
+
+(Replace with your actual download link or attachment)
+
+Thank you for shopping at Artisan Market!
+"""
+        # For HTML email, you can use render_to_string with a template.
+        # For now, we use plain text.
+
+        send_mail(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,   # set in settings.py
+            [order.email],
+            fail_silently=False,
+        )
+        # ------------------------------------------------
+
         # Clear cart after order
         cart.items.all().delete()
         return redirect('order_success')
+
     return render(request, 'store/checkout.html', {
         'cart_items': cart_items,
         'total': total,
