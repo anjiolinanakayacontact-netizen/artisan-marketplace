@@ -199,10 +199,12 @@ def checkout(request):
         order = Order.objects.create(
             user=request.user,
             full_name=request.user.get_full_name() or request.user.username,
-            email=request.user.email,          # use logged-in user's email
+            email=request.user.email,
             payment_method=request.POST.get('payment_method'),
             total=total,
         )
+        # Create order items and collect download links
+        download_links = []
         for item in cart_items:
             OrderItem.objects.create(
                 order=order,
@@ -210,14 +212,18 @@ def checkout(request):
                 quantity=item['quantity'],
                 price=item['product'].price,
             )
+            if item['product'].download_link:
+                download_links.append({
+                    'name': item['product'].name,
+                    'link': item['product'].download_link,
+                })
 
         # ---- Send email to buyer with software product ----
         subject = f'Your digital product from Artisan Market (Order #{order.id})'
-        # Build a simple plain text message
         message = f"""
 Hello {order.full_name},
 
-Thank you for your purchase! Here is your software product:
+Thank you for your purchase!
 
 Order ID: {order.id}
 Total paid: ₱{total}
@@ -226,24 +232,28 @@ Items:
 """
         for item in cart_items:
             message += f"- {item['product'].name} x{item['quantity']} = ₱{item['subtotal']}\n"
-        message += """
-Your download link (valid for 24 hours):
-https://yourdomain.com/download/software.zip
 
-(Replace with your actual download link or attachment)
+        if download_links:
+            message += "\nDownload your software using the links below:\n"
+            for dl in download_links:
+                message += f"{dl['name']}: {dl['link']}\n"
+        else:
+            message += "\nNo download link provided for your items. Please contact support.\n"
 
-Thank you for shopping at Artisan Market!
-"""
-        # For HTML email, you can use render_to_string with a template.
-        # For now, we use plain text.
+        message += "\nThank you for shopping at Artisan Market!"
 
-        send_mail(
-            subject,
-            message,
-            settings.DEFAULT_FROM_EMAIL,   # set in settings.py
-            [order.email],
-            fail_silently=False,
-        )
+        # Send email with error handling
+        try:
+            send_mail(
+                subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [order.email],
+                fail_silently=False,
+            )
+            print(f"Email sent successfully to {order.email}")
+        except Exception as e:
+            print(f"EMAIL ERROR: {e}")
         # ------------------------------------------------
 
         # Clear cart after order
