@@ -12,15 +12,15 @@
 
 {% block content %}
 
-<!-- Hero Section - Quote Slider (arrows removed) -->
-<section class="relative px-6 pt-6 pb-12">
+<!-- Hero Section - Quote Slider (full width, no padding) -->
+<section class="relative pt-6 pb-12">
     <div class="relative w-full aspect-[4/5] overflow-hidden shadow-2xl bg-black">
         <div id="slider" class="flex transition-transform duration-700 ease-in-out h-full">
             <!-- Slide 1 -->
             <div class="min-w-full h-full flex flex-col items-center justify-center px-10 text-center">
                 <span class="text-primary text-6xl font-black mb-8">"</span>
                 <p class="text-white text-lg font-bold leading-relaxed tracking-wide mb-8">
-                    Get inspired and empowered by Art, so you won't be in denial of science. When one feels disempowered, she or he tends to be in denial of truths.
+                    Get inspired and empowered by art, so you won't be in denial of science. When one feels disempowered, she or he tends to be in denial of truths.
                 </p>
                 <div class="h-px w-12 bg-primary mb-4"></div>
                 <span class="text-white/60 text-xs font-black uppercase tracking-[0.3em]">Anjiolina Nakaya</span>
@@ -47,7 +47,7 @@
                 <span class="text-primary text-[10px] font-bold uppercase tracking-widest mt-1">Co-Founder</span>
             </div>
         </div>
-        <!-- Left/Right arrow buttons removed -->
+        <!-- Dots -->
         <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
             <button onclick="goToSlide(0)" id="dot-0" class="w-2 h-2 bg-primary rounded-full transition-all"></button>
             <button onclick="goToSlide(1)" id="dot-1" class="w-2 h-2 bg-white/30 rounded-full transition-all"></button>
@@ -56,7 +56,7 @@
     </div>
 </section>
 
-<!-- Categories Row (renamed) -->
+<!-- Categories Row -->
 <section class="px-6 mb-16">
     <h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] mb-8 text-on-surface">Categories</h2>
     <div class="flex gap-10 overflow-x-auto pb-4 no-scrollbar">
@@ -73,12 +73,11 @@
     </div>
 </section>
 
-<!-- Featured Artisans (renamed, subtitle removed) -->
+<!-- Featured Artisans -->
 <section class="bg-black text-white py-16 px-6 mb-16">
     <div class="flex justify-between items-end mb-10">
         <div>
             <h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] text-white">The Artisans</h2>
-            <!-- "Preserving Heritage" removed -->
         </div>
     </div>
     <div class="flex gap-8 overflow-x-auto no-scrollbar">
@@ -101,13 +100,12 @@
     </div>
 </section>
 
-<!-- Product Grid with VISIBLE Add to Cart Buttons -->
+<!-- Product Grid -->
 <section class="px-6 mb-16">
     <h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] mb-10 text-on-surface">The Seasonal Drop</h2>
     <div class="grid grid-cols-2 gap-x-6 gap-y-12">
         {% for product in products %}
         <div class="group relative">
-            <!-- Product image container -->
             <div class="aspect-square bg-surface-container overflow-hidden mb-5 relative group-hover:shadow-xl transition-all duration-500">
                 {% if product.image %}
                 <a href="{% url 'product_detail' product.pk %}">
@@ -154,7 +152,6 @@
 
 {% block extra_scripts %}
 <script>
-    // Slider functionality (auto-slide only, no arrow controls)
     let currentSlide = 0;
     const totalSlides = 3;
 
@@ -177,7 +174,6 @@
         updateSlider();
     };
 
-    // Auto slide every 5 seconds
     let autoSlideInterval = setInterval(() => {
         if (document.getElementById('slider')) {
             currentSlide = (currentSlide + 1) % totalSlides;
