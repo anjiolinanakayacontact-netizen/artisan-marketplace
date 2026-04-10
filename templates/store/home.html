@@ -12,7 +12,7 @@
 
 {% block content %}
 
-<!-- Hero Section - Quote Slider (unchanged) -->
+<!-- Hero Section - Quote Slider (arrows removed) -->
 <section class="relative px-6 pt-6 pb-12">
     <div class="relative w-full aspect-[4/5] overflow-hidden shadow-2xl bg-black">
         <div id="slider" class="flex transition-transform duration-700 ease-in-out h-full">
@@ -47,12 +47,7 @@
                 <span class="text-primary text-[10px] font-bold uppercase tracking-widest mt-1">Co-Founder</span>
             </div>
         </div>
-        <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-primary transition-colors flex items-center justify-center">
-            <span class="material-symbols-outlined text-white">chevron_left</span>
-        </button>
-        <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-primary transition-colors flex items-center justify-center">
-            <span class="material-symbols-outlined text-white">chevron_right</span>
-        </button>
+        <!-- Left/Right arrow buttons removed -->
         <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
             <button onclick="goToSlide(0)" id="dot-0" class="w-2 h-2 bg-primary rounded-full transition-all"></button>
             <button onclick="goToSlide(1)" id="dot-1" class="w-2 h-2 bg-white/30 rounded-full transition-all"></button>
@@ -61,9 +56,9 @@
     </div>
 </section>
 
-<!-- Categories Row (unchanged) -->
+<!-- Categories Row (renamed) -->
 <section class="px-6 mb-16">
-    <h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] mb-8 text-on-surface">Curated Categories</h2>
+    <h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] mb-8 text-on-surface">Categories</h2>
     <div class="flex gap-10 overflow-x-auto pb-4 no-scrollbar">
         {% for category in categories %}
         <a href="{% url 'search' %}?category={{ category.id }}" class="flex flex-col items-center gap-3 min-w-fit group">
@@ -78,12 +73,12 @@
     </div>
 </section>
 
-<!-- Featured Artisans (unchanged) -->
+<!-- Featured Artisans (renamed, subtitle removed) -->
 <section class="bg-black text-white py-16 px-6 mb-16">
     <div class="flex justify-between items-end mb-10">
         <div>
-            <h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] text-white">The Master Artisans</h2>
-            <p class="text-[10px] text-white/50 font-medium uppercase mt-2 tracking-widest">Preserving Heritage</p>
+            <h2 class="font-headline font-black text-xs uppercase tracking-[0.3em] text-white">The Artisans</h2>
+            <!-- "Preserving Heritage" removed -->
         </div>
     </div>
     <div class="flex gap-8 overflow-x-auto no-scrollbar">
@@ -112,7 +107,7 @@
     <div class="grid grid-cols-2 gap-x-6 gap-y-12">
         {% for product in products %}
         <div class="group relative">
-            <!-- Product image container (black box) – ensures fit without zoom -->
+            <!-- Product image container -->
             <div class="aspect-square bg-surface-container overflow-hidden mb-5 relative group-hover:shadow-xl transition-all duration-500">
                 {% if product.image %}
                 <a href="{% url 'product_detail' product.pk %}">
@@ -129,7 +124,6 @@
             <p class="text-[9px] text-on-surface/50 mb-3 uppercase tracking-tighter">{{ product.artisan }}</p>
             <div class="flex items-center justify-between border-t border-black/5 pt-3">
                 <span class="font-headline font-black text-primary text-sm">₱{{ product.price }}</span>
-                <!-- BUTTON – visible and properly styled -->
                 <form method="post" action="{% url 'add_to_cart' product.pk %}">
                     {% csrf_token %}
                     <button type="submit" class="bg-black text-white w-10 h-10 flex items-center justify-center active:scale-90 transition-transform hover:bg-primary rounded-full">
@@ -146,7 +140,7 @@
     </div>
 </section>
 
-<!-- Footer (moved inside content, but base.html already has footer? Actually base.html does NOT have footer, so we keep it here) -->
+<!-- Footer -->
 <footer class="bg-black text-white w-full py-16 px-8 mt-auto flex flex-col items-center space-y-4 text-center">
     <span class="text-white font-black font-headline text-lg uppercase tracking-[0.4em]">KUNTANI STUDIOS</span>
     <p class="text-white/60 text-xs font-medium tracking-widest max-w-xs leading-relaxed">
@@ -160,7 +154,7 @@
 
 {% block extra_scripts %}
 <script>
-    // Slider functionality
+    // Slider functionality (auto-slide only, no arrow controls)
     let currentSlide = 0;
     const totalSlides = 3;
 
@@ -178,16 +172,6 @@
         }
     }
 
-    window.nextSlide = function() {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        updateSlider();
-    };
-
-    window.prevSlide = function() {
-        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-        updateSlider();
-    };
-
     window.goToSlide = function(index) {
         currentSlide = index;
         updateSlider();
@@ -196,7 +180,8 @@
     // Auto slide every 5 seconds
     let autoSlideInterval = setInterval(() => {
         if (document.getElementById('slider')) {
-            nextSlide();
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
         } else {
             clearInterval(autoSlideInterval);
         }

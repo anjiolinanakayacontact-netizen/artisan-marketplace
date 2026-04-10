@@ -133,11 +133,11 @@
     {% endblock %}
 </main>
 
-<!-- Bottom Navigation – now visible on all screen sizes (md:hidden removed) -->
+<!-- Bottom Navigation – now visible on all screen sizes, "Curated" changed to "Home" -->
 <nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#ffffff] z-50 rounded-t-2xl shadow-2xl">
     <a href="{% url 'home' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300">
         <span class="material-symbols-outlined">grid_view</span>
-        <span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Curated</span>
+        <span class="text-[10px] font-bold uppercase tracking-widest font-headline mt-1">Home</span>
     </a>
     <a href="{% url 'search' %}" class="flex flex-col items-center justify-center text-[#1b1b1b]/40 hover:text-[#a43700] transition-colors active:scale-90 duration-300">
         <span class="material-symbols-outlined">search</span>
